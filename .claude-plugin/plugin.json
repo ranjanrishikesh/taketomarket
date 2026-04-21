@@ -1,0 +1,10 @@
+{
+  "name": "taketomarket",
+  "version": "0.1.0",
+  "description": "Marketing operating system for Claude Code. Spec-driven campaigns with positioning-as-invariant enforcement, quality gate walls, and compound learnings.",
+  "author": {
+    "name": "takeToMarket"
+  },
+  "license": "MIT",
+  "keywords": ["marketing", "campaigns", "positioning", "quality-gates", "agent-skills"]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "taketomarket",
+  "version": "0.1.0",
+  "description": "Marketing operating system for Claude Code. Spec-driven campaigns with positioning-as-invariant enforcement, quality gate walls, and compound learnings.",
+  "license": "MIT",
+  "bin": {
+    "taketomarket": "./install.js"
+  },
+  "files": [
+    ".claude-plugin/",
+    "skills/",
+    "workflows/",
+    "templates/",
+    "references/",
+    "playbooks/",
+    "gates/",
+    "bin/",
+    "settings.json",
+    "install.js"
+  ],
+  "keywords": ["claude-code", "marketing", "campaigns", "agent-skills", "codex"],
+  "engines": {
+    "node": ">=18"
+  }
+}
