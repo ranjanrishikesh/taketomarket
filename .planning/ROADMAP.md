@@ -50,7 +50,11 @@ Plans:
   2. All 9 reference files (POSITIONING.md, BRAND.md, ICP.md, CHANNELS.md, STATE.md, METRICS.md, COMPETITORS.md, CALENDAR.md, LEARNINGS.md) are generated in .marketing/
   3. POSITIONING.md uses structured checklist format with primary differentiator phrase, category, target audience, proof points, and must-not-say terms
   4. Vague or generic outputs are rejected and the user is re-asked with more specific prompts
-**Plans**: TBD
+**Plans:** 3 plans
+Plans:
+- [ ] 02-01-PLAN.md -- Interview question bank and specificity validation rules
+- [ ] 02-02-PLAN.md -- Main /ttm-init interview workflow with file generation
+- [ ] 02-03-PLAN.md -- SKILL.md finalization and end-to-end verification checkpoint
 
 ### Phase 3: Campaign Creation and Briefing
 **Goal**: Users can create campaigns and generate briefs that enforce outcome metrics and positioning alignment before any content is produced
@@ -154,7 +158,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Plugin Scaffold and Tooling | 0/3 | Planning complete | - |
-| 2. Onboarding Interview | 0/TBD | Not started | - |
+| 2. Onboarding Interview | 0/3 | Planning complete | - |
 | 3. Campaign Creation and Briefing | 0/TBD | Not started | - |
 | 4. Content Production and Verification | 0/TBD | Not started | - |
 | 5. Review, Fix, and Ship | 0/TBD | Not started | - |
