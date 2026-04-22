@@ -9,6 +9,7 @@
 
 'use strict';
 
+const path = require('path');
 const { execFileSync } = require('child_process');
 const { output, error } = require('./core.cjs');
 
@@ -51,6 +52,15 @@ function cmdCommit(message, files, raw) {
   const sanitized = sanitizeMessage(message);
   if (!sanitized) {
     error('commit message empty after sanitization');
+  }
+
+  // Validate file paths stay within project directory
+  const projectRoot = path.resolve(process.cwd());
+  for (const file of files) {
+    const resolved = path.resolve(projectRoot, file);
+    if (!resolved.startsWith(projectRoot + path.sep) && resolved !== projectRoot) {
+      error(`file path escapes project directory: ${file}`);
+    }
   }
 
   // Stage each file using execFileSync (array args, no shell injection)
