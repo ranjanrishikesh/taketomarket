@@ -52,7 +52,7 @@ Plans:
   4. Vague or generic outputs are rejected and the user is re-asked with more specific prompts
 **Plans:** 3 plans
 Plans:
-- [ ] 02-01-PLAN.md -- Interview question bank and specificity validation rules
+- [x] 02-01-PLAN.md -- Interview question bank and specificity validation rules
 - [ ] 02-02-PLAN.md -- Main /ttm-init interview workflow with file generation
 - [ ] 02-03-PLAN.md -- SKILL.md finalization and end-to-end verification checkpoint
 
