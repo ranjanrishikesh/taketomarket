@@ -89,9 +89,14 @@ If result shows `exists: false`: Tell the user the campaign does not exist and s
 
 Read campaign state. Check the `phase` field:
 
-- If phase is `"created"` (not `"researched"`):
+- If phase is `"created"`:
   Warn the user:
   "Research not yet completed for this campaign. Brief quality will be limited without research data. Run `/ttm-research ${SLUG}` first for better results. Proceed without research?"
+  Wait for user confirmation. If user declines, exit.
+
+- If phase is NOT `"created"` and NOT `"researched"`:
+  Warn the user:
+  "Campaign is in phase `${PHASE}`. Expected 'researched' before briefing. Running /ttm-brief now will overwrite the existing BRIEF.md. Proceed?"
   Wait for user confirmation. If user declines, exit.
 
 Check if RESEARCH.md has actual content (not just template placeholders):
