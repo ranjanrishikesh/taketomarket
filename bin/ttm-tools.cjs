@@ -13,6 +13,7 @@
  *   timestamp [format]       Get timestamp (full|date|filename)
  *   init                     Check .marketing/ initialization status
  *   state <read|update>      Read or update .marketing/STATE.md
+ *   campaign <sub> [args]    Campaign operations (init, state, update)
  *   health                   Validate .marketing/ directory structure
  *   commit <msg> [--files]   Stage files and git commit
  */
@@ -60,6 +61,17 @@ switch (command) {
     cmdCommit(parsed.positional[0], files, raw);
     break;
   }
+  case 'campaign': {
+    const { cmdCampaignInit, cmdCampaignState, cmdCampaignUpdate } = require('./lib/campaign.cjs');
+    const campaignArgs = args.slice(1).filter(a => a !== '--raw');
+    const subCmd = campaignArgs[0];
+    const slug = campaignArgs[1];
+    if (subCmd === 'init') cmdCampaignInit(slug, campaignArgs.slice(2).join(' '), raw);
+    else if (subCmd === 'state') cmdCampaignState(slug, raw);
+    else if (subCmd === 'update') cmdCampaignUpdate(slug, campaignArgs[2], campaignArgs[3], raw);
+    else error('campaign subcommand required: init, state, update');
+    break;
+  }
   case 'health': {
     const { cmdHealth } = require('./lib/health.cjs');
     cmdHealth(raw);
@@ -67,6 +79,6 @@ switch (command) {
   }
   default:
     error(
-      `Unknown command: ${command || '(none)'}. Available: slug, timestamp, init, state, commit, health`
+      `Unknown command: ${command || '(none)'}. Available: slug, timestamp, init, state, campaign, commit, health`
     );
 }
