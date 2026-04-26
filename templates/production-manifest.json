@@ -1,0 +1,19 @@
+{
+  "campaign": "[SLUG]",
+  "produced_at": "[ISO_TIMESTAMP]",
+  "context_loaded": {
+    "brief": ".marketing/CAMPAIGNS/[SLUG]/BRIEF.md",
+    "positioning": ".marketing/POSITIONING.md",
+    "brand": ".marketing/BRAND.md",
+    "icp": ".marketing/ICP.md"
+  },
+  "hero": {
+    "asset_id": 1,
+    "type": "[ASSET_TYPE]",
+    "channel": "[CHANNEL]",
+    "playbook": "[PLAYBOOK_PATH_OR_NONE]",
+    "file": "ASSETS/[HERO_FILENAME].md"
+  },
+  "derivatives": [],
+  "total_assets": 0
+}
