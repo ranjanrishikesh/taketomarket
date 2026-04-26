@@ -82,7 +82,12 @@ Plans:
   3. User runs /ttm-verify and every asset receives a pass/fail report across all 10 base quality gates with line-level feedback
   4. Verify runs in a separate context from Produce to prevent self-evaluation bias
   5. Deviation reports offer 3 options per failure: Correct (rewrite), Accept+log (ship with exception), Escalate (trigger positioning shift)
-**Plans**: TBD
+**Plans:** 4 plans
+Plans:
+- [ ] 04-01-PLAN.md -- Infrastructure: extend campaign.cjs state fields, create templates and producer agent
+- [ ] 04-02-PLAN.md -- /ttm-produce workflow with hero-first Task() orchestration
+- [ ] 04-03-PLAN.md -- Quality gate system: expand base-gates.md and create gate-evaluation.md
+- [ ] 04-04-PLAN.md -- /ttm-verify workflow with 10-gate evaluation and deviation handling
 
 ### Phase 5: Review, Fix, and Ship
 **Goal**: Users can review assets with structured checklists, fix failures through root-cause analysis, and ship with verified launch readiness
@@ -164,7 +169,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 1. Plugin Scaffold and Tooling | 0/3 | Planning complete | - |
 | 2. Onboarding Interview | 0/3 | Planning complete | - |
 | 3. Campaign Creation and Briefing | 0/3 | Planning complete | - |
-| 4. Content Production and Verification | 0/TBD | Not started | - |
+| 4. Content Production and Verification | 0/4 | Planning complete | - |
 | 5. Review, Fix, and Ship | 0/TBD | Not started | - |
 | 6. Positioning Invariant System | 0/TBD | Not started | - |
 | 7. State Management and Campaign Operations | 0/TBD | Not started | - |
