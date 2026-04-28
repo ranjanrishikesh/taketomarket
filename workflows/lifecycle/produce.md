@@ -291,11 +291,11 @@ this file to discover which assets exist and what context was loaded during prod
 
 Update campaign phase:
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign update "${SLUG}" phase produced
 TIMESTAMP=$(node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" timestamp --raw)
 if [ -z "$TIMESTAMP" ]; then
   echo "Error: could not get timestamp"; exit 1
 fi
+node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign update "${SLUG}" phase produced
 node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign update "${SLUG}" phase.produced "$TIMESTAMP"
 ```
 
