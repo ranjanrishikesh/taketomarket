@@ -9,8 +9,6 @@ allowed-tools: Read Bash Glob Grep
 
 # /ttm-positioning-check
 
-**Status:** Not yet implemented (Phase 6)
-
 Read and follow the workflow at `${CLAUDE_PLUGIN_ROOT}/workflows/reference-mgmt/positioning-check.md`
 
 This command will:
