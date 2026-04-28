@@ -20,6 +20,31 @@ Drift is evaluated using GATE-01's 3 checks. Each check maps to a category:
 
 ---
 
+## Bleeding Analysis
+
+Bleeding occurs when must-not-say terms from POSITIONING.md appear in **customer-facing** materials. This is distinct from general must-not-say drift -- non-customer-facing usage (internal briefs, planning docs) is a WARN, but customer-facing usage represents positioning "bleeding" into territory the brand explicitly avoids.
+
+### Asset Type Classification
+
+Classify each asset as customer-facing or non-customer-facing based on its file path and content type:
+
+| Asset Type | Classification | Examples |
+|------------|---------------|----------|
+| Landing pages, blog posts, ad copy, social posts, email campaigns | Customer-facing | Assets intended for external audience consumption |
+| Internal briefs, research docs, planning notes, strategy docs | Non-customer-facing | Assets used internally for planning and alignment |
+
+When asset type is ambiguous, classify as customer-facing (conservative default).
+
+### Bleeding Severity
+
+| Check 3 Result | Asset Type | Bleeding Status | Severity |
+|----------------|-----------|-----------------|----------|
+| FAIL | Customer-facing | BLEEDING | Critical -- must-not-say term reaching external audience |
+| WARN | Non-customer-facing | NOT BLEEDING | Advisory -- internal usage, lower risk |
+| PASS | Any | CLEAN | No must-not-say terms found |
+
+---
+
 ## Per-Asset Drift Calculation
 
 Per-asset drift percentage = (WARN checks + FAIL checks) / total checks evaluated * 100
@@ -105,6 +130,21 @@ ${TREND_DETAIL}
 | Differentiator Alignment | ${DIFF_COUNT} | ${DIFF_PCT}% |
 | Proof Point Sourcing | ${PROOF_COUNT} | ${PROOF_PCT}% |
 | Must-Not-Say Violations | ${MNS_COUNT} | ${MNS_PCT}% |
+
+## Bleeding Analysis
+
+Must-not-say terms that have bled into customer-facing materials:
+
+| # | Asset | Campaign | Term Found | Context | Severity |
+|---|-------|----------|------------|---------|----------|
+| 1 | ${ASSET_NAME} | ${CAMPAIGN_SLUG} | "${TERM}" | "${SURROUNDING_CONTEXT}" | Critical |
+| ... | ... | ... | ... | ... | ... |
+
+**Bleeding count:** ${BLEEDING_COUNT} of ${MNS_VIOLATION_COUNT} must-not-say violations are in customer-facing materials
+**Bleeding rate:** ${BLEEDING_RATE}% of must-not-say violations have bled into customer-facing territory
+
+${IF_NO_BLEEDING}No must-not-say terms found in customer-facing materials. Positioning boundaries are holding.${END_IF}
+${IF_BLEEDING}Customer-facing assets contain must-not-say terms. These should be prioritized for /ttm-fix as they represent active positioning leakage to your audience.${END_IF}
 
 ## Findings Detail
 
