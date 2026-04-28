@@ -10,6 +10,18 @@ revision feedback on Revise (D-12). Auto-triggers /ttm-fix for revised assets (D
 @${CLAUDE_PLUGIN_ROOT}/references/review-checklist.md
 </required_reading>
 
+<constraints>
+## POSITIONING.md is READ-ONLY
+
+**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+
+POSITIONING.md is an architectural invariant. If you detect positioning drift:
+- In verify: use the Escalate option to launch /ttm-positioning-shift
+- In other workflows: flag the issue and recommend running /ttm-positioning-check
+
+Only /ttm-positioning-shift and /ttm-init may modify POSITIONING.md.
+</constraints>
+
 <process>
 
 ## Text-Mode Detection

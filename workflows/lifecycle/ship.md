@@ -10,6 +10,18 @@ status allows staggered launches (D-11). Only ship-ready assets can ship.
 @${CLAUDE_PLUGIN_ROOT}/references/ship-checklist-items.md
 </required_reading>
 
+<constraints>
+## POSITIONING.md is READ-ONLY
+
+**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+
+POSITIONING.md is an architectural invariant. If you detect positioning drift:
+- In verify: use the Escalate option to launch /ttm-positioning-shift
+- In other workflows: flag the issue and recommend running /ttm-positioning-check
+
+Only /ttm-positioning-shift and /ttm-init may modify POSITIONING.md.
+</constraints>
+
 <process>
 
 ## Text-Mode Detection
@@ -463,6 +475,30 @@ Checklist result: ${CHECKLIST_RESULT}
 Next: Run /ttm-measure ${SLUG} when measurement window begins
       (or /ttm-ship ${SLUG} again to ship deferred assets)
 ```
+
+---
+
+## Step 11: Positioning Check Auto-Suggest (D-02)
+
+Check if a positioning audit is recommended:
+```bash
+SHIPPED_JSON=$(node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign list --shipped-since-last-audit --raw)
+SHIPPED_COUNT=$(echo "$SHIPPED_JSON" | node -e "const d=require('fs').readFileSync('/dev/stdin','utf8');console.log(JSON.parse(d).count)")
+```
+
+If SHIPPED_COUNT >= 3, display:
+
+```
+takeToMarket > POSITIONING CHECK SUGGESTED
+
+${SHIPPED_COUNT} campaigns have shipped since your last positioning audit.
+Consider running /ttm-positioning-check to verify positioning consistency
+across recent assets.
+
+This is a suggestion, not a requirement. Run it when convenient.
+```
+
+If SHIPPED_COUNT < 3, do not display anything.
 
 </process>
 
