@@ -483,7 +483,7 @@ Next: Run /ttm-measure ${SLUG} when measurement window begins
 Check if a positioning audit is recommended:
 ```bash
 SHIPPED_JSON=$(node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign list --shipped-since-last-audit --raw)
-SHIPPED_COUNT=$(echo "$SHIPPED_JSON" | node -e "const d=require('fs').readFileSync('/dev/stdin','utf8');console.log(JSON.parse(d).count)")
+SHIPPED_COUNT=$(echo "$SHIPPED_JSON" | node -e "process.stdin.resume();let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>console.log(JSON.parse(d).count))")
 ```
 
 If SHIPPED_COUNT >= 3, display:

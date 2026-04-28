@@ -85,7 +85,7 @@ Parse the current POSITIONING.md into structured fields:
 
 ```bash
 ACTIVE_JSON=$(node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign list --active --raw)
-ACTIVE_COUNT=$(echo "$ACTIVE_JSON" | node -e "const d=require('fs').readFileSync('/dev/stdin','utf8');console.log(JSON.parse(d).count)")
+ACTIVE_COUNT=$(echo "$ACTIVE_JSON" | node -e "process.stdin.resume();let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>console.log(JSON.parse(d).count))")
 ```
 
 If ACTIVE_COUNT > 0:
