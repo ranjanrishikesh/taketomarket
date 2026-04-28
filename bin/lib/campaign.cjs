@@ -63,11 +63,6 @@ function cmdCampaignInit(slug, name, raw) {
     error('campaign directory path escapes project directory');
   }
 
-  // Guard against overwriting an existing campaign (TOCTOU defense)
-  if (fs.existsSync(statePath)) {
-    error(`Campaign already exists: ${safe}. Delete the directory first or use a different slug.`);
-  }
-
   // Create CAMPAIGNS/<slug>/ASSETS/ (recursive creates all intermediate dirs)
   fs.mkdirSync(assetsDir, { recursive: true });
 
@@ -124,7 +119,15 @@ function cmdCampaignInit(slug, name, raw) {
     '',
   ].join('\n');
 
-  safeWriteFile(statePath, stateContent);
+  // TOCTOU-safe creation: wx flag fails atomically if file already exists
+  try {
+    fs.writeFileSync(statePath, stateContent, { flag: 'wx', encoding: 'utf-8' });
+  } catch (e) {
+    if (e.code === 'EEXIST') {
+      error(`Campaign already exists: ${safe}. Delete the directory first or use a different slug.`);
+    }
+    throw e;
+  }
 
   // Copy RESEARCH.md template
   const templateDir = path.resolve(__dirname, '..', '..', 'templates');
