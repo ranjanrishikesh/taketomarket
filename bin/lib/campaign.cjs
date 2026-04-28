@@ -264,10 +264,13 @@ function cmdCampaignList(filter, sinceArg, raw) {
   }
 
   // Read all campaign STATE.md files
+  const projectRoot = path.resolve(process.cwd());
   const campaigns = [];
   for (const entry of entries) {
     if (!entry.isDirectory()) continue;
     const statePath = path.resolve(campaignsDir, entry.name, 'STATE.md');
+    // Security: reject paths that escape the project root (e.g., via symlinks)
+    if (!statePath.startsWith(projectRoot + path.sep)) continue;
     const content = safeReadFile(statePath);
     if (content === null) continue;
     const { frontmatter } = parseFrontmatter(content);
