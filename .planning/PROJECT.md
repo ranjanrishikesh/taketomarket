@@ -21,6 +21,10 @@ Every marketing asset ships with a verifiable outcome metric and passes through 
 - [x] Campaign creation (`/ttm-new-campaign`) with full scaffold (STATE.md, BRIEF.md, RESEARCH.md, ASSETS/) — Validated in Phase 3: Campaign Creation and Briefing
 - [x] Market research (`/ttm-research`) with web search + manual paste hybrid and confidence scores — Validated in Phase 3: Campaign Creation and Briefing
 - [x] Brief generation (`/ttm-brief`) with outcome metric enforcement and positioning check gate — Validated in Phase 3: Campaign Creation and Briefing
+- [x] Content production (`/ttm-produce`) with hero-first wave-parallel execution in fresh contexts — Validated in Phase 4: Content Production and Verification
+- [x] 10-gate quality wall (`/ttm-verify`) with summary + line-level feedback, soft fail with override — Validated in Phase 4: Content Production and Verification
+- [x] 3-option deviation handling (Correct/Accept+log/Escalate) with full audit trail — Validated in Phase 4: Content Production and Verification
+- [x] Context isolation between Produce and Verify via `context: fork` — Validated in Phase 4: Content Production and Verification
 
 ### Active
 
@@ -108,4 +112,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-23 after Phase 3 completion*
+*Last updated: 2026-04-28 after Phase 4 completion*
