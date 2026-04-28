@@ -136,7 +136,11 @@ function cmdDriftLogAppend(eventType, source, details, affectedCount, raw) {
   // Find the Audit Trail marker and append after it
   const marker = '<!-- NEW ENTRIES BELOW THIS LINE -->';
   let updated;
-  if (content.includes(marker)) {
+  const markerCount = content.split(marker).length - 1;
+  if (markerCount > 1) {
+    error(`DRIFT-LOG.md has ${markerCount} occurrences of the Audit Trail marker. File may be corrupted.`);
+  }
+  if (markerCount === 1) {
     updated = content.replace(marker, marker + '\n' + newRow);
   } else {
     // Fallback: append at end of content
@@ -189,7 +193,11 @@ function cmdDriftLogDeprecation(asset, campaign, oldElement, requiredUpdate, dea
   // Find the Deprecation Backlog marker and append after it
   const marker = '<!-- DEPRECATION ENTRIES BELOW THIS LINE -->';
   let updated;
-  if (content.includes(marker)) {
+  const markerCount = content.split(marker).length - 1;
+  if (markerCount > 1) {
+    error(`DRIFT-LOG.md has ${markerCount} occurrences of the Deprecation marker. File may be corrupted.`);
+  }
+  if (markerCount === 1) {
     updated = content.replace(marker, marker + '\n' + newRow);
   } else {
     // Fallback: append at end of content
