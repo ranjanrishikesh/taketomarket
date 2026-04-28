@@ -9,8 +9,6 @@ allowed-tools: Read Write Bash Glob Grep
 
 # /ttm-positioning-shift
 
-**Status:** Not yet implemented (Phase 6)
-
 Read and follow the workflow at `${CLAUDE_PLUGIN_ROOT}/workflows/reference-mgmt/positioning-shift.md`
 
 This command will:
