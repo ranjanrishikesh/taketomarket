@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 05-02-PLAN.md
-last_updated: "2026-04-28T09:05:41.000Z"
+stopped_at: Completed 05-04-PLAN.md
+last_updated: "2026-04-28T09:16:01.000Z"
 last_activity: 2026-04-28
 progress:
   total_phases: 10
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 17
-  completed_plans: 15
-  percent: 88
+  completed_plans: 17
+  percent: 100
 ---
 
 # Project State
@@ -21,22 +21,22 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-21)
 
 **Core value:** Every marketing asset ships with a verifiable outcome metric and passes through a positioning-invariant quality gate wall -- no asset ships without both, ever.
-**Current focus:** Phase 05 — review-fix-and-ship
+**Current focus:** Phase 05 complete -- review-fix-and-ship
 
 ## Current Position
 
 Phase: 5 of 10 (review-fix-and-ship)
-Plan: 2 of 4 complete
-Status: In progress -- 05-02-PLAN.md complete
-Last activity: 2026-04-28 - Completed 05-02-PLAN.md
+Plan: 4 of 4 complete
+Status: Phase complete -- all 4 plans executed
+Last activity: 2026-04-28 - Completed 05-04-PLAN.md
 
-Progress: [████████░░] 88%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 15
+- Total plans completed: 17
 - Average duration: -
 - Total execution time: 0 hours
 
@@ -48,6 +48,7 @@ Progress: [████████░░] 88%
 | 02 | 3 | - | - |
 | 03 | 3 | - | - |
 | 04 | 4 | - | - |
+| 05 | 4 | - | - |
 
 **Recent Trend:**
 
@@ -74,6 +75,12 @@ Recent decisions affecting current work:
 - [05-02]: Revision feedback stored as per-asset REVIEW-FEEDBACK-[NAME].md files for fix loop input
 - [05-02]: MANIFEST.json extended with review_status and review_feedback_file per asset
 - [05-02]: Auto-trigger /ttm-fix is user instruction, not direct invocation (review not forked)
+- [05-03]: Inline re-verification in fix.md rather than invoking /ttm-verify via Task() (avoids double-fork)
+- [05-03]: Fix briefs stored persistently as FIX-BRIEF-ASSET_ID-attempt-N.md for escalation and learning
+- [05-03]: Preservation constraints in fix brief prevent oscillating gate regressions
+- [05-04]: Ship workflow references ship-checklist-items.md via @-syntax (485 lines, under limit)
+- [05-04]: Checklist sections dynamically included only for asset types present in ship-ready list
+- [05-04]: Human confirmations grouped by section to reduce interaction fatigue
 
 ### Pending Todos
 
@@ -81,7 +88,6 @@ None yet.
 
 ### Blockers/Concerns
 
-- Research flag: Phase 4 wave-parallel fresh-context production pattern needs explicit design work before implementation
 - Research flag: Phase 9 discipline-specific measurable metrics need per-channel domain research
 - Research flag: Phase 10 npm installer for plugin-format skills needs verification against plugin-dev docs
 
@@ -95,6 +101,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-04-28T09:05:41Z
-Stopped at: Completed 05-02-PLAN.md
-Resume file: .planning/phases/05-review-fix-and-ship/05-03-PLAN.md
+Last session: 2026-04-28T09:16:01Z
+Stopped at: Completed 05-04-PLAN.md (Phase 05 complete)
+Resume file: None

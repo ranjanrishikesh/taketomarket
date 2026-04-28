@@ -101,9 +101,9 @@ Plans:
 **Plans:** 4 plans
 Plans:
 - [x] 05-01-PLAN.md -- Infrastructure: campaign.cjs state fields, SKILL.md updates, reference files and templates
-- [ ] 05-02-PLAN.md -- /ttm-review workflow with structured checklist and per-asset outcomes
-- [ ] 05-03-PLAN.md -- /ttm-fix workflow with root-cause loop, Task() re-production, and 3-attempt cap
-- [ ] 05-04-PLAN.md -- /ttm-ship workflow with dynamic launch checklist and per-asset shipping
+- [x] 05-02-PLAN.md -- /ttm-review workflow with structured checklist and per-asset outcomes
+- [x] 05-03-PLAN.md -- /ttm-fix workflow with root-cause loop, Task() re-production, and 3-attempt cap
+- [x] 05-04-PLAN.md -- /ttm-ship workflow with dynamic launch checklist and per-asset shipping
 
 ### Phase 6: Positioning Invariant System
 **Goal**: Positioning is enforced as an architectural invariant across every campaign phase, with controlled shift workflows when repositioning is needed
@@ -175,7 +175,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 2. Onboarding Interview | 0/3 | Planning complete | - |
 | 3. Campaign Creation and Briefing | 0/3 | Planning complete | - |
 | 4. Content Production and Verification | 0/4 | Planning complete | - |
-| 5. Review, Fix, and Ship | 1/4 | In progress | - |
+| 5. Review, Fix, and Ship | 4/4 | Complete | 2026-04-28 |
 | 6. Positioning Invariant System | 0/TBD | Not started | - |
 | 7. State Management and Campaign Operations | 0/TBD | Not started | - |
 | 8. Core Playbooks | 0/TBD | Not started | - |
