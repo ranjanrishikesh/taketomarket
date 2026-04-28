@@ -28,6 +28,11 @@ Every marketing asset ships with a verifiable outcome metric and passes through 
 - [x] Human review (`/ttm-review`) with hero-first structured checklist, 4 mandatory questions, Approve/Revise/Reject per asset — Validated in Phase 5: Review, Fix, and Ship
 - [x] Root-cause fix loop (`/ttm-fix`) with AI diagnosis + user confirm, Task() re-production, 10-gate re-verification, 3-attempt cap — Validated in Phase 5: Review, Fix, and Ship
 - [x] Launch checklist (`/ttm-ship`) with dynamic per-campaign checklist, AI auto-checks + human confirms, per-asset ship status — Validated in Phase 5: Review, Fix, and Ship
+- [x] POSITIONING.md loaded into every phase context with two-tier strategy (compact summary universal, full in produce/verify/positioning-check) — Validated in Phase 6: Positioning Invariant System
+- [x] Read-only POSITIONING.md enforcement via state-based gate (any active campaign locks positioning) with `<constraints>` blocks in all 6 lifecycle workflows — Validated in Phase 6: Positioning Invariant System
+- [x] `/ttm-positioning-shift` controlled repositioning with reasoning, migration plan, deprecation schedule, mandatory human approval gate — Validated in Phase 6: Positioning Invariant System
+- [x] `/ttm-positioning-check` drift audit with time-window sampling, GATE-01 reuse, bleeding analysis, trend tracking, DRIFT-LOG.md logging — Validated in Phase 6: Positioning Invariant System
+- [x] Dual positioning drift log: POSITIONING.md History table (shifts only) + .marketing/DRIFT-LOG.md (all events including deviations cross-ref) — Validated in Phase 6: Positioning Invariant System
 
 ### Active
 
@@ -115,4 +120,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-28 after Phase 5 completion*
+*Last updated: 2026-04-28 after Phase 6 completion*
