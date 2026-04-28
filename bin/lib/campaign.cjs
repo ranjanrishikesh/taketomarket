@@ -5,7 +5,7 @@
  * Depends on: ./core.cjs for output, error, safeReadFile, safeWriteFile,
  *             parseFrontmatter, serializeFrontmatter
  *
- * Exports: cmdCampaignInit, cmdCampaignState, cmdCampaignUpdate
+ * Exports: cmdCampaignInit, cmdCampaignState, cmdCampaignUpdate, cmdCampaignList
  */
 
 'use strict';
@@ -241,8 +241,90 @@ function cmdCampaignUpdate(slug, field, value, raw) {
   output({ updated: field, value, last_updated: timestamp }, raw, `${field}=${value}`);
 }
 
+// Active campaign phases for filtering
+const ACTIVE_PHASES = new Set(['briefed', 'produced', 'verified', 'reviewed', 'shipped']);
+
+/**
+ * List campaigns with optional filtering.
+ *
+ * @param {string} filter - Filter flag: '--active', '--shipped-since-last-audit', or ''
+ * @param {string} sinceArg - Time window filter e.g. '30d', '90d'
+ * @param {boolean} raw - Whether to output raw string
+ */
+function cmdCampaignList(filter, sinceArg, raw) {
+  const campaignsDir = path.resolve(process.cwd(), '.marketing', 'CAMPAIGNS');
+
+  // If no campaigns directory, return empty
+  let entries;
+  try {
+    entries = fs.readdirSync(campaignsDir, { withFileTypes: true });
+  } catch {
+    output({ campaigns: [], count: 0 }, raw, '0 campaigns');
+    return;
+  }
+
+  // Read all campaign STATE.md files
+  const campaigns = [];
+  for (const entry of entries) {
+    if (!entry.isDirectory()) continue;
+    const statePath = path.resolve(campaignsDir, entry.name, 'STATE.md');
+    const content = safeReadFile(statePath);
+    if (content === null) continue;
+    const { frontmatter } = parseFrontmatter(content);
+    campaigns.push({ slug: entry.name, ...frontmatter });
+  }
+
+  let filtered = campaigns;
+
+  if (filter === '--active') {
+    // Filter to campaigns in active phases
+    filtered = campaigns.filter(c => ACTIVE_PHASES.has(c.phase));
+  } else if (filter === '--shipped-since-last-audit') {
+    // Filter to campaigns shipped since last audit event in DRIFT-LOG.md
+    const shippedCampaigns = campaigns.filter(c => c['phase.shipped'] && c['phase.shipped'] !== 'null');
+    let lastAuditTimestamp = null;
+
+    const driftLogPath = path.resolve(process.cwd(), '.marketing', 'DRIFT-LOG.md');
+    const driftLogContent = safeReadFile(driftLogPath);
+    if (driftLogContent) {
+      // Find last audit event timestamp in the Audit Trail table
+      const lines = driftLogContent.split('\n');
+      for (const line of lines) {
+        if (line.includes('| audit |') || line.includes('| audit|')) {
+          const match = line.match(/\|\s*(\d{4}-\d{2}-\d{2}T[^\s|]+)\s*\|/);
+          if (match) {
+            const ts = match[1];
+            if (!lastAuditTimestamp || ts > lastAuditTimestamp) {
+              lastAuditTimestamp = ts;
+            }
+          }
+        }
+      }
+    }
+
+    if (lastAuditTimestamp) {
+      filtered = shippedCampaigns.filter(c => c['phase.shipped'] > lastAuditTimestamp);
+    } else {
+      // No prior audit -- include all shipped campaigns
+      filtered = shippedCampaigns;
+    }
+  } else if (sinceArg && sinceArg.match(/^\d+d$/)) {
+    // Parse days and calculate cutoff date
+    const days = parseInt(sinceArg, 10);
+    const cutoff = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
+    filtered = campaigns.filter(c => {
+      if (c.phase === 'archived') return false;
+      const ts = c.last_updated || c['phase.produced'];
+      return ts && ts !== 'null' && ts > cutoff;
+    });
+  }
+
+  output({ campaigns: filtered, count: filtered.length }, raw, filtered.length + ' campaigns');
+}
+
 module.exports = {
   cmdCampaignInit,
   cmdCampaignState,
   cmdCampaignUpdate,
+  cmdCampaignList,
 };

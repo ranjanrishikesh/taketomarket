@@ -13,7 +13,8 @@
  *   timestamp [format]       Get timestamp (full|date|filename)
  *   init                     Check .marketing/ initialization status
  *   state <read|update>      Read or update .marketing/STATE.md
- *   campaign <sub> [args]    Campaign operations (init, state, update)
+ *   campaign <sub> [args]    Campaign operations (init, state, update, list)
+ *   drift-log <sub> [args]   Drift log operations (append, deprecation)
  *   health                   Validate .marketing/ directory structure
  *   commit <msg> [--files]   Stage files and git commit
  */
@@ -62,17 +63,22 @@ switch (command) {
     break;
   }
   case 'campaign': {
-    const { cmdCampaignInit, cmdCampaignState, cmdCampaignUpdate } = require('./lib/campaign.cjs');
+    const { cmdCampaignInit, cmdCampaignState, cmdCampaignUpdate, cmdCampaignList } = require('./lib/campaign.cjs');
     const campaignArgs = args.slice(1).filter(a => a !== '--raw');
     const subCmd = campaignArgs[0];
     const slug = campaignArgs[1];
-    if (slug && /\s/.test(slug)) {
+    if (subCmd !== 'list' && slug && /\s/.test(slug)) {
       error('campaign slug must not contain whitespace -- use hyphens');
     }
     if (subCmd === 'init') cmdCampaignInit(slug, campaignArgs.slice(2).join(' '), raw);
     else if (subCmd === 'state') cmdCampaignState(slug, raw);
     else if (subCmd === 'update') cmdCampaignUpdate(slug, campaignArgs[2], campaignArgs[3], raw);
-    else error('campaign subcommand required: init, state, update');
+    else if (subCmd === 'list') {
+      const filter = campaignArgs[1] || '';
+      const since = campaignArgs.find(a => a.match(/^\d+d$/)) || '';
+      cmdCampaignList(filter, since, raw);
+    }
+    else error('campaign subcommand required: init, state, update, list');
     break;
   }
   case 'deviation': {
@@ -94,6 +100,35 @@ switch (command) {
     }
     break;
   }
+  case 'drift-log': {
+    const dlArgs = args.slice(1).filter(a => a !== '--raw');
+    const dlCmd = dlArgs[0];
+    if (dlCmd === 'append') {
+      const { cmdDriftLogAppend } = require('./lib/drift-log.cjs');
+      const parsed = parseNamedArgs(args.slice(2));
+      cmdDriftLogAppend(
+        parsed.named['event-type'],
+        parsed.named.source,
+        parsed.named.details,
+        parsed.named.affected,
+        raw
+      );
+    } else if (dlCmd === 'deprecation') {
+      const { cmdDriftLogDeprecation } = require('./lib/drift-log.cjs');
+      const parsed = parseNamedArgs(args.slice(2));
+      cmdDriftLogDeprecation(
+        parsed.named.asset,
+        parsed.named.campaign,
+        parsed.named['old-element'],
+        parsed.named['required-update'],
+        parsed.named.deadline,
+        raw
+      );
+    } else {
+      error('drift-log subcommand required: append, deprecation');
+    }
+    break;
+  }
   case 'health': {
     const { cmdHealth } = require('./lib/health.cjs');
     cmdHealth(raw);
@@ -101,6 +136,6 @@ switch (command) {
   }
   default:
     error(
-      `Unknown command: ${command || '(none)'}. Available: slug, timestamp, init, state, campaign, commit, deviation, health`
+      `Unknown command: ${command || '(none)'}. Available: slug, timestamp, init, state, campaign, commit, deviation, drift-log, health`
     );
 }
