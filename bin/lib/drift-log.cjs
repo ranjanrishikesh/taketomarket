@@ -115,7 +115,7 @@ function cmdDriftLogAppend(eventType, source, details, affectedCount, raw) {
   }
 
   // Sanitize inputs
-  const safeSource = source.replace(/\|/g, '-').replace(/\n/g, '').substring(0, 80);
+  const safeSource = source.replace(/\|/g, '-').replace(/\n/g, '').replace(/[<>]/g, '').substring(0, 80);
   const safeDetails = sanitizeDetails(details || '');
   const safeAffected = parseInt(affectedCount, 10) || 0;
 
@@ -171,11 +171,11 @@ function cmdDriftLogDeprecation(asset, campaign, oldElement, requiredUpdate, dea
   if (!campaign || !campaign.trim()) error('campaign required for drift-log deprecation');
 
   // Sanitize all inputs
-  const safeAsset = (asset || '').replace(/\|/g, '-').replace(/\n/g, '').substring(0, 80);
-  const safeCampaign = (campaign || '').replace(/\|/g, '-').replace(/\n/g, '').substring(0, 80);
+  const safeAsset = (asset || '').replace(/\|/g, '-').replace(/\n/g, '').replace(/[<>]/g, '').substring(0, 80);
+  const safeCampaign = (campaign || '').replace(/\|/g, '-').replace(/\n/g, '').replace(/[<>]/g, '').substring(0, 80);
   const safeOldElement = sanitizeDetails(oldElement || '');
   const safeUpdate = sanitizeDetails(requiredUpdate || '');
-  const safeDeadline = (deadline || '').replace(/\|/g, '-').replace(/\n/g, '').substring(0, 30);
+  const safeDeadline = (deadline || '').replace(/\|/g, '-').replace(/\n/g, '').replace(/[<>]/g, '').substring(0, 30);
 
   const { driftLogPath } = resolveDriftLogPath();
 
