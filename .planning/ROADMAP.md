@@ -114,12 +114,13 @@ Plans:
   2. POSITIONING.md cannot be edited from within a campaign -- attempts are blocked with an explanation
   3. User runs /ttm-positioning-shift and must provide explicit reasoning, migration plan for existing assets, deprecation schedule, and human approval before any change takes effect
   4. User runs /ttm-positioning-check and receives a report showing percentage on-positioning across recent assets, types of drift detected, and bleeding-into-customer-facing-materials analysis
-**Plans:** 4 plans
+**Plans:** 5 plans
 Plans:
 - [x] 06-01-PLAN.md -- CLI infrastructure: drift-log.cjs module, campaign list subcommand, DRIFT-LOG.md template
 - [x] 06-02-PLAN.md -- /ttm-positioning-check drift audit workflow with GATE-01 reuse and report generation
 - [x] 06-03-PLAN.md -- Read-only POSITIONING.md enforcement in lifecycle workflows, context-loading update, auto-suggest in ship
 - [x] 06-04-PLAN.md -- /ttm-positioning-shift controlled change workflow with approval gate and migration planning
+- [ ] 06-05-PLAN.md -- Gap closure: dedicated Bleeding Analysis section in positioning-check workflow and report
 
 ### Phase 7: State Management and Campaign Operations
 **Goal**: Users can manage campaign state across sessions, recover from interruptions, and get guided navigation through the lifecycle
@@ -181,7 +182,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 3. Campaign Creation and Briefing | 0/3 | Planning complete | - |
 | 4. Content Production and Verification | 0/4 | Planning complete | - |
 | 5. Review, Fix, and Ship | 4/4 | Complete | 2026-04-28 |
-| 6. Positioning Invariant System | 0/4 | Planning complete | - |
+| 6. Positioning Invariant System | 4/5 | Gap closure planned | - |
 | 7. State Management and Campaign Operations | 0/TBD | Not started | - |
 | 8. Core Playbooks | 0/TBD | Not started | - |
 | 9. Measurement, Learning, and Remaining Playbooks | 0/TBD | Not started | - |
