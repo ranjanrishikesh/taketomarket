@@ -337,6 +337,11 @@ Never write to DEVIATIONS.md directly. This ensures consistent formatting across
 
 ### Option 3: Escalate
 
+Record the escalation in campaign state before exiting:
+```bash
+node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign update "${SLUG}" verify.overall_result "escalated"
+```
+
 Display: "Launching /ttm-positioning-shift. Verification paused. After positioning
 is resolved, re-run /ttm-verify ${SLUG}."
 
