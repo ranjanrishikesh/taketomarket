@@ -1,11 +1,11 @@
 /**
- * Campaign -- Per-campaign STATE.md init/read/update operations for ttm-tools.cjs
+ * Campaign -- Per-campaign STATE.md init/read/update/archive operations for ttm-tools.cjs
  *
  * Zero npm dependencies. Uses only Node.js built-ins: path, fs.
  * Depends on: ./core.cjs for output, error, safeReadFile, safeWriteFile,
  *             parseFrontmatter, serializeFrontmatter
  *
- * Exports: cmdCampaignInit, cmdCampaignState, cmdCampaignUpdate, cmdCampaignList
+ * Exports: cmdCampaignInit, cmdCampaignState, cmdCampaignUpdate, cmdCampaignList, cmdCampaignArchive
  */
 
 'use strict';
@@ -217,6 +217,10 @@ const ALLOWED_FIELDS = new Set([
   'fix.run_count', 'fix.last_run', 'fix.overall_result',
   // Phase 5: Ship tracking
   'ship.status', 'ship.shipped_at', 'ship.checklist_result',
+  // Phase 7: Archive tracking
+  'archive.archived_at', 'archive.learnings_extracted',
+  // Phase 7: Cancel tracking
+  'cancel.cancelled_at', 'cancel.reason',
   'current_campaign',
 ]);
 
@@ -335,9 +339,93 @@ function cmdCampaignList(filter, sinceArg, raw) {
   output({ campaigns: filtered, count: filtered.length }, raw, filtered.length + ' campaigns');
 }
 
+/**
+ * Archive a shipped campaign: move directory to ARCHIVE/, update state.
+ * Only campaigns with phase='shipped' can be archived (per D-08).
+ * Uses cpSync + rmSync for cross-filesystem safety (per Pitfall 1).
+ *
+ * @param {string} slug - Campaign slug
+ * @param {boolean} raw - Whether to output raw string
+ */
+function cmdCampaignArchive(slug, raw) {
+  if (!slug || !slug.trim()) error('campaign slug required for archive');
+
+  const safe = slug.toLowerCase().replace(/[^a-z0-9-]/g, '');
+  const projectRoot = path.resolve(process.cwd());
+  const srcDir = path.resolve(projectRoot, '.marketing', 'CAMPAIGNS', safe);
+  const destDir = path.resolve(projectRoot, '.marketing', 'CAMPAIGNS', 'ARCHIVE', safe);
+
+  // Security check: both paths must be inside project root
+  if (!srcDir.startsWith(projectRoot)) {
+    error('source path escapes project directory');
+  }
+  if (!destDir.startsWith(projectRoot)) {
+    error('destination path escapes project directory');
+  }
+
+  // Validate source exists
+  try {
+    if (!fs.statSync(srcDir).isDirectory()) {
+      error(`Campaign not found: ${safe}`);
+    }
+  } catch {
+    error(`Campaign not found: ${safe}`);
+  }
+
+  // Validate destination does NOT exist (irreversibility per D-10)
+  try {
+    fs.statSync(destDir);
+    error(`Archive destination already exists: ${safe}. Cannot overwrite archived campaign.`);
+  } catch {
+    // Expected: destination should not exist
+  }
+
+  // Read and validate STATE.md -- only shipped campaigns can be archived
+  const statePath = path.resolve(srcDir, 'STATE.md');
+  const content = safeReadFile(statePath);
+  if (content === null) {
+    error(`Campaign STATE.md not found for: ${safe}`);
+  }
+  const { frontmatter, body } = parseFrontmatter(content);
+  if (frontmatter.phase !== 'shipped') {
+    error('Only shipped campaigns can be archived. Current phase: ' + frontmatter.phase);
+  }
+
+  // Create ARCHIVE/ directory
+  fs.mkdirSync(path.dirname(destDir), { recursive: true });
+
+  // Copy directory (cross-filesystem safe)
+  fs.cpSync(srcDir, destDir, { recursive: true });
+
+  // Verify destination exists before removing source
+  try {
+    if (!fs.statSync(destDir).isDirectory()) {
+      error('Archive copy verification failed');
+    }
+  } catch {
+    error('Archive copy verification failed');
+  }
+
+  // Remove source
+  fs.rmSync(srcDir, { recursive: true, force: true });
+
+  // Update STATE.md in archived location
+  const timestamp = new Date().toISOString();
+  frontmatter.phase = 'archived';
+  frontmatter['archive.archived_at'] = timestamp;
+  frontmatter['last_updated'] = timestamp;
+
+  const updatedContent = serializeFrontmatter(frontmatter, body);
+  const destStatePath = path.resolve(destDir, 'STATE.md');
+  fs.writeFileSync(destStatePath, updatedContent, 'utf-8');
+
+  output({ archived: true, slug: safe, dest: destDir }, raw, 'archived ' + safe);
+}
+
 module.exports = {
   cmdCampaignInit,
   cmdCampaignState,
   cmdCampaignUpdate,
   cmdCampaignList,
+  cmdCampaignArchive,
 };
