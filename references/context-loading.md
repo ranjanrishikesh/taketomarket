@@ -54,6 +54,7 @@ Tier 2 is the complete file content below `<!-- END_SUMMARY -->`. It includes de
 | /ttm-resume | Yes | None |
 | /ttm-health | Yes | None |
 | /ttm-positioning-check | Yes | POSITIONING.md |
+| /ttm-positioning-shift | Yes | POSITIONING.md |
 | /ttm-brand-refresh | Yes | BRAND.md |
 | /ttm-icp-refresh | Yes | ICP.md |
 | /ttm-competitor-scan | Yes | COMPETITORS.md |
