@@ -98,7 +98,12 @@ Plans:
   2. User runs /ttm-fix and the system performs root cause analysis, generates a fix brief, re-produces in isolated context, and re-verifies
   3. Fix loop is capped at 3 attempts per asset -- after 3 failures, the system escalates to human review
   4. User runs /ttm-ship and receives a launch checklist confirming tracking installed, UTMs confirmed, funnel tested, assets finalized
-**Plans**: TBD
+**Plans:** 4 plans
+Plans:
+- [ ] 05-01-PLAN.md -- Infrastructure: campaign.cjs state fields, SKILL.md updates, reference files and templates
+- [ ] 05-02-PLAN.md -- /ttm-review workflow with structured checklist and per-asset outcomes
+- [ ] 05-03-PLAN.md -- /ttm-fix workflow with root-cause loop, Task() re-production, and 3-attempt cap
+- [ ] 05-04-PLAN.md -- /ttm-ship workflow with dynamic launch checklist and per-asset shipping
 
 ### Phase 6: Positioning Invariant System
 **Goal**: Positioning is enforced as an architectural invariant across every campaign phase, with controlled shift workflows when repositioning is needed
@@ -170,7 +175,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 2. Onboarding Interview | 0/3 | Planning complete | - |
 | 3. Campaign Creation and Briefing | 0/3 | Planning complete | - |
 | 4. Content Production and Verification | 0/4 | Planning complete | - |
-| 5. Review, Fix, and Ship | 0/TBD | Not started | - |
+| 5. Review, Fix, and Ship | 0/4 | Planning complete | - |
 | 6. Positioning Invariant System | 0/TBD | Not started | - |
 | 7. State Management and Campaign Operations | 0/TBD | Not started | - |
 | 8. Core Playbooks | 0/TBD | Not started | - |
