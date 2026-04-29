@@ -82,6 +82,10 @@ Read .marketing/CAMPAIGNS/${SLUG}/STATE.md
 The body contains "Phase:" and "Next step:" lines plus any additional notes,
 blockers, or context left by previous workflow runs.
 
+**Fallback:** If the Read tool returns empty or fails, log "No additional notes
+recorded in STATE.md body" and continue with CLI-parsed state only. Do NOT fail
+the resume workflow due to a missing or empty body section.
+
 ---
 
 ## Step 3: Build Recovery Context
