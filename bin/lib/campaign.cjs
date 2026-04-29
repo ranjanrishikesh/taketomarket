@@ -376,8 +376,12 @@ function cmdCampaignArchive(slug, raw) {
   try {
     fs.statSync(destDir);
     error(`Archive destination already exists: ${safe}. Cannot overwrite archived campaign.`);
-  } catch {
-    // Expected: destination should not exist
+  } catch (e) {
+    if (e.code !== 'ENOENT') {
+      // Re-throw unexpected errors (permissions, etc.) rather than silently proceeding
+      throw e;
+    }
+    // ENOENT is expected -- destination does not exist, safe to proceed
   }
 
   // Read and validate STATE.md -- only shipped campaigns can be archived
