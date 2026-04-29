@@ -407,13 +407,21 @@ function cmdCampaignArchive(slug, raw) {
   // Copy directory (cross-filesystem safe)
   fs.cpSync(srcDir, destDir, { recursive: true });
 
-  // Verify destination exists before removing source
+  // Verify destination exists and STATE.md was copied before removing source
   try {
     if (!fs.statSync(destDir).isDirectory()) {
-      error('Archive copy verification failed');
+      error('Archive copy verification failed: destination is not a directory');
     }
   } catch {
-    error('Archive copy verification failed');
+    error('Archive copy verification failed: destination directory not found');
+  }
+  const destStatePath = path.resolve(destDir, 'STATE.md');
+  try {
+    if (!fs.statSync(destStatePath).isFile()) {
+      error('Archive copy verification failed: STATE.md not found in destination');
+    }
+  } catch {
+    error('Archive copy verification failed: STATE.md not found in destination');
   }
 
   // Remove source
@@ -426,7 +434,6 @@ function cmdCampaignArchive(slug, raw) {
   frontmatter['last_updated'] = timestamp;
 
   const updatedContent = serializeFrontmatter(frontmatter, body);
-  const destStatePath = path.resolve(destDir, 'STATE.md');
   fs.writeFileSync(destStatePath, updatedContent, 'utf-8');
 
   output({ archived: true, slug: safe, dest: destDir }, raw, 'archived ' + safe);
