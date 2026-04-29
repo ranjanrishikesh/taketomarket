@@ -109,10 +109,12 @@ function parseFrontmatter(content) {
   }
   // Normalize line endings before parsing (handles Windows \r\n)
   const normalized = content.replace(/\r\n/g, '\n');
-  const endIndex = normalized.indexOf('\n---', 3);
-  if (endIndex === -1) {
+  // Match the closing --- only when it occupies a full line (followed by \n or end-of-string)
+  const endMatch = normalized.substring(3).search(/\n---(\n|$)/);
+  if (endMatch === -1) {
     return { frontmatter: {}, body: content };
   }
+  const endIndex = endMatch + 3; // adjust for the substring(3) offset
   const fmBlock = normalized.substring(4, endIndex).trim();
   const body = normalized.substring(endIndex + 4).trimStart();
   const frontmatter = {};
