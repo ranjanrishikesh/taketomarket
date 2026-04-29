@@ -151,8 +151,8 @@ Plans:
 **Plans:** 3 plans
 Plans:
 - [x] 08-01-PLAN.md -- Base playbook inheritance contract, verify workflow extension, gate-evaluation discipline gate support
-- [ ] 08-02-PLAN.md -- SEO and AEO discipline playbooks with full gate definitions
-- [ ] 08-03-PLAN.md -- Email, LinkedIn, and Social discipline playbooks with full gate definitions
+- [x] 08-02-PLAN.md -- SEO and AEO discipline playbooks with full gate definitions
+- [x] 08-03-PLAN.md -- Email, LinkedIn, and Social discipline playbooks with full gate definitions
 
 ### Phase 9: Measurement, Learning, and Remaining Playbooks
 **Goal**: Users can close the feedback loop by measuring campaign outcomes, extracting lessons that improve future campaigns, and produce content across all 10 marketing disciplines
