@@ -33,7 +33,7 @@ function resolveCampaignStatePath(slug) {
   const safe = slug.toLowerCase().replace(/[^a-z0-9-]/g, '');
   const statePath = path.resolve(process.cwd(), '.marketing', 'CAMPAIGNS', safe, 'STATE.md');
   const projectRoot = path.resolve(process.cwd());
-  if (!statePath.startsWith(projectRoot)) {
+  if (!statePath.startsWith(projectRoot + path.sep)) {
     error('campaign STATE.md path escapes project directory');
   }
   return statePath;
@@ -59,7 +59,7 @@ function cmdCampaignInit(slug, name, raw) {
 
   // Security check: campaignDir must be inside project root
   const projectRoot = path.resolve(process.cwd());
-  if (!campaignDir.startsWith(projectRoot)) {
+  if (!campaignDir.startsWith(projectRoot + path.sep)) {
     error('campaign directory path escapes project directory');
   }
 
@@ -356,10 +356,10 @@ function cmdCampaignArchive(slug, raw) {
   const destDir = path.resolve(projectRoot, '.marketing', 'CAMPAIGNS', 'ARCHIVE', safe);
 
   // Security check: both paths must be inside project root
-  if (!srcDir.startsWith(projectRoot)) {
+  if (!srcDir.startsWith(projectRoot + path.sep)) {
     error('source path escapes project directory');
   }
-  if (!destDir.startsWith(projectRoot)) {
+  if (!destDir.startsWith(projectRoot + path.sep)) {
     error('destination path escapes project directory');
   }
 
