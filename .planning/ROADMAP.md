@@ -135,8 +135,8 @@ Plans:
 **Plans:** 3 plans
 Plans:
 - [x] 07-01-PLAN.md -- CLI infrastructure: campaign archive, extended health checks, learnings extraction reference
-- [ ] 07-02-PLAN.md -- /ttm-state dashboard, /ttm-health audit, and /ttm-next routing workflows
-- [ ] 07-03-PLAN.md -- /ttm-resume recovery and /ttm-archive finalization workflows
+- [x] 07-02-PLAN.md -- /ttm-state dashboard, /ttm-health audit, and /ttm-next routing workflows
+- [x] 07-03-PLAN.md -- /ttm-resume recovery and /ttm-archive finalization workflows
 
 ### Phase 8: Core Playbooks
 **Goal**: Users can produce and verify content with discipline-specific knowledge and quality gates for the 5 highest-demand marketing channels
