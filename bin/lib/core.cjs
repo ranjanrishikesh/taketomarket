@@ -146,8 +146,9 @@ function serializeFrontmatter(data, body) {
     const strVal = String(value);
     // Quote values that contain special YAML characters
     if (strVal.includes(':') || strVal.includes('#') || strVal.includes('"') ||
+        strVal.includes('\n') || strVal.includes('\r') ||
         strVal.startsWith(' ') || strVal.endsWith(' ')) {
-      lines.push(`${key}: "${strVal.replace(/"/g, '\\"')}"`);
+      lines.push(`${key}: "${strVal.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r')}"`);
     } else {
       lines.push(`${key}: ${strVal}`);
     }
