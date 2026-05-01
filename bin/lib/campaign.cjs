@@ -221,6 +221,12 @@ const ALLOWED_FIELDS = new Set([
   'archive.archived_at', 'archive.learnings_extracted',
   // Phase 7: Cancel tracking
   'cancel.cancelled_at', 'cancel.reason',
+  // Phase 9: Measurement tracking
+  'measure.run_count', 'measure.last_run', 'measure.outcome_result',
+  'measure.outcome_delta', 'measure.analytics_source',
+  // Phase 9: Learn tracking
+  'learn.run_count', 'learn.last_run', 'learn.lessons_extracted',
+  'learn.edits_proposed', 'learn.edits_applied',
   'current_campaign',
 ]);
 
