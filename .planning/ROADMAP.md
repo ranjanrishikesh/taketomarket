@@ -169,9 +169,9 @@ Plans:
 - [x] 09-01-PLAN.md -- Infrastructure: campaign.cjs state fields, measurement templates, meta-gate evaluation reference
 - [x] 09-02-PLAN.md -- YouTube and Paid Ads discipline playbooks
 - [x] 09-03-PLAN.md -- Affiliate, PR/Media, and Events discipline playbooks
-- [ ] 09-04-PLAN.md -- /ttm-measure workflow with 3-pathway analytics input and attribution models
-- [ ] 09-05-PLAN.md -- /ttm-learn workflow with narrative+apply reference edits and root-cause logging
-- [ ] 09-06-PLAN.md -- Meta-gate integration into verify.md as Step 4c
+- [x] 09-04-PLAN.md -- /ttm-measure workflow with 3-pathway analytics input and attribution models
+- [x] 09-05-PLAN.md -- /ttm-learn workflow with narrative+apply reference edits and root-cause logging
+- [x] 09-06-PLAN.md -- Meta-gate integration into verify.md as Step 4c
 
 ### Phase 10: Distribution and Polish
 **Goal**: Users can install takeToMarket via git clone or npm with post-install validation, and access all utility commands for reference file management and discipline-specific audits
@@ -200,5 +200,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 6. Positioning Invariant System | 5/5 | Complete | 2026-04-28 |
 | 7. State Management and Campaign Operations | 3/3 | Complete | 2026-04-29 |
 | 8. Core Playbooks | 3/3 | Complete | 2026-04-29 |
-| 9. Measurement, Learning, and Remaining Playbooks | 0/6 | Planning complete | - |
+| 9. Measurement, Learning, and Remaining Playbooks | 6/6 | Complete | 2026-05-02 |
 | 10. Distribution and Polish | 0/TBD | Not started | - |

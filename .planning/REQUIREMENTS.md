@@ -111,10 +111,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Meta-Gates
 
-- [ ] **META-01**: Portfolio balance gate — checks if campaign leaves system over-indexed on one channel
-- [ ] **META-02**: Calendar collision gate — detects if too many assets shipping in same window for audience absorption
-- [ ] **META-03**: Theme consistency gate — verifies all campaign assets across channels tell the same story
-- [ ] **META-04**: Learning plan gate — checks campaign has a testable hypothesis, not just pure execution
+- [x] **META-01**: Portfolio balance gate — checks if campaign leaves system over-indexed on one channel
+- [x] **META-02**: Calendar collision gate — detects if too many assets shipping in same window for audience absorption
+- [x] **META-03**: Theme consistency gate — verifies all campaign assets across channels tell the same story
+- [x] **META-04**: Learning plan gate — checks campaign has a testable hypothesis, not just pure execution
 
 ### Distribution
 
@@ -254,10 +254,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UTIL-08 | Phase 10 | Pending |
 | UTIL-09 | Phase 10 | Pending |
 | UTIL-10 | Phase 7 | Pending |
-| META-01 | Phase 9 | Pending |
-| META-02 | Phase 9 | Pending |
-| META-03 | Phase 9 | Pending |
-| META-04 | Phase 9 | Pending |
+| META-01 | Phase 9 | Complete |
+| META-02 | Phase 9 | Complete |
+| META-03 | Phase 9 | Complete |
+| META-04 | Phase 9 | Complete |
 | DIST-01 | Phase 10 | Pending |
 | DIST-02 | Phase 10 | Pending |
 | DIST-03 | Phase 10 | Pending |
