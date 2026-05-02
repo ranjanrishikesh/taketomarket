@@ -182,57 +182,20 @@ For each asset in ASSETS:
   Using the effective tiers from Step 4a (defaults if no overrides):
   For each of the 10 gates (in order from base-gates.md):
 
-  1. **GATE-01: Positioning Drift** (Tier 1)
-     - Load: `.marketing/POSITIONING.md` (already loaded in Tier 2)
-     - Evaluate per gate-evaluation.md GATE-01 instructions
-     - Record structured output: gate, tier, result, findings[]
+  Evaluate each gate per gate-evaluation.md instructions. Record structured output per gate: gate, tier, result, findings[].
 
-  2. **GATE-02: Claim Accuracy** (Tier 1)
-     - Load: `.marketing/BRAND.md` (already loaded in Tier 2)
-     - Evaluate per gate-evaluation.md GATE-02 instructions
-     - Record structured output
-
-  3. **GATE-03: Voice Drift** (Tier 2)
-     - Load: `.marketing/BRAND.md` voice archetype and banned words sections
-     - Evaluate per gate-evaluation.md GATE-03 instructions
-     - Record structured output
-
-  4. **GATE-04: Outcome Alignment** (Tier 1)
-     - Load: `.marketing/CAMPAIGNS/${SLUG}/BRIEF.md` outcome metric section
-     - Evaluate per gate-evaluation.md GATE-04 instructions
-     - Record structured output
-
-  5. **GATE-05: Funnel Integrity** (Tier 2)
-     - Load: `.marketing/CAMPAIGNS/${SLUG}/BRIEF.md` funnel/CTA section
-     - Evaluate per gate-evaluation.md GATE-05 instructions
-     - Record structured output
-
-  6. **GATE-06: UTM Hygiene** (Tier 2)
-     - Load: `.marketing/CHANNELS.md` UTM schema section
-     - Evaluate per gate-evaluation.md GATE-06 instructions
-     - Record structured output
-
-  7. **GATE-07: Compliance** (Tier 2)
-     - No specific reference file -- apply industry-standard requirements
-     - Evaluate per gate-evaluation.md GATE-07 instructions
-     - Record structured output
-
-  8. **GATE-08: Competitor Collision** (Tier 2)
-     - Load: `.marketing/COMPETITORS.md` (already loaded in Tier 2)
-     - Evaluate per gate-evaluation.md GATE-08 instructions
-     - Record structured output
-
-  9. **GATE-09: ICP Fit** (Tier 2)
-     - Load: `.marketing/ICP.md` (already loaded in Tier 2)
-     - Evaluate per gate-evaluation.md GATE-09 instructions
-     - Record structured output
-
-  10. **GATE-10: Format Correctness** (Tier 2)
-      - Load: channel-specific playbook if available (`${CLAUDE_PLUGIN_ROOT}/playbooks/<type>.md`),
-        otherwise apply general platform guidelines
-      - Use asset type metadata from MANIFEST.json
-      - Evaluate per gate-evaluation.md GATE-10 instructions
-      - Record structured output
+  | # | Gate | Tier | Reference Data |
+  |---|------|------|----------------|
+  | 1 | GATE-01: Positioning Drift | T1 | POSITIONING.md |
+  | 2 | GATE-02: Claim Accuracy | T1 | BRAND.md |
+  | 3 | GATE-03: Voice Drift | T2 | BRAND.md (voice archetype + banned words) |
+  | 4 | GATE-04: Outcome Alignment | T1 | CAMPAIGNS/${SLUG}/BRIEF.md (outcome metric) |
+  | 5 | GATE-05: Funnel Integrity | T2 | CAMPAIGNS/${SLUG}/BRIEF.md (funnel/CTA) |
+  | 6 | GATE-06: UTM Hygiene | T2 | CHANNELS.md (UTM schema) |
+  | 7 | GATE-07: Compliance | T2 | Industry-standard requirements |
+  | 8 | GATE-08: Competitor Collision | T2 | COMPETITORS.md |
+  | 9 | GATE-09: ICP Fit | T2 | ICP.md |
+  | 10 | GATE-10: Format Correctness | T2 | Playbook or general platform guidelines |
 
   After all 10 gates evaluated for this asset, aggregate:
   - Count total PASS, WARN, FAIL results
@@ -258,6 +221,33 @@ For each asset in ASSETS:
 7. Update the asset's aggregate to include discipline gate outcomes
 
 Same rules as base gates: evaluate each discipline gate SEPARATELY.
+
+---
+
+## Step 4c: Evaluate Meta-Gates
+
+Meta-gates evaluate portfolio-level concerns across all active campaigns. All 4 meta-gates
+are **Tier 2 advisory** -- they produce findings in the report but do NOT block verification.
+
+Load detailed evaluation instructions:
+@${CLAUDE_PLUGIN_ROOT}/references/meta-gate-evaluation.md
+
+1. Fetch all campaign data:
+   ```bash
+   node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign list --raw
+   ```
+2. Include the current campaign (${SLUG}) in the evaluation even if not yet in "active" list
+3. Read `.marketing/CALENDAR.md` for quarterly theme and launch dates
+4. Evaluate each meta-gate per the criteria in meta-gate-evaluation.md:
+   - META-01: Portfolio Balance (funnel stage + channel diversity)
+   - META-02: Calendar Collision (launch date overlap + audience collision)
+   - META-03: Theme Consistency (quarterly theme alignment)
+   - META-04: Learning Plan (measurement plan + testable hypothesis)
+5. Record each result as: { gate_id: "META-XX", tier: 2, result: PASS|WARN|FAIL, findings: [] }
+6. Append meta-gate results to a separate PORTFOLIO_RESULTS array (not mixed with per-asset gates)
+
+Meta-gate results are displayed in a separate section of the verification report, after the
+per-asset summary table.
 
 ---
 
@@ -296,6 +286,19 @@ Discipline gate rows appear after base gates. Show N/A for assets without a matc
 
 Display the summary table to the user.
 
+If PORTFOLIO_RESULTS is not empty, add a portfolio-level section after the per-asset table:
+
+### Portfolio Assessment (Tier 2 Advisory)
+
+| Meta-Gate | Result | Finding |
+|-----------|--------|---------|
+| META-01: Portfolio Balance | [PASS|WARN|FAIL] | [one-line finding] |
+| META-02: Calendar Collision | [PASS|WARN|FAIL] | [one-line finding] |
+| META-03: Theme Consistency | [PASS|WARN|FAIL] | [one-line finding] |
+| META-04: Learning Plan | [PASS|WARN|FAIL] | [one-line finding] |
+
+> These are advisory findings. No action is required to proceed with verification.
+
 Below the summary table, display drill-down detail for every WARN and FAIL finding
 using the structured output format from gate-evaluation.md:
 
@@ -310,6 +313,8 @@ using the structured output format from gate-evaluation.md:
 ---
 
 ## Step 6: Handle Tier 1 Deviations
+
+**Note:** Meta-gates are Tier 2 advisory and are NOT included in Tier 1 deviation handling.
 
 For each Tier 1 gate (base or discipline, including overridden) that returned WARN or FAIL on any asset:
 
@@ -491,6 +496,9 @@ Next: Run /ttm-review ${SLUG} to conduct human review
 - [ ] VERIFICATION.md written with full report (summary table + detail findings)
 - [ ] Campaign STATE.md updated with all gate results and verification metadata
 - [ ] Verify context never accessed produce's internal reasoning (file-based asset loading only)
+- [ ] Meta-gates evaluated against portfolio data (campaign list --raw)
+- [ ] Meta-gate results are Tier 2 advisory (not blocking)
+- [ ] Portfolio Assessment section included in verification report
 </success_criteria>
 
 <output>
