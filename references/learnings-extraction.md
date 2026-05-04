@@ -21,7 +21,7 @@ For each success, identify the specific pattern or approach that drove it (posit
 
 Scan for indicators of failure or friction:
 
-- **Gate failures:** Any gate field with `fail` result -- check VERIFY-REPORT-*.md for the specific failure details and root cause.
+- **Gate failures:** Any gate field with `fail` result -- check VERIFICATION.md for the specific failure details and root cause.
 - **Fix loops:** If fix.run_count > 0, the campaign needed corrections. Check FIX-BRIEF-*.md for what was wrong and what was changed.
 - **Review rejections:** Check REVIEW-FEEDBACK-*.md for revision requests -- extract what the reviewer flagged and why.
 - **Multiple verification runs:** If verify.run_count > 1, initial assets failed quality gates -- determine what was missed.
@@ -86,9 +86,9 @@ Read these files from the campaign directory to extract learnings:
 | `STATE.md` (frontmatter) | Gate results (gate.* fields), fix counts (fix.run_count), phase timestamps, verify run count |
 | `MANIFEST.json` | Per-asset results, review status, asset types produced |
 | `BRIEF.md` | Original strategy, positioning anchor, target ICP, channel mix rationale |
-| `VERIFY-REPORT-*.md` | Gate check details, pass/fail specifics, deviation justifications |
+| `VERIFICATION.md` | Gate check details, pass/fail specifics, deviation justifications |
 | `FIX-BRIEF-*.md` | What failed, root cause analysis, fix applied |
 | `REVIEW-FEEDBACK-*.md` | Human reviewer comments, approval/rejection reasons, revision requests |
 | `ASSETS/` | Final asset content for qualitative assessment of what shipped |
 
-Scan order: STATE.md first (quantitative summary), then VERIFY-REPORT and FIX-BRIEF (failure details), then REVIEW-FEEDBACK (human signal), then BRIEF.md (strategy context).
+Scan order: STATE.md first (quantitative summary), then VERIFICATION.md and FIX-BRIEF (failure details), then REVIEW-FEEDBACK (human signal), then BRIEF.md (strategy context).

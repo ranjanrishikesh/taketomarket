@@ -112,7 +112,7 @@ If SLUG is empty, error: "Usage: /ttm-learn [campaign-slug]. Provide a campaign 
 - `.marketing/CAMPAIGNS/${SLUG}/STATE.md` (frontmatter for gate results, run counts)
 - `.marketing/CAMPAIGNS/${SLUG}/MEASUREMENT.md` (measurement report with outcome data)
 - `.marketing/CAMPAIGNS/${SLUG}/BRIEF.md` (original strategy and targets)
-- `.marketing/CAMPAIGNS/${SLUG}/VERIFY-REPORT-*.md` (gate details if they exist)
+- `.marketing/CAMPAIGNS/${SLUG}/VERIFICATION.md` (gate details if it exists)
 - `.marketing/CAMPAIGNS/${SLUG}/FIX-BRIEF-*.md` (fix details if they exist)
 - `.marketing/CAMPAIGNS/${SLUG}/REVIEW-FEEDBACK-*.md` (reviewer comments if they exist)
 
@@ -182,7 +182,7 @@ pattern drove the win.
 
 **Artifact scan order** (per learnings-extraction.md):
 1. STATE.md gate fields for pass/fail patterns
-2. VERIFY-REPORT files for specific gate failure details
+2. VERIFICATION.md for specific gate failure details
 3. FIX-BRIEF files for root-cause analysis already performed
 4. REVIEW-FEEDBACK files for human reviewer signals
 5. BRIEF.md for strategic context
@@ -350,6 +350,7 @@ Write updated LEARNINGS.md.
 ## Step 8: Update Campaign State
 
 ```bash
+node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign update ${SLUG} phase learned
 node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign update ${SLUG} phase.learned true
 node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign update ${SLUG} learn.run_count ${RUN_COUNT}
 node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign update ${SLUG} learn.last_run ${ISO_DATE}
@@ -392,7 +393,7 @@ Where `${PATTERN_STATUS}` is one of:
 
 <checklist>
 - [ ] Campaign is in measured or learned phase
-- [ ] Campaign artifacts scanned in correct order (STATE > VERIFY-REPORT > FIX-BRIEF > REVIEW-FEEDBACK > BRIEF)
+- [ ] Campaign artifacts scanned in correct order (STATE > VERIFICATION > FIX-BRIEF > REVIEW-FEEDBACK > BRIEF)
 - [ ] Outcome deltas calculated for all metrics
 - [ ] Each lesson classified with root-cause taxonomy category
 - [ ] Reference file edits proposed as narratives with per-edit human approval
