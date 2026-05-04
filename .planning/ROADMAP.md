@@ -185,10 +185,13 @@ Plans:
   5. User can run /ttm-repurpose to fan out a long-form asset into derivative assets across channels with full brief-produce-verify per derivative
 **Plans:** 5 plans
 Plans:
+**Wave 1**
 - [ ] 10-01-PLAN.md -- npm installer (install.js) with runtime detection and post-install validation
 - [ ] 10-02-PLAN.md -- Reference management workflows (brand-refresh, icp-refresh, competitor-scan)
 - [ ] 10-03-PLAN.md -- Discipline audit workflows (seo-audit, aeo-check, keyword-map, email-preflight, affiliate-kit)
 - [ ] 10-04-PLAN.md -- Repurpose workflow with Task() orchestration and MANIFEST extension
+
+**Wave 2** *(blocked on Wave 1 completion)*
 - [ ] 10-05-PLAN.md -- README.md comprehensive documentation
 
 ## Progress

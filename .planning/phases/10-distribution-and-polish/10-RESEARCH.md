@@ -502,22 +502,16 @@ Include specific recommendations for WARN/FAIL items.
 | A3 | npx runs install.js with __dirname pointing to package root | Common Pitfalls | File copy would fail; need to verify npm package layout |
 | A4 | Claude Code on Windows uses %USERPROFILE%/.claude/ not %APPDATA% | Pitfall 5 | Windows installs would fail |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Exact Codex plugin installation path**
-   - What we know: Claude Code uses ~/.claude/ directory structure
-   - What's unclear: Whether Codex uses ~/.codex/ or a different convention
-   - Recommendation: Default to ~/.codex/plugins/ based on CLAUDE.md decision D-02; document as configurable via --runtime flag
+   - RESOLVED: Default to `~/.codex/plugins/` based on CLAUDE.md decision D-02. The `--runtime codex` flag uses this path. Configurable via explicit flag override.
 
 2. **MANIFEST.json schema for derivative tracking (D-14)**
-   - What we know: MANIFEST.json already tracks assets with type, channel, role fields
-   - What's unclear: Exact schema for `source_asset` cross-reference field
-   - Recommendation: Add `source_asset_id` field (nullable) to existing asset entries; repurpose derivatives reference their source
+   - RESOLVED: Add `source_asset_id` field (nullable string) to existing asset entries in MANIFEST.json. Repurpose derivatives reference their source asset's ID. Schema: `{ "source_asset_id": "asset-slug-or-null" }`.
 
 3. **Whether to output audit reports to file or stdout**
-   - What we know: Context says "output a report" but format is discretionary
-   - What's unclear: User expectation for persistence of audit results
-   - Recommendation: Output inline (stdout-style in conversation) by default. Offer to save to .marketing/AUDITS/ if user wants persistence. keyword-map should write to file since it's reference data.
+   - RESOLVED: Output inline (conversation text) by default. keyword-map writes to `.marketing/KEYWORD-MAP.md` since it's reference data. Other audits are ephemeral analysis — no file persistence for MVP.
 
 ## Validation Architecture
 
