@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: milestone_complete
+status: completed
 stopped_at: All plans complete - v1.0 milestone delivered
-last_updated: "2026-05-04T12:12:11.382Z"
-last_activity: 2026-05-04 -- Phase 11 execution started
+last_updated: "2026-05-04T13:04:07.649Z"
+last_activity: 2026-05-04
 progress:
   total_phases: 11
   completed_phases: 11
   total_plans: 42
-  completed_plans: 39
+  completed_plans: 42
   percent: 100
 ---
 
@@ -115,7 +115,12 @@ Items acknowledged and carried forward from previous milestone close:
 
 | Category | Item | Status | Deferred At |
 |----------|------|--------|-------------|
-| *(none)* | | | |
+| uat_gap | Phase 01: 01-HUMAN-UAT.md (1 pending scenario) | partial | 2026-05-04 |
+| uat_gap | Phase 06: 06-HUMAN-UAT.md | partial | 2026-05-04 |
+| verification | Phase 01: 01-VERIFICATION.md | human_needed | 2026-05-04 |
+| verification | Phase 02: 02-VERIFICATION.md | human_needed | 2026-05-04 |
+| verification | Phase 07: 07-VERIFICATION.md | human_needed | 2026-05-04 |
+| verification | Phase 09: 09-VERIFICATION.md | human_needed | 2026-05-04 |
 
 ## Session Continuity
 

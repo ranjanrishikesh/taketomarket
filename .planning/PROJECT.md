@@ -8,81 +8,59 @@ An open-source Claude Code / Codex skill that brings GSD-style spec-driven devel
 
 Every marketing asset ships with a verifiable outcome metric and passes through a positioning-invariant quality gate wall — no asset ships without both, ever.
 
+## Current State
+
+**v1.0 MVP shipped 2026-05-04** — 11 phases, 42 plans, 314 commits, 17,470 LOC across 125 files in 14 days.
+
+Delivered: Full 9-phase campaign lifecycle (init→learn), 27 `/ttm-*` commands, 10-gate quality wall, 10 discipline playbooks (SEO, AEO, Email, LinkedIn, Social, YouTube, Paid Ads, Affiliate, PR/Media, Events), positioning-as-invariant enforcement, npm + git clone distribution, interview-driven onboarding, compound learnings system.
+
 ## Requirements
 
-### Validated
+### Validated — v1.0
 
-- [x] Plugin scaffold with `.claude-plugin/plugin.json` manifest and 27 `/ttm-*` SKILL.md stubs — Validated in Phase 1: Plugin Scaffold and Tooling
-- [x] `bin/ttm-tools.cjs` CLI utility for deterministic operations (slug, timestamp, state, health, commit) — Validated in Phase 1: Plugin Scaffold and Tooling
-- [x] Reference file templates with two-tier context loading (`_SUMMARY`/`END_SUMMARY`) — Validated in Phase 1: Plugin Scaffold and Tooling
-- [x] Dual-runtime support via CLAUDE.md and AGENTS.md templates with identical positioning-as-invariant rules — Validated in Phase 1: Plugin Scaffold and Tooling
-- [x] Interview-driven onboarding (`/ttm-init`) with 6-section guided interview, specificity validation, and generation of all 9 reference files — Validated in Phase 2: Onboarding Interview
-- [x] Vague/generic output rejection with banned phrase detection and re-prompt logic — Validated in Phase 2: Onboarding Interview
-- [x] Campaign creation (`/ttm-new-campaign`) with full scaffold (STATE.md, BRIEF.md, RESEARCH.md, ASSETS/) — Validated in Phase 3: Campaign Creation and Briefing
-- [x] Market research (`/ttm-research`) with web search + manual paste hybrid and confidence scores — Validated in Phase 3: Campaign Creation and Briefing
-- [x] Brief generation (`/ttm-brief`) with outcome metric enforcement and positioning check gate — Validated in Phase 3: Campaign Creation and Briefing
-- [x] Content production (`/ttm-produce`) with hero-first wave-parallel execution in fresh contexts — Validated in Phase 4: Content Production and Verification
-- [x] 10-gate quality wall (`/ttm-verify`) with summary + line-level feedback, soft fail with override — Validated in Phase 4: Content Production and Verification
-- [x] 3-option deviation handling (Correct/Accept+log/Escalate) with full audit trail — Validated in Phase 4: Content Production and Verification
-- [x] Context isolation between Produce and Verify via `context: fork` — Validated in Phase 4: Content Production and Verification
-- [x] Human review (`/ttm-review`) with hero-first structured checklist, 4 mandatory questions, Approve/Revise/Reject per asset — Validated in Phase 5: Review, Fix, and Ship
-- [x] Root-cause fix loop (`/ttm-fix`) with AI diagnosis + user confirm, Task() re-production, 10-gate re-verification, 3-attempt cap — Validated in Phase 5: Review, Fix, and Ship
-- [x] Launch checklist (`/ttm-ship`) with dynamic per-campaign checklist, AI auto-checks + human confirms, per-asset ship status — Validated in Phase 5: Review, Fix, and Ship
-- [x] POSITIONING.md loaded into every phase context with two-tier strategy (compact summary universal, full in produce/verify/positioning-check) — Validated in Phase 6: Positioning Invariant System
-- [x] Read-only POSITIONING.md enforcement via state-based gate (any active campaign locks positioning) with `<constraints>` blocks in all 6 lifecycle workflows — Validated in Phase 6: Positioning Invariant System
-- [x] `/ttm-positioning-shift` controlled repositioning with reasoning, migration plan, deprecation schedule, mandatory human approval gate — Validated in Phase 6: Positioning Invariant System
-- [x] `/ttm-positioning-check` drift audit with time-window sampling, GATE-01 reuse, bleeding analysis, trend tracking, DRIFT-LOG.md logging — Validated in Phase 6: Positioning Invariant System
-- [x] Dual positioning drift log: POSITIONING.md History table (shifts only) + .marketing/DRIFT-LOG.md (all events including deviations cross-ref) — Validated in Phase 6: Positioning Invariant System
-- [x] `/ttm-state` campaign dashboard with all-campaigns view (active + archived), single-campaign detail, decisions/blockers/experiments — Validated in Phase 7: State Management and Campaign Operations
-- [x] `/ttm-resume` session recovery with auto-load context, interrupted fix/verify loop detection, and next-command guidance — Validated in Phase 7: State Management and Campaign Operations
-- [x] `/ttm-archive` campaign finalization with directory move to ARCHIVE/, structured learnings extraction to LEARNINGS.md, shipped-only guard — Validated in Phase 7: State Management and Campaign Operations
-- [x] `/ttm-health` full audit with staleness detection, campaign velocity warnings, state consistency, DRIFT-LOG.md integrity, gate consistency — Validated in Phase 7: State Management and Campaign Operations
-- [x] `/ttm-next` multi-campaign portfolio routing with priority algorithm (pending reviews > fix loops > earlier phases > recency) — Validated in Phase 7: State Management and Campaign Operations
-- [x] Campaign state persistence across sessions via CAMPAIGNS/<slug>/ directory files — Validated in Phase 7: State Management and Campaign Operations
-- [x] Base playbook inheritance model with additive gates + weight override (discipline can promote base gates to Tier 1) — Validated in Phase 8: Core Playbooks
-- [x] SEO playbook with 7 discipline gates (title/H1, search intent, schema, internal links, thin content, meta description, Core Web Vitals) — Validated in Phase 8: Core Playbooks
-- [x] AEO playbook with 5 discipline gates (quote-worthy sentences, FAQ/HowTo schema, author markup, fact consistency, answer format) — Validated in Phase 8: Core Playbooks
-- [x] Email playbook with 7 discipline gates including DNS-based SPF/DKIM/DMARC deliverability checks — Validated in Phase 8: Core Playbooks
-- [x] LinkedIn playbook with 4 discipline gates (opener hooks, native content, professional tone, engagement path) — Validated in Phase 8: Core Playbooks
-- [x] Social playbook with 4 discipline gates and X/Twitter, Instagram, Facebook platform-specific subsections — Validated in Phase 8: Core Playbooks
-- [x] `/ttm-measure` with 3-pathway analytics input (MCP tool detection + CSV/MD paste + batch structured questions) and outcome-first attribution (time-decay default, last-touch/linear on request) — Validated in Phase 9: Measurement, Learning, and Remaining Playbooks
-- [x] `/ttm-learn` with narrative+apply reference file edits, per-edit human approval gate, root-cause taxonomy logging to LEARNINGS.md — Validated in Phase 9: Measurement, Learning, and Remaining Playbooks
-- [x] LEARNINGS.md compound learning with root-cause taxonomy (7 categories), pattern extraction (winning hooks/angles/formats), loaded into Brief phase — Validated in Phase 9: Measurement, Learning, and Remaining Playbooks
-- [x] YouTube playbook with 6 discipline gates (thumbnail, hook-in-5s, description SEO, timestamps, end-screen, title+thumbnail fit) — Validated in Phase 9: Measurement, Learning, and Remaining Playbooks
-- [x] Paid Ads playbook with 5 discipline gates (message match, creative variety, audience fit, bid alignment, landing page) — Validated in Phase 9: Measurement, Learning, and Remaining Playbooks
-- [x] Affiliate playbook with 5 discipline gates (kit completeness, attribution logic, commission sanity, partner fit, disclosure) — Validated in Phase 9: Measurement, Learning, and Remaining Playbooks
-- [x] PR/Media playbook with 5 discipline gates (media list, pitch angle, embargo, earned measurement, follow-up) — Validated in Phase 9: Measurement, Learning, and Remaining Playbooks
-- [x] Events playbook with 5 discipline gates (pre/during/post phases, funnel, community, sponsorship ROI, content capture) — Validated in Phase 9: Measurement, Learning, and Remaining Playbooks
-- [x] Meta-gates (portfolio balance, calendar collision, theme consistency, learning plan) integrated into verify as Tier 2 advisory — Validated in Phase 9: Measurement, Learning, and Remaining Playbooks
+- [x] Plugin scaffold with `.claude-plugin/plugin.json` manifest and 27 `/ttm-*` SKILL.md stubs — v1.0
+- [x] `bin/ttm-tools.cjs` CLI utility for deterministic operations — v1.0
+- [x] Reference file templates with two-tier context loading — v1.0
+- [x] Dual-runtime support via CLAUDE.md and AGENTS.md — v1.0
+- [x] Interview-driven onboarding (`/ttm-init`) with 6-section guided interview — v1.0
+- [x] Vague/generic output rejection with banned phrase detection — v1.0
+- [x] Campaign creation (`/ttm-new-campaign`) with full scaffold — v1.0
+- [x] Market research (`/ttm-research`) with web search + manual paste hybrid — v1.0
+- [x] Brief generation (`/ttm-brief`) with outcome metric enforcement — v1.0
+- [x] Content production (`/ttm-produce`) with hero-first wave-parallel execution — v1.0
+- [x] 10-gate quality wall (`/ttm-verify`) with structured deviation handling — v1.0
+- [x] 3-option deviation handling (Correct/Accept+log/Escalate) — v1.0
+- [x] Context isolation between Produce and Verify via `context: fork` — v1.0
+- [x] Human review (`/ttm-review`) with hero-first structured checklist — v1.0
+- [x] Root-cause fix loop (`/ttm-fix`) with 3-attempt cap — v1.0
+- [x] Launch checklist (`/ttm-ship`) with dynamic per-campaign checklist — v1.0
+- [x] POSITIONING.md loaded into every phase context with two-tier strategy — v1.0
+- [x] Read-only POSITIONING.md enforcement via state-based gate — v1.0
+- [x] `/ttm-positioning-shift` controlled repositioning with human approval — v1.0
+- [x] `/ttm-positioning-check` drift audit with time-window sampling — v1.0
+- [x] Dual positioning drift log (POSITIONING.md History + DRIFT-LOG.md) — v1.0
+- [x] `/ttm-state` campaign dashboard with all-campaigns view — v1.0
+- [x] `/ttm-resume` session recovery with auto-load context — v1.0
+- [x] `/ttm-archive` campaign finalization with learnings extraction — v1.0
+- [x] `/ttm-health` full audit with staleness and consistency checks — v1.0
+- [x] `/ttm-next` multi-campaign portfolio routing — v1.0
+- [x] Campaign state persistence across sessions — v1.0
+- [x] Base playbook inheritance model with additive gates — v1.0
+- [x] SEO, AEO, Email, LinkedIn, Social playbooks with discipline gates — v1.0
+- [x] YouTube, Paid Ads, Affiliate, PR/Media, Events playbooks — v1.0
+- [x] `/ttm-measure` with 3-pathway analytics input and outcome-first attribution — v1.0
+- [x] `/ttm-learn` with narrative+apply reference file edits — v1.0
+- [x] LEARNINGS.md compound learning with root-cause taxonomy — v1.0
+- [x] Meta-gates (portfolio balance, calendar collision, theme consistency, learning plan) — v1.0
+- [x] npm installer with runtime detection and post-install validation — v1.0
+- [x] Reference management commands (brand-refresh, icp-refresh, competitor-scan) — v1.0
+- [x] Discipline audit commands (seo-audit, aeo-check, keyword-map, email-preflight, affiliate-kit) — v1.0
+- [x] Content repurposing pipeline (`/ttm-repurpose`) — v1.0
+- [x] README.md with quickstart, 27-command reference, architecture guide — v1.0
 
 ### Active
 
-- [ ] Interview-driven onboarding (`/ttm-init`) that generates all reference files (POSITIONING.md, BRAND.md, ICP.md, CHANNELS.md, STATE.md, CALENDAR.md, COMPETITORS.md, METRICS.md, LEARNINGS.md) from structured questioning
-- [ ] 9-phase campaign lifecycle: Discover → Brief → Produce → Verify → Review → Fix → Ship → Measure → Learn
-- [ ] Slash commands for each phase (`/ttm-new-campaign`, `/ttm-research`, `/ttm-brief`, `/ttm-produce`, `/ttm-verify`, `/ttm-review`, `/ttm-fix`, `/ttm-ship`, `/ttm-measure`, `/ttm-learn`)
-- [ ] Positioning-as-invariant enforcement — `POSITIONING.md` loaded into every phase, drift detected and flagged
-- [ ] Positioning shift workflow (`/ttm-positioning-shift`) requiring explicit reasoning, migration plan, and human approval
-- [ ] Outcome-over-output enforcement — every asset requires both output metric and outcome metric before shipping
-- [ ] Quality gate wall in Verify phase with pass/fail per gate per asset
-- [ ] Base quality gates: positioning drift, claim accuracy, voice drift, outcome alignment, funnel integrity, UTM hygiene, compliance, competitor collision, ICP fit, format correctness
-- [ ] Fix-as-you-go: root cause → fix brief → re-produce → re-verify (capped at 3 attempts)
-- [ ] Discipline-specific playbooks (SEO, AEO, YouTube, LinkedIn, Social, Email, Paid Ads, Affiliate, PR/Media, Events)
-- [ ] Discipline-specific quality gates per playbook
-- [ ] Campaign state persistence in `CAMPAIGNS/<slug>/` directories across sessions
-- [ ] Reference file management commands (`/ttm-positioning-check`, `/ttm-brand-refresh`, `/ttm-icp-refresh`, `/ttm-competitor-scan`)
-- [ ] Discipline quick-action commands (`/ttm-seo-audit`, `/ttm-aeo-check`, `/ttm-keyword-map`, `/ttm-email-preflight`, `/ttm-affiliate-kit`, `/ttm-repurpose`)
-- [ ] State and recovery commands (`/ttm-state`, `/ttm-resume`, `/ttm-archive`, `/ttm-health`)
-- [ ] Manual measurement phase — user pastes analytics data, takeToMarket analyzes against outcome metrics with 3 attribution models
-- [ ] Learn phase that extracts lessons and proposes edits to reference files with human approval gates
-- [ ] `LEARNINGS.md` root-cause taxonomy and pattern extraction
-- [ ] Meta-gates: portfolio balance, calendar collision, theme consistency, learning plan
-- [ ] Monthly positioning audit sampling recent assets
-- [ ] GSD-inspired prompt engineering — wave-parallel production in fresh contexts, atomic tasks, state persistence
-- [ ] Dual distribution: git clone (copy skill folder) + npm package
-- [ ] Solo-user workflow (no concurrency handling)
-- [ ] Content repurposing pipeline (`/ttm-repurpose`) — long-form → derivatives across channels
-- [ ] `.marketing/` directory structure mirroring GSD's `.planning/`
-- [ ] Deviation reports with 3 options: Correct, Accept+log, Escalate to positioning shift
+(None — fresh requirements defined in next milestone via `/gsd-new-milestone`)
 
 ### Out of Scope
 
@@ -91,54 +69,43 @@ Every marketing asset ships with a verifiable outcome metric and passes through 
 - Automated competitor scan (weekly cron) — V2
 - AEO citation tracker (crawl queries across AI engines) — V2
 - Design tool integration for final creative assets — V2
-- Scheduling/publishing integration (Buffer, Notion, Ghost, etc.) — takeToMarket briefs + produces + verifies, hands off to existing tools
+- Scheduling/publishing integration (Buffer, Notion, Ghost, etc.) — hands off to existing tools
 - Analytics dashboard — writes reports, does not replace analytics stack
 - Real-time collaboration features — solo-first design
 
 ## Context
 
-- **Architecture model:** This is a Claude Code / Codex skill, not a standalone app. It's a collection of skill files, templates, workflows, and prompt-engineered instructions that install into the user's AI coding assistant environment.
-- **Inspiration:** GSD (Get Shit Done) by TÂCHES / Lex Christopherson — 31K+ stars. takeToMarket ports GSD's meta-prompting architecture (phases, state files, slash commands, wave-parallel execution, quality gates) from software development to marketing.
-- **Key design decisions from idea.md:** Positioning is the invariant (read-only during campaigns). Outcome > output (measure phase reports outcome first). Fix ≠ retry (root cause → specific rewrite brief → isolated context). Failed-fix loops capped at 3.
-- **Distribution:** Both git clone (users copy skill folder into `.claude/skills/` or `.codex/`) and npm package for convenience.
-- **Onboarding:** Interview-driven `/ttm-init` that asks structured questions and generates reference files, rather than requiring users to fill templates manually.
+- **Architecture model:** Claude Code / Codex skill — collection of SKILL.md files, workflows, templates, references, playbooks, gates, and a CJS CLI utility.
+- **Codebase:** 17,470 LOC (Markdown workflows + CJS utilities). 125 files. Zero npm runtime dependencies.
+- **Inspiration:** GSD (Get Shit Done) — 31K+ stars. Ports GSD's meta-prompting architecture to marketing.
+- **Distribution:** npm (`npx taketomarket`) + git clone. Plugin format with `.claude-plugin/plugin.json`.
+- **Known tech debt:** Campaign name YAML injection (CR-01 fixed in Phase 11), stale install cleanup (CR-02 fixed).
 
 ## Constraints
 
-- **Platform**: Must work as a Claude Code skill AND Codex skill — skill format must be compatible with both runtimes
-- **Context window**: Production in Produce phase uses fresh 200K-token contexts per wave, loaded with brief + positioning + brand + ICP + playbook
-- **No external dependencies for MVP**: The skill itself should not require external services — analytics data is pasted in manually
-- **State persistence**: All state lives in `.marketing/` directory files — no database, no external storage
+- **Platform**: Must work as Claude Code skill AND Codex skill
+- **Context window**: Production uses fresh 200K-token contexts per wave
+- **No external dependencies for MVP**: Analytics data pasted manually
+- **State persistence**: All state in `.marketing/` directory files
 
 ## Key Decisions
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Name: takeToMarket | User preference — clear, action-oriented, descriptive | — Pending |
-| Interview-driven onboarding over templates | Lower barrier to entry for first-time users; templates available for power users | — Pending |
-| Solo-first, team later | Reduces complexity for MVP; team features (locks, concurrent edits) deferred to V2 | — Pending |
-| Manual measurement before MCP | Avoids external dependency in MVP; users paste data from their existing analytics | — Pending |
-| Dual distribution (git + npm) | Git clone for hackers, npm for convenience — reaches both audiences | — Pending |
-| GSD-inspired prompt engineering | Proven architecture at 31K+ stars; wave-parallel execution, atomic tasks, state persistence | — Pending |
-| Positioning as invariant | #1 failure mode in real marketing teams is incremental dilution; this is the core design principle | — Pending |
-| Command prefix: `/ttm-*` | TTM = takeToMarket; short, memorable, consistent with GSD's `/gsd-*` pattern | — Pending |
+| Name: takeToMarket | User preference — clear, action-oriented | Validated v1.0 |
+| Interview-driven onboarding over templates | Lower barrier to entry | Validated v1.0 |
+| Solo-first, team later | Reduces MVP complexity | Validated v1.0 |
+| Manual measurement before MCP | Avoids external dependency | Validated v1.0 |
+| Dual distribution (git + npm) | Reaches both audiences | Validated v1.0 |
+| GSD-inspired prompt engineering | Proven architecture at scale | Validated v1.0 |
+| Positioning as invariant | #1 failure mode prevention | Validated v1.0 |
+| Command prefix: `/ttm-*` | Short, memorable, consistent | Validated v1.0 |
+| serializeFrontmatter for all YAML | Prevents injection (CR-01) | Validated v1.0 |
+| rmSync before install overwrite | Prevents stale artifacts (CR-02) | Validated v1.0 |
 
 ## Evolution
 
 This document evolves at phase transitions and milestone boundaries.
 
-**After each phase transition** (via `/gsd-transition`):
-1. Requirements invalidated? → Move to Out of Scope with reason
-2. Requirements validated? → Move to Validated with phase reference
-3. New requirements emerged? → Add to Active
-4. Decisions to log? → Add to Key Decisions
-5. "What This Is" still accurate? → Update if drifted
-
-**After each milestone** (via `/gsd-complete-milestone`):
-1. Full review of all sections
-2. Core Value check — still the right priority?
-3. Audit Out of Scope — reasons still valid?
-4. Update Context with current state
-
 ---
-*Last updated: 2026-05-04 after Phase 11 (Gap Closure) completion — all v1.0 milestone phases complete*
+*Last updated: 2026-05-04 after v1.0 MVP milestone completion*
