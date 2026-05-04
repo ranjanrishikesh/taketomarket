@@ -183,13 +183,13 @@ Plans:
   3. User can run /ttm-brand-refresh, /ttm-icp-refresh, and /ttm-competitor-scan to update reference files with new data
   4. User can run discipline-specific utility commands (/ttm-seo-audit, /ttm-aeo-check, /ttm-keyword-map, /ttm-email-preflight, /ttm-affiliate-kit)
   5. User can run /ttm-repurpose to fan out a long-form asset into derivative assets across channels with full brief-produce-verify per derivative
-**Plans:** 2/5 plans executed
+**Plans:** 4/5 plans executed
 Plans:
 **Wave 1**
 - [x] 10-01-PLAN.md -- npm installer (install.js) with runtime detection and post-install validation
 - [x] 10-02-PLAN.md -- Reference management workflows (brand-refresh, icp-refresh, competitor-scan)
-- [ ] 10-03-PLAN.md -- Discipline audit workflows (seo-audit, aeo-check, keyword-map, email-preflight, affiliate-kit)
-- [ ] 10-04-PLAN.md -- Repurpose workflow with Task() orchestration and MANIFEST extension
+- [x] 10-03-PLAN.md -- Discipline audit workflows (seo-audit, aeo-check, keyword-map, email-preflight, affiliate-kit)
+- [x] 10-04-PLAN.md -- Repurpose workflow with Task() orchestration and MANIFEST extension
 
 **Wave 2** *(blocked on Wave 1 completion)*
 - [ ] 10-05-PLAN.md -- README.md comprehensive documentation
@@ -210,4 +210,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 7. State Management and Campaign Operations | 3/3 | Complete | 2026-04-29 |
 | 8. Core Playbooks | 3/3 | Complete | 2026-04-29 |
 | 9. Measurement, Learning, and Remaining Playbooks | 6/6 | Complete | 2026-05-02 |
-| 10. Distribution and Polish | 2/5 | In Progress|  |
+| 10. Distribution and Polish | 4/5 | In Progress|  |

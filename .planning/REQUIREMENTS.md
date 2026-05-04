@@ -106,7 +106,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **UTIL-06**: `/ttm-keyword-map` generates keyword cluster map with intent tags
 - [ ] **UTIL-07**: `/ttm-email-preflight` deliverability + dark-mode + spam-trigger scan
 - [ ] **UTIL-08**: `/ttm-affiliate-kit` generates creative kit for affiliate partners
-- [ ] **UTIL-09**: `/ttm-repurpose <source-asset>` fans out long-form → derivative assets across channels with full brief → produce → verify per derivative
+- [x] **UTIL-09**: `/ttm-repurpose <source-asset>` fans out long-form → derivative assets across channels with full brief → produce → verify per derivative
 - [ ] **UTIL-10**: `/ttm-next` guides user to the right next command based on current campaign state
 
 ### Meta-Gates
@@ -252,7 +252,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UTIL-06 | Phase 10 | Pending |
 | UTIL-07 | Phase 10 | Pending |
 | UTIL-08 | Phase 10 | Pending |
-| UTIL-09 | Phase 10 | Pending |
+| UTIL-09 | Phase 10 | Complete |
 | UTIL-10 | Phase 7 | Pending |
 | META-01 | Phase 9 | Complete |
 | META-02 | Phase 9 | Complete |
