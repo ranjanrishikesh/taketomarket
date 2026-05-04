@@ -186,7 +186,7 @@ Plans:
 **Plans:** 5 plans
 Plans:
 **Wave 1**
-- [ ] 10-01-PLAN.md -- npm installer (install.js) with runtime detection and post-install validation
+- [x] 10-01-PLAN.md -- npm installer (install.js) with runtime detection and post-install validation
 - [ ] 10-02-PLAN.md -- Reference management workflows (brand-refresh, icp-refresh, competitor-scan)
 - [ ] 10-03-PLAN.md -- Discipline audit workflows (seo-audit, aeo-check, keyword-map, email-preflight, affiliate-kit)
 - [ ] 10-04-PLAN.md -- Repurpose workflow with Task() orchestration and MANIFEST extension
@@ -210,4 +210,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 7. State Management and Campaign Operations | 3/3 | Complete | 2026-04-29 |
 | 8. Core Playbooks | 3/3 | Complete | 2026-04-29 |
 | 9. Measurement, Learning, and Remaining Playbooks | 6/6 | Complete | 2026-05-02 |
-| 10. Distribution and Polish | 0/5 | Planning complete | - |
+| 10. Distribution and Polish | 1/5 | Executing | - |

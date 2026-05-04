@@ -118,9 +118,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Distribution
 
-- [ ] **DIST-01**: Git clone installation — user copies skill folder into `.claude/skills/` or `.codex/`, works immediately
-- [ ] **DIST-02**: npm package — `npx taketomarket` installs with runtime detection (Claude Code vs Codex)
-- [ ] **DIST-03**: Post-install validation that runs `/ttm-health` to confirm correct setup
+- [x] **DIST-01**: Git clone installation — user copies skill folder into `.claude/skills/` or `.codex/`, works immediately
+- [x] **DIST-02**: npm package — `npx taketomarket` installs with runtime detection (Claude Code vs Codex)
+- [x] **DIST-03**: Post-install validation that runs `/ttm-health` to confirm correct setup
 - [ ] **DIST-04**: README.md with installation, quickstart, and reference documentation
 
 ### Learning System
@@ -258,9 +258,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | META-02 | Phase 9 | Complete |
 | META-03 | Phase 9 | Complete |
 | META-04 | Phase 9 | Complete |
-| DIST-01 | Phase 10 | Pending |
-| DIST-02 | Phase 10 | Pending |
-| DIST-03 | Phase 10 | Pending |
+| DIST-01 | Phase 10 | Complete |
+| DIST-02 | Phase 10 | Complete |
+| DIST-03 | Phase 10 | Complete |
 | DIST-04 | Phase 10 | Pending |
 | LRNG-01 | Phase 9 | Pending |
 | LRNG-02 | Phase 9 | Pending |

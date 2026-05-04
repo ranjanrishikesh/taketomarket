@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 10 context gathered
-last_updated: "2026-05-04T09:31:53.922Z"
-last_activity: 2026-05-04 -- Phase 10 planning complete
+stopped_at: Completed 10-01 npm installer plan
+last_updated: "2026-05-04T09:44:18Z"
+last_activity: 2026-05-04 -- Completed 10-01 npm installer
 progress:
   total_phases: 10
   completed_phases: 9
   total_plans: 39
-  completed_plans: 34
-  percent: 87
+  completed_plans: 35
+  percent: 90
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-21)
 
 **Core value:** Every marketing asset ships with a verifiable outcome metric and passes through a positioning-invariant quality gate wall -- no asset ships without both, ever.
-**Current focus:** Phase 09 — measurement-learning-and-remaining-playbooks
+**Current focus:** Phase 10 — distribution-and-polish
 
 ## Current Position
 
-Phase: 10
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-05-04 -- Phase 10 planning complete
+Phase: 10 (distribution-and-polish) — EXECUTING
+Plan: 2 of 5
+Status: Executing Phase 10
+Last activity: 2026-05-04 -- Completed 10-01 npm installer
 
 Progress: [██████████] 100%
 
@@ -36,7 +36,7 @@ Progress: [██████████] 100%
 
 **Velocity:**
 
-- Total plans completed: 23
+- Total plans completed: 24
 - Average duration: -
 - Total execution time: 0 hours
 
@@ -50,6 +50,7 @@ Progress: [██████████] 100%
 | 04 | 4 | - | - |
 | 05 | 4 | - | - |
 | 09 | 6 | - | - |
+| 10 | 1 | 2min | 2min |
 
 **Recent Trend:**
 
@@ -84,6 +85,9 @@ Recent decisions affecting current work:
 - [05-04]: Human confirmations grouped by section to reduce interaction fatigue
 - [09-06]: Compressed 10-gate evaluation list into table format to keep verify.md under 520 lines after meta-gate additions
 - [09-06]: Meta-gate results stored in separate PORTFOLIO_RESULTS array, not mixed with per-asset gate results
+- [10-01]: Path traversal protection via path.resolve + homedir prefix check in install.js
+- [10-01]: Symlinks skipped with warning during copy (threat T-10-02 mitigation)
+- [10-01]: --dry-run validates source package completeness without writing files
 
 ### Pending Todos
 
@@ -92,7 +96,7 @@ None yet.
 ### Blockers/Concerns
 
 - Research flag: Phase 9 discipline-specific measurable metrics need per-channel domain research
-- Research flag: Phase 10 npm installer for plugin-format skills needs verification against plugin-dev docs
+- ~~Research flag: Phase 10 npm installer for plugin-format skills needs verification against plugin-dev docs~~ (resolved in 10-01)
 
 ## Deferred Items
 
@@ -104,6 +108,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-05-04T08:57:13.435Z
-Stopped at: Phase 10 context gathered
-Resume file: .planning/phases/10-distribution-and-polish/10-CONTEXT.md
+Last session: 2026-05-04T09:44:18Z
+Stopped at: Completed 10-01 npm installer plan
+Resume file: .planning/phases/10-distribution-and-polish/10-01-SUMMARY.md
