@@ -351,7 +351,7 @@ Write updated LEARNINGS.md.
 
 ```bash
 node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign update ${SLUG} phase learned
-node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign update ${SLUG} phase.learned true
+node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign update ${SLUG} phase.learned "${ISO_DATE}"
 node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign update ${SLUG} learn.run_count ${RUN_COUNT}
 node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign update ${SLUG} learn.last_run ${ISO_DATE}
 node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign update ${SLUG} learn.lessons_extracted ${LESSON_COUNT}

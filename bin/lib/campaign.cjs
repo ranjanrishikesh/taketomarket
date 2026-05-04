@@ -31,6 +31,7 @@ function resolveCampaignStatePath(slug) {
   if (!slug || !slug.trim()) error('campaign slug required');
   // Re-sanitize slug (defense in depth -- caller may pass unsanitized input)
   const safe = slug.toLowerCase().replace(/[^a-z0-9-]/g, '');
+  if (!safe) error('campaign slug must contain at least one alphanumeric character after sanitization');
   const statePath = path.resolve(process.cwd(), '.marketing', 'CAMPAIGNS', safe, 'STATE.md');
   const projectRoot = path.resolve(process.cwd());
   if (!statePath.startsWith(projectRoot + path.sep)) {
@@ -52,6 +53,7 @@ function cmdCampaignInit(slug, name, raw) {
 
   // Re-sanitize slug (defense in depth)
   const safe = slug.toLowerCase().replace(/[^a-z0-9-]/g, '');
+  if (!safe) error('campaign slug must contain at least one alphanumeric character after sanitization');
 
   const campaignDir = path.resolve(process.cwd(), '.marketing', 'CAMPAIGNS', safe);
   const assetsDir = path.resolve(campaignDir, 'ASSETS');
@@ -68,56 +70,50 @@ function cmdCampaignInit(slug, name, raw) {
 
   const timestamp = new Date().toISOString();
 
-  // Build STATE.md with flat dot-notation frontmatter (parseFrontmatter compatible)
-  const stateContent = [
-    '---',
-    `campaign: ${safe}`,
-    `name: ${name}`,
-    `created: ${timestamp}`,
-    'phase: created',
-    `last_updated: ${timestamp}`,
-    `phase.created: ${timestamp}`,
-    'phase.researched: null',
-    'phase.briefed: null',
-    'phase.produced: null',
-    'phase.verified: null',
-    'phase.reviewed: null',
-    'phase.fixed: null',
-    'phase.shipped: null',
-    'phase.measured: null',
-    'phase.learned: null',
-    'gate.positioning_check: null',
-    'gate.outcome_metric: null',
-    'gate.positioning_drift: null',
-    'gate.claim_accuracy: null',
-    'gate.voice_drift: null',
-    'gate.outcome_alignment: null',
-    'gate.funnel_integrity: null',
-    'gate.utm_hygiene: null',
-    'gate.compliance: null',
-    'gate.competitor_collision: null',
-    'gate.icp_fit: null',
-    'gate.format_correctness: null',
-    'verify.run_count: null',
-    'verify.last_run: null',
-    'verify.overall_result: null',
-    'review.run_count: null',
-    'review.last_run: null',
-    'review.overall_result: null',
-    'fix.run_count: null',
-    'fix.last_run: null',
-    'fix.overall_result: null',
-    'ship.status: null',
-    'ship.shipped_at: null',
-    'ship.checklist_result: null',
-    '---',
-    '',
-    `# Campaign: ${name}`,
-    '',
-    'Phase: created',
-    `Next step: Run \`/ttm-research ${safe}\` to gather market intelligence.`,
-    '',
-  ].join('\n');
+  // Build STATE.md via serializeFrontmatter to safely handle special chars in name (CR-01)
+  const frontmatterObj = {
+    campaign: safe,
+    name: name,
+    created: timestamp,
+    phase: 'created',
+    last_updated: timestamp,
+    'phase.created': timestamp,
+    'phase.researched': 'null',
+    'phase.briefed': 'null',
+    'phase.produced': 'null',
+    'phase.verified': 'null',
+    'phase.reviewed': 'null',
+    'phase.fixed': 'null',
+    'phase.shipped': 'null',
+    'phase.measured': 'null',
+    'phase.learned': 'null',
+    'gate.positioning_check': 'null',
+    'gate.outcome_metric': 'null',
+    'gate.positioning_drift': 'null',
+    'gate.claim_accuracy': 'null',
+    'gate.voice_drift': 'null',
+    'gate.outcome_alignment': 'null',
+    'gate.funnel_integrity': 'null',
+    'gate.utm_hygiene': 'null',
+    'gate.compliance': 'null',
+    'gate.competitor_collision': 'null',
+    'gate.icp_fit': 'null',
+    'gate.format_correctness': 'null',
+    'verify.run_count': 'null',
+    'verify.last_run': 'null',
+    'verify.overall_result': 'null',
+    'review.run_count': 'null',
+    'review.last_run': 'null',
+    'review.overall_result': 'null',
+    'fix.run_count': 'null',
+    'fix.last_run': 'null',
+    'fix.overall_result': 'null',
+    'ship.status': 'null',
+    'ship.shipped_at': 'null',
+    'ship.checklist_result': 'null',
+  };
+  const bodyContent = `\n# Campaign: ${name}\n\nPhase: created\nNext step: Run \`/ttm-research ${safe}\` to gather market intelligence.\n`;
+  const stateContent = serializeFrontmatter(frontmatterObj, bodyContent);
 
   // TOCTOU-safe creation: wx flag fails atomically if file already exists
   try {
@@ -267,6 +263,11 @@ const ACTIVE_PHASES = new Set(['briefed', 'produced', 'verified', 'reviewed', 's
  * @param {boolean} raw - Whether to output raw string
  */
 function cmdCampaignList(filter, sinceArg, raw) {
+  // Enforce mutual exclusion of filter flags and --since early (WR-01)
+  if (filter && sinceArg) {
+    error('--active/--shipped-since-last-audit and --since are mutually exclusive');
+  }
+
   const campaignsDir = path.resolve(process.cwd(), '.marketing', 'CAMPAIGNS');
 
   // If no campaigns directory, return empty
@@ -292,11 +293,6 @@ function cmdCampaignList(filter, sinceArg, raw) {
     campaigns.push({ slug: entry.name, ...frontmatter });
   }
 
-  // Enforce mutual exclusion of filter flags and --since
-  if (filter && sinceArg) {
-    error('--active/--shipped-since-last-audit and --since are mutually exclusive');
-  }
-
   let filtered = campaigns;
 
   if (filter === '--active') {
@@ -317,7 +313,7 @@ function cmdCampaignList(filter, sinceArg, raw) {
           // Parse pipe-delimited columns by position rather than first-match regex
           // Expected columns: ['', event_type, timestamp, source, details, affected, '']
           const cols = line.split('|').map(c => c.trim());
-          if (cols.length >= 3) {
+          if (cols.length >= 6) {
             const ts = cols[2];
             if (ts && ts.match(/^\d{4}-\d{2}-\d{2}T/)) {
               if (!lastAuditTimestamp || ts > lastAuditTimestamp) {
@@ -368,6 +364,7 @@ function cmdCampaignArchive(slug, raw) {
   if (!slug || !slug.trim()) error('campaign slug required for archive');
 
   const safe = slug.toLowerCase().replace(/[^a-z0-9-]/g, '');
+  if (!safe) error('campaign slug must contain at least one alphanumeric character after sanitization');
   const projectRoot = path.resolve(process.cwd());
   const srcDir = path.resolve(projectRoot, '.marketing', 'CAMPAIGNS', safe);
   const destDir = path.resolve(projectRoot, '.marketing', 'CAMPAIGNS', 'ARCHIVE', safe);
@@ -469,6 +466,7 @@ function cmdRepurposeManifest(slug, sourceAssetId, derivatives, raw) {
   }
 
   const safeSlug = slug.toLowerCase().replace(/[^a-z0-9-]/g, '');
+  if (!safeSlug) error('campaign slug must contain at least one alphanumeric character after sanitization');
   const projectRoot = path.resolve(process.cwd());
   const manifestPath = path.resolve(projectRoot, '.marketing', 'CAMPAIGNS', safeSlug, 'MANIFEST.json');
 
@@ -508,10 +506,18 @@ function cmdRepurposeManifest(slug, sourceAssetId, derivatives, raw) {
     error('source-asset-id must be a number');
   }
 
+  // Check for duplicate asset_id entries (WR-06)
+  const existingIds = new Set(manifest.derivatives.map(d => Number(d.asset_id)));
+
   for (const d of derivatives) {
     if (!d.asset_id || !d.name || !d.channel || !d.file) {
       error('Each derivative must have asset_id, name, channel, and file fields');
     }
+    const numId = Number(d.asset_id);
+    if (existingIds.has(numId)) {
+      error(`Duplicate asset_id ${d.asset_id} -- already exists in MANIFEST.json`);
+    }
+    existingIds.add(numId);
     manifest.derivatives.push({
       asset_id: Number(d.asset_id),
       name: d.name,

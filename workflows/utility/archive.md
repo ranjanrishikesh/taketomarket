@@ -110,6 +110,12 @@ Parse output and validate:
 
 ## Step 3: Extract Learnings
 
+**Skip check:** If campaign `phase` is `"learned"` (meaning `/ttm-learn` already ran), skip this step entirely:
+```
+takeToMarket > Learnings already extracted via /ttm-learn. Skipping re-extraction.
+```
+Proceed directly to Step 4.
+
 ```
 takeToMarket > EXTRACTING LEARNINGS
 ```

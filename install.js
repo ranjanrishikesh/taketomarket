@@ -194,7 +194,7 @@ Options:
 
   // Verify targetDir is within home directory (T-10-01, T-10-03)
   const homeDir = os.homedir();
-  if (!targetDir.startsWith(homeDir)) {
+  if (!targetDir.startsWith(homeDir + path.sep)) {
     console.error('Error: Target directory resolves outside home directory. Aborting.');
     process.exit(1);
   }
@@ -216,9 +216,10 @@ Options:
     process.exit(0);
   }
 
-  // Check for existing installation
+  // Check for existing installation — remove stale files before copying (CR-02)
   if (dirExists(targetDir)) {
-    console.log('Existing installation found. Overwriting...');
+    console.log('Existing installation found. Removing before reinstall...');
+    fs.rmSync(targetDir, { recursive: true, force: true });
     console.log('');
   }
 
