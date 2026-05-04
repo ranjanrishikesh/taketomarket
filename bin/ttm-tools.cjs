@@ -63,7 +63,7 @@ switch (command) {
     break;
   }
   case 'campaign': {
-    const { cmdCampaignInit, cmdCampaignState, cmdCampaignUpdate, cmdCampaignList, cmdCampaignArchive } = require('./lib/campaign.cjs');
+    const { cmdCampaignInit, cmdCampaignState, cmdCampaignUpdate, cmdCampaignList, cmdCampaignArchive, cmdRepurposeManifest } = require('./lib/campaign.cjs');
     const campaignArgs = args.slice(1).filter(a => a !== '--raw');
     const subCmd = campaignArgs[0];
     const slug = campaignArgs[1];
@@ -82,7 +82,18 @@ switch (command) {
       cmdCampaignList(filter, since, raw);
     }
     else if (subCmd === 'archive') cmdCampaignArchive(slug, raw);
-    else error('campaign subcommand required: init, state, update, list, archive');
+    else if (subCmd === 'repurpose-manifest') {
+      const sourceAssetId = campaignArgs[2];
+      const derivativesJson = campaignArgs[3];
+      let derivatives;
+      try {
+        derivatives = JSON.parse(derivativesJson);
+      } catch (e) {
+        error('Failed to parse derivatives JSON: ' + e.message);
+      }
+      cmdRepurposeManifest(slug, sourceAssetId, derivatives, raw);
+    }
+    else error('campaign subcommand required: init, state, update, list, archive, repurpose-manifest');
     break;
   }
   case 'deviation': {

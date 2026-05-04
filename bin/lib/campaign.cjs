@@ -450,10 +450,98 @@ function cmdCampaignArchive(slug, raw) {
   output({ archived: true, slug: safe, dest: destDir }, raw, 'archived ' + safe);
 }
 
+/**
+ * Add repurpose derivative entries to an existing campaign MANIFEST.json.
+ * Each derivative gets a `source_asset_id` field linking back to the source asset.
+ *
+ * @param {string} slug - Campaign slug
+ * @param {number} sourceAssetId - The asset_id of the source asset being repurposed
+ * @param {Array<{asset_id: number, name: string, type: string, channel: string, file: string}>} derivatives - Derivative asset entries
+ * @param {boolean} raw - Whether to output raw string
+ */
+function cmdRepurposeManifest(slug, sourceAssetId, derivatives, raw) {
+  if (!slug || !slug.trim()) error('campaign slug required for repurpose-manifest');
+  if (sourceAssetId === undefined || sourceAssetId === null) {
+    error('source-asset-id required for repurpose-manifest');
+  }
+  if (!Array.isArray(derivatives) || derivatives.length === 0) {
+    error('derivatives array required (non-empty) for repurpose-manifest');
+  }
+
+  const safeSlug = slug.toLowerCase().replace(/[^a-z0-9-]/g, '');
+  const projectRoot = path.resolve(process.cwd());
+  const manifestPath = path.resolve(projectRoot, '.marketing', 'CAMPAIGNS', safeSlug, 'MANIFEST.json');
+
+  // Security: path must stay within project root (T-10-12)
+  if (!manifestPath.startsWith(projectRoot + path.sep)) {
+    error('MANIFEST.json path escapes project directory');
+  }
+
+  // Read existing manifest or create a new one
+  let manifest;
+  const existing = safeReadFile(manifestPath);
+  if (existing !== null) {
+    try {
+      manifest = JSON.parse(existing);
+    } catch (e) {
+      error('Failed to parse existing MANIFEST.json: ' + e.message);
+    }
+  } else {
+    // No existing manifest -- create a minimal one
+    manifest = {
+      campaign: safeSlug,
+      produced_at: new Date().toISOString(),
+      hero: null,
+      derivatives: [],
+      total_assets: 0,
+    };
+  }
+
+  // Ensure derivatives array exists
+  if (!Array.isArray(manifest.derivatives)) {
+    manifest.derivatives = [];
+  }
+
+  // Validate and append each derivative with source_asset_id
+  const numericSourceId = Number(sourceAssetId);
+  if (isNaN(numericSourceId)) {
+    error('source-asset-id must be a number');
+  }
+
+  for (const d of derivatives) {
+    if (!d.asset_id || !d.name || !d.channel || !d.file) {
+      error('Each derivative must have asset_id, name, channel, and file fields');
+    }
+    manifest.derivatives.push({
+      asset_id: Number(d.asset_id),
+      name: d.name,
+      type: d.type || 'derivative',
+      channel: d.channel,
+      file: d.file,
+      source_asset_id: numericSourceId,
+      derived_from: numericSourceId,
+    });
+  }
+
+  // Update total_assets count
+  const heroCount = manifest.hero ? 1 : 0;
+  manifest.total_assets = heroCount + manifest.derivatives.length;
+
+  // Write updated manifest
+  safeWriteFile(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
+
+  output(
+    { updated: true, slug: safeSlug, derivatives_added: derivatives.length, total_assets: manifest.total_assets },
+    raw,
+    derivatives.length + ' derivatives added'
+  );
+}
+
 module.exports = {
   cmdCampaignInit,
   cmdCampaignState,
   cmdCampaignUpdate,
   cmdCampaignList,
   cmdCampaignArchive,
+  cmdRepurposeManifest,
 };
