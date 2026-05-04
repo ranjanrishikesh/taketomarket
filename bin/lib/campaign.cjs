@@ -358,7 +358,7 @@ function cmdCampaignList(filter, sinceArg, raw) {
 
 /**
  * Archive a shipped campaign: move directory to ARCHIVE/, update state.
- * Only campaigns with phase='shipped' can be archived (per D-08).
+ * Only campaigns with phase='shipped' or phase='learned' can be archived (per D-08).
  * Uses cpSync + rmSync for cross-filesystem safety (per Pitfall 1).
  *
  * @param {string} slug - Campaign slug
@@ -408,8 +408,8 @@ function cmdCampaignArchive(slug, raw) {
     error(`Campaign STATE.md not found for: ${safe}`);
   }
   const { frontmatter, body } = parseFrontmatter(content);
-  if (frontmatter.phase !== 'shipped') {
-    error('Only shipped campaigns can be archived. Current phase: ' + frontmatter.phase);
+  if (frontmatter.phase !== 'shipped' && frontmatter.phase !== 'learned') {
+    error('Only shipped or learned campaigns can be archived. Current phase: ' + frontmatter.phase);
   }
 
   // Create ARCHIVE/ directory

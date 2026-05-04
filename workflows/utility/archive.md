@@ -1,6 +1,6 @@
 <purpose>
-Archive workflow for /ttm-archive. Validates campaign is shipped (only shipped
-campaigns can be archived per D-08), extracts structured learnings from campaign
+Archive workflow for /ttm-archive. Validates campaign is shipped or learned (only
+shipped or learned campaigns can be archived per D-08), extracts structured learnings from campaign
 artifacts (D-09), moves campaign to ARCHIVE/ directory (D-07), and updates
 LEARNINGS.md with extracted lessons.
 
@@ -31,11 +31,11 @@ Once archived, a campaign cannot be un-archived via this command. The user must
 be informed and must confirm before the archive operation executes. This is a
 destructive operation that moves files to ARCHIVE/ permanently.
 
-## Shipped-Only Validation
+## Shipped or Learned Validation
 
-Only campaigns with phase = "shipped" can be archived. Campaigns in any other
-phase (including "cancelled") must be rejected with a clear explanation of why
-and what to do instead.
+Only campaigns with phase = "shipped" or phase = "learned" can be archived.
+Campaigns in any other phase (including "cancelled") must be rejected with a
+clear explanation of why and what to do instead.
 </constraints>
 
 <process>
@@ -100,9 +100,9 @@ Parse output and validate:
 - If `phase` equals `'cancelled'`: tell user cancelled campaigns cannot be archived
   per policy. They stay in CAMPAIGNS/ as cautionary records for future reference.
   Exit.
-- If `phase` does NOT equal `'shipped'`: tell user only shipped campaigns can be
+- If `phase` is NOT one of `'shipped'` or `'learned'`: tell user only shipped or learned campaigns can be
   archived. Display current phase and suggest completing remaining phases:
-  "Campaign '${SLUG}' is in phase '${phase}'. Only shipped campaigns can be
+  "Campaign '${SLUG}' is in phase '${phase}'. Only shipped or learned campaigns can be
   archived. Complete the remaining phases first."
   Exit.
 
@@ -121,7 +121,7 @@ Following the learnings-extraction.md reference guide, scan campaign artifacts.
 1. `.marketing/CAMPAIGNS/${SLUG}/STATE.md` (full file -- frontmatter and body)
 2. `.marketing/CAMPAIGNS/${SLUG}/MANIFEST.json` (if exists -- per-asset gate results)
 3. `.marketing/CAMPAIGNS/${SLUG}/BRIEF.md` (if exists -- original strategy)
-4. Any `VERIFY-REPORT-*.md` files in the campaign directory (gate details)
+4. `VERIFICATION.md` in the campaign directory (gate details)
 5. Any `FIX-BRIEF-*.md` files (fix attempts and outcomes)
 6. Any `REVIEW-FEEDBACK-*.md` files (human review feedback)
 
@@ -238,7 +238,7 @@ If the command returns an error:
 The CLI command handles:
 - Moving the campaign directory to `.marketing/CAMPAIGNS/ARCHIVE/${SLUG}/`
 - Updating the campaign state to "archived"
-- Validating the campaign is in "shipped" phase before allowing archive
+- Validating the campaign is in "shipped" or "learned" phase before allowing archive
 
 ---
 
@@ -310,7 +310,7 @@ Campaign directory moved to `.marketing/CAMPAIGNS/ARCHIVE/${SLUG}/`
 </process>
 
 <success_criteria>
-- [ ] Campaign validated as shipped before archive (D-08)
+- [ ] Campaign validated as shipped or learned before archive (D-08)
 - [ ] Cancelled campaigns rejected with explanation (D-08)
 - [ ] Learnings extracted from campaign artifacts using extraction guide (D-09)
 - [ ] Root-cause taxonomy applied to failure categorization (D-09)
