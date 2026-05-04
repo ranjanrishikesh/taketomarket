@@ -98,9 +98,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Utility Commands
 
-- [ ] **UTIL-01**: `/ttm-brand-refresh` updates BRAND.md with new proof points, deprecates expired ones
-- [ ] **UTIL-02**: `/ttm-icp-refresh` updates ICP.md from new customer data (calls, reviews, feedback)
-- [ ] **UTIL-03**: `/ttm-competitor-scan` on-demand competitor analysis, updates COMPETITORS.md
+- [x] **UTIL-01**: `/ttm-brand-refresh` updates BRAND.md with new proof points, deprecates expired ones
+- [x] **UTIL-02**: `/ttm-icp-refresh` updates ICP.md from new customer data (calls, reviews, feedback)
+- [x] **UTIL-03**: `/ttm-competitor-scan` on-demand competitor analysis, updates COMPETITORS.md
 - [ ] **UTIL-04**: `/ttm-seo-audit` technical + content SEO audit of a URL or sitemap
 - [ ] **UTIL-05**: `/ttm-aeo-check <query>` checks citation status across AI engines for a query
 - [ ] **UTIL-06**: `/ttm-keyword-map` generates keyword cluster map with intent tags
@@ -244,9 +244,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | STAT-03 | Phase 7 | Pending |
 | STAT-04 | Phase 7 | Pending |
 | STAT-05 | Phase 7 | Pending |
-| UTIL-01 | Phase 10 | Pending |
-| UTIL-02 | Phase 10 | Pending |
-| UTIL-03 | Phase 10 | Pending |
+| UTIL-01 | Phase 10 | Complete |
+| UTIL-02 | Phase 10 | Complete |
+| UTIL-03 | Phase 10 | Complete |
 | UTIL-04 | Phase 10 | Pending |
 | UTIL-05 | Phase 10 | Pending |
 | UTIL-06 | Phase 10 | Pending |
