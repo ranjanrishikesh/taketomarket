@@ -47,7 +47,11 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
   2. `require('./install.js')` returns exported functions without triggering install or process.exit
   3. Test helper utilities exist for creating isolated temp directories and mock .marketing/ scaffolds
   4. package.json scripts.test is set to `node --test`
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 12-01-PLAN.md — Refactor install.js with require.main guard + module.exports; add scripts.test to package.json
+- [ ] 12-02-PLAN.md — Create test/helpers.cjs shared utilities and test/install.test.cjs smoke test
 
 ### Phase 13: Unit Tests for bin/lib Modules
 **Goal**: Every bin/lib module has unit tests that catch regressions before code ships to the registry
@@ -98,7 +102,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 12 → 13 → 14 → 15 → 16
+Phases execute in numeric order: 12 -> 13 -> 14 -> 15 -> 16
 (Note: Phase 15 can start after Phase 12, independent of 13/14)
 
 | Phase | Milestone | Plans | Status | Completed |
@@ -114,7 +118,7 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 → 16
 | 9. Measurement, Learning, and Remaining Playbooks | v1.0 | 6/6 | Complete | 2026-05-02 |
 | 10. Distribution and Polish | v1.0 | 5/5 | Complete | 2026-05-04 |
 | 11. Gap Closure | v1.0 | 3/3 | Complete | 2026-05-04 |
-| 12. Test Infrastructure & Installer Refactor | v1.1 | 0/? | Not started | - |
+| 12. Test Infrastructure & Installer Refactor | v1.1 | 0/2 | Not started | - |
 | 13. Unit Tests for bin/lib Modules | v1.1 | 0/? | Not started | - |
 | 14. E2E & Integration Tests | v1.1 | 0/? | Not started | - |
 | 15. Package Metadata & CLI Polish | v1.1 | 0/? | Not started | - |
