@@ -60,7 +60,7 @@ Delivered: Full 9-phase campaign lifecycle (init→learn), 27 `/ttm-*` commands,
 
 ### Active
 
-(None — fresh requirements defined in next milestone via `/gsd-new-milestone`)
+(Defined in REQUIREMENTS.md for v1.1)
 
 ### Out of Scope
 
@@ -103,9 +103,21 @@ Delivered: Full 9-phase campaign lifecycle (init→learn), 27 `/ttm-*` commands,
 | serializeFrontmatter for all YAML | Prevents injection (CR-01) | Validated v1.0 |
 | rmSync before install overwrite | Prevents stale artifacts (CR-02) | Validated v1.0 |
 
+## Current Milestone: v1.1 Publish Prep & Gap Closure
+
+**Goal:** Close remaining gaps from v1.0 and publish the package to npm so users can install via `npx taketomarket` / `pnpm dlx taketomarket`.
+
+**Target features:**
+- Automated tests for bin/ttm-tools.cjs and install.js
+- Fix broken references or missing files discovered during testing
+- npm publish preparation (package.json metadata, .npmignore, LICENSE check)
+- End-to-end install verification
+- Publish to npm registry
+- Validate post-publish install
+
 ## Evolution
 
 This document evolves at phase transitions and milestone boundaries.
 
 ---
-*Last updated: 2026-05-04 after v1.0 MVP milestone completion*
+*Last updated: 2026-05-11 after v1.1 milestone start*
