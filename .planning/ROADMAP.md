@@ -30,7 +30,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 
 **Milestone Goal:** Close remaining gaps from v1.0 and publish the package to npm so users can install via `npx taketomarket` / `pnpm dlx taketomarket`.
 
-- [ ] **Phase 12: Test Infrastructure & Installer Refactor** - Make install.js testable and establish test foundation
+- [x] **Phase 12: Test Infrastructure & Installer Refactor** - Make install.js testable and establish test foundation (completed 2026-05-10)
 - [ ] **Phase 13: Unit Tests for bin/lib Modules** - Comprehensive unit test coverage for all CJS modules
 - [ ] **Phase 14: E2E & Integration Tests** - Full install flow validation in isolated environments
 - [ ] **Phase 15: Package Metadata & CLI Polish** - Complete npm page metadata and CLI UX improvements
@@ -47,14 +47,14 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
   2. `require('./install.js')` returns exported functions without triggering install or process.exit
   3. Test helper utilities exist for creating isolated temp directories and mock .marketing/ scaffolds
   4. package.json scripts.test is set to `node --test`
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 
 Plans:
 **Wave 1**
 - [x] 12-01-PLAN.md — Refactor install.js with require.main guard + module.exports; add scripts.test to package.json
 
 **Wave 2** *(blocked on Wave 1 completion)*
-- [ ] 12-02-PLAN.md — Create test/helpers.cjs shared utilities and test/install.test.cjs smoke test
+- [x] 12-02-PLAN.md — Create test/helpers.cjs shared utilities and test/install.test.cjs smoke test
 
 ### Phase 13: Unit Tests for bin/lib Modules
 **Goal**: Every bin/lib module has unit tests that catch regressions before code ships to the registry
@@ -121,7 +121,7 @@ Phases execute in numeric order: 12 -> 13 -> 14 -> 15 -> 16
 | 9. Measurement, Learning, and Remaining Playbooks | v1.0 | 6/6 | Complete | 2026-05-02 |
 | 10. Distribution and Polish | v1.0 | 5/5 | Complete | 2026-05-04 |
 | 11. Gap Closure | v1.0 | 3/3 | Complete | 2026-05-04 |
-| 12. Test Infrastructure & Installer Refactor | v1.1 | 1/2 | In Progress|  |
+| 12. Test Infrastructure & Installer Refactor | v1.1 | 2/2 | Complete   | 2026-05-10 |
 | 13. Unit Tests for bin/lib Modules | v1.1 | 0/? | Not started | - |
 | 14. E2E & Integration Tests | v1.1 | 0/? | Not started | - |
 | 15. Package Metadata & CLI Polish | v1.1 | 0/? | Not started | - |
