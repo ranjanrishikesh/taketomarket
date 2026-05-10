@@ -1,208 +1,239 @@
-# Feature Research
+# Feature Landscape: npm Publish Prep
 
-**Domain:** AI-powered marketing operating system (Claude Code / Codex skill)
-**Researched:** 2026-04-21
+**Domain:** npm CLI installer package for Claude Code / Codex skill distribution
+**Researched:** 2026-05-11
 **Confidence:** HIGH
 
-## Feature Landscape
+## Table Stakes
 
-### Table Stakes (Users Expect These)
-
-Features users assume exist in any marketing skill / campaign management system. Missing these = the skill feels broken or incomplete.
+Features users expect from any `npx <package>` installer. Missing = package feels broken or amateurish.
 
 | Feature | Why Expected | Complexity | Notes |
 |---------|--------------|------------|-------|
-| **Guided onboarding (`/ttm-init`)** | Users need a zero-friction way to bootstrap their marketing context; interview-driven is standard in AI tools (Jasper, Copy.ai all do guided setup) | MEDIUM | Must generate POSITIONING.md, BRAND.md, ICP.md, CHANNELS.md, COMPETITORS.md, METRICS.md. GSD pattern: structured questions, file generation. |
-| **Campaign lifecycle with clear phases** | Every campaign tool has a workflow (brief > create > review > publish > measure). Without phases, users are just chatting with an LLM. | HIGH | 9 phases (Discover > Brief > Produce > Verify > Review > Fix > Ship > Measure > Learn). The phased approach is what makes this a "system" not a "prompt." |
-| **Slash commands per phase** | Claude Code skills are invoked via slash commands. Users expect one command per action, not multi-step instructions they type manually. | MEDIUM | `/ttm-new-campaign`, `/ttm-brief`, `/ttm-produce`, `/ttm-verify`, `/ttm-review`, `/ttm-fix`, `/ttm-ship`, `/ttm-measure`, `/ttm-learn` |
-| **Persistent campaign state** | Sessions end; work must survive. GSD proved `.planning/` state persistence is the pattern users expect in Claude Code skills. | MEDIUM | `CAMPAIGNS/<slug>/` directory with state files (brief.md, assets/, verify-report.md, etc.). STATE.md tracks phase, blockers, history. |
-| **Brand voice / style context loading** | Every AI content tool (Jasper, Writer, Typeface) loads brand context. Without it, output is generic. | LOW | BRAND.md loaded into every production context. Includes tone, vocabulary, do/don't lists. |
-| **Multi-channel content production** | Users expect to produce content for multiple channels from a single campaign brief. One-channel-only feels limiting. | MEDIUM | Blog, email, social (LinkedIn, Twitter/X), ad copy. Playbooks per channel define format rules. |
-| **Content review and feedback loop** | Human-in-the-loop review is expected. Pure auto-generation without review gates feels reckless for marketing teams. | LOW | Review phase presents assets, collects feedback, routes to Fix or Ship. |
-| **Basic measurement integration** | Users need to close the loop (did this work?). Even manual data entry suffices for MVP — but the analysis must exist. | MEDIUM | Manual paste of analytics data. Skill analyzes against outcome metrics defined in the brief. |
-| **Reference file management** | Users need to update their positioning, ICP, competitors over time. Stale reference files = stale output. | LOW | `/ttm-brand-refresh`, `/ttm-icp-refresh`, `/ttm-competitor-scan`, `/ttm-positioning-check` |
-| **Campaign archival and history** | Users need to see past campaigns, resume interrupted ones, and archive completed ones. | LOW | `/ttm-archive`, `/ttm-resume`, `/ttm-state` |
-| **Template/format correctness per channel** | Each channel has format constraints (character limits, image specs, email structure). Users expect the skill to know these. | LOW | Encoded in discipline playbooks. Verified in quality gates (format correctness gate). |
+| `#!/usr/bin/env node` shebang on install.js | Required for npx/pnpm dlx to execute the bin entry | Low | Already present |
+| `--help` / `-h` flag | Every CLI tool prints usage info | Low | Already implemented |
+| `--version` / `-v` flag | Standard CLI convention; users confirm what version installed | Low | **MISSING** -- must add |
+| Clear success/failure output | Users need visual confirmation install worked | Low | Already implemented with [PASS]/[FAIL] validation |
+| Non-zero exit code on failure | CI/scripts depend on exit codes | Low | Already implemented (process.exit(1)) |
+| README.md renders on npmjs.com | Primary discovery surface; npm shows README as package page | Low | README exists and is comprehensive |
+| `repository` field in package.json | Creates "Repository" link on npmjs.com sidebar | Low | **MISSING** -- must add |
+| `homepage` field in package.json | Creates "Homepage" link on npmjs.com sidebar | Low | **MISSING** -- must add |
+| `bugs` field in package.json | Creates "Issues" link on npmjs.com sidebar | Low | **MISSING** -- must add |
+| `author` field in package.json | Shows author on npmjs.com sidebar | Low | **MISSING** -- must add |
+| LICENSE file included in package | npm includes it by default; expected for MIT packages | Low | Needs verification that LICENSE file exists |
+| Sensible `keywords` for discovery | npm search uses keywords array | Low | Present but should be expanded |
+| `engines.node` field | Tells users minimum Node version; npx warns on mismatch | Low | Already present (>=18) |
+| Idempotent installs | Running `npx taketomarket` twice should work cleanly | Low | Already handled (rmSync before reinstall) |
+| `--dry-run` flag | Users preview what will happen without writing files | Low | Already implemented |
+| `files` whitelist excludes dev artifacts | Users should not download .planning/, tests, .git | Low | Present but needs audit for completeness |
 
-### Differentiators (Competitive Advantage)
+## Differentiators
 
-Features that set takeToMarket apart from Jasper, generic AI content tools, and other marketing skills. These are the "why use this instead of just prompting Claude directly" features.
+Features that set the install experience apart from generic CLI tools. Not expected, but increase trust and adoption.
 
 | Feature | Value Proposition | Complexity | Notes |
 |---------|-------------------|------------|-------|
-| **Positioning-as-invariant enforcement** | The #1 failure mode in marketing is incremental positioning dilution. No other tool treats positioning as a read-only invariant during campaigns. Jasper has "brand voice" but it's a suggestion, not an enforcement gate. takeToMarket makes positioning a hard constraint: every asset is verified against POSITIONING.md, deviations are flagged with 3 options (Correct, Accept+log, Escalate to positioning shift). This is the core differentiator. | HIGH | POSITIONING.md is loaded into every phase context. Verify phase runs positioning drift detection. `/ttm-positioning-shift` requires explicit reasoning, migration plan, and human approval. Monthly audit samples recent assets. |
-| **Outcome-over-output enforcement** | Most AI content tools measure "did we produce the thing?" takeToMarket requires every asset to have both an output metric (was it published?) AND an outcome metric (did it drive signups/traffic/conversion?). This forces strategic thinking at brief time, not after the fact. | MEDIUM | Brief phase requires outcome metric definition. Measure phase reports outcome first, output second. Assets cannot pass Ship without defined outcome metrics. |
-| **Quality gate wall (10+ gates per asset)** | Jasper has "brand voice check." takeToMarket has a full gate wall: positioning drift, claim accuracy, voice drift, outcome alignment, funnel integrity, UTM hygiene, compliance, competitor collision, ICP fit, format correctness. Plus discipline-specific gates per playbook. This is systematic verification, not a vibe check. | HIGH | Each gate returns pass/fail with explanation. All gates must pass or have explicit human override. Results persist in verify-report.md. |
-| **Fix-as-you-go with root cause analysis** | Most tools: "try again." takeToMarket: root cause diagnosis > specific fix brief > isolated re-production > re-verification. Capped at 3 attempts to prevent infinite loops. This treats content failures like engineering bugs, not bad luck. | MEDIUM | Fix phase generates a fix brief explaining what failed and why. Re-production happens in fresh context with fix brief loaded. 3-attempt cap prevents wasted tokens. |
-| **Compound learning system** | LEARNINGS.md with root-cause taxonomy and pattern extraction. Each campaign's Learn phase proposes edits to reference files (positioning, ICP, brand) based on measured outcomes. The system gets smarter over time. No AI content tool does this — they treat each generation as independent. | HIGH | Learn phase extracts lessons from Measure results. Proposes reference file edits with human approval. Root-cause taxonomy prevents repeating the same mistakes. LEARNINGS.md is loaded into Brief phase of future campaigns. |
-| **Discipline-specific playbooks with custom gates** | Not just "write a blog post" — full SEO playbook (keyword research, SERP analysis, internal linking, schema markup), AEO playbook (AI engine optimization), YouTube playbook (script structure, thumbnail brief, metadata), etc. Each playbook adds discipline-specific quality gates. | HIGH | 10 playbooks: SEO, AEO, YouTube, LinkedIn, Social, Email, Paid Ads, Affiliate, PR/Media, Events. Each adds 3-5 custom quality gates beyond the base 10. |
-| **Content repurposing pipeline** | `/ttm-repurpose` takes a long-form asset and generates derivatives across channels with positioning and voice consistency maintained. Not just "summarize for Twitter" — full brief > produce > verify cycle per derivative. | MEDIUM | Generates derivative briefs from source asset. Each derivative goes through the same quality gate wall. Maintains attribution chain back to source. |
-| **Meta-gates (portfolio-level verification)** | Beyond individual asset quality: portfolio balance (not all top-of-funnel), calendar collision detection (don't publish competing pieces same week), theme consistency, learning plan alignment. These are strategic checks no content tool does. | MEDIUM | Run at campaign creation and before Ship. Require access to CALENDAR.md and other active campaigns. |
-| **Deviation reports with structured resolution** | When positioning drift is detected, the user gets 3 clear options: Correct (fix the asset), Accept+log (ship with documented deviation), Escalate (trigger `/ttm-positioning-shift`). This turns subjective "is this on brand?" into a structured decision with audit trail. | LOW | Integrated into Verify phase. Deviations logged in campaign state for Learn phase analysis. |
-| **Wave-parallel production in fresh contexts** | GSD-inspired architecture: complex campaigns split into waves, each wave produced in a fresh 200K-token context loaded only with brief + positioning + brand + ICP + playbook. Prevents context rot that degrades quality in long sessions. | MEDIUM | Borrowed directly from GSD. Each wave is an atomic unit. Results merged back into campaign state. |
+| Version banner on run | Print package name + version at start (like create-next-app does) | Low | Builds trust; user sees exactly what version is running |
+| Post-install quick start instructions | Tell users what to do next after success | Low | Already implemented (shows /ttm-init steps) |
+| Runtime auto-detection | No config needed for Claude Code vs Codex | Low | Already implemented |
+| Validation report after install | Structural check proves the install is healthy | Low | Already implemented with component-level pass/fail |
+| `@latest` tag awareness | Ensure `npx taketomarket@latest` always fetches fresh | Low | Works by default with npm; document in README |
+| `funding` field in package.json | Shows "Fund this package" on npmjs.com | Low | Optional but increases legitimacy for open source |
+| Colored/styled terminal output | Visual hierarchy in install output | Med | Nice-to-have; must work without colors in CI (respect NO_COLOR) |
+| `--local` flag for project-level install | Install to `./.claude/plugins/` instead of global `~/` | Med | GSD supports this; useful for team repos |
+| Update notification | Check if newer version exists and suggest upgrade | Med | Defer to post-publish; requires registry API call |
 
-### Anti-Features (Deliberately NOT Building)
+## Anti-Features
 
-Features that seem appealing but would undermine the skill's value proposition, add unwarranted complexity, or violate the "skill, not SaaS" constraint.
+Features to explicitly NOT build for the npm publish milestone.
 
-| Feature | Why Requested | Why Problematic | Alternative |
-|---------|---------------|-----------------|-------------|
-| **Real-time analytics dashboard** | "I want to see campaign performance in one place" | This is a SaaS feature, not a skill feature. Claude Code skills write files and run commands — they don't serve web UIs. Building a dashboard means building an app, which is out of scope. Analytics tools (GA, Mixpanel, PostHog) already exist. | Measure phase: user pastes analytics data, skill generates analysis reports as markdown files. Reports are the "dashboard." |
-| **Direct publishing / scheduling integration** | "Let the skill publish directly to WordPress / Buffer / social platforms" | External API integrations add fragile dependencies, auth management, and failure modes. The skill should produce verified assets and hand them off. Publishing tools are a separate concern. | Ship phase generates publish-ready files with metadata (title, description, tags, UTMs, scheduled date). User publishes via their existing tools. |
-| **MCP-dependent core functionality** | "Connect to GA/GSC/HubSpot via MCP for automated measurement" | MCP availability varies across environments. Making core features depend on MCP means the skill breaks for users without those MCPs configured. | Manual measurement for MVP. MCP integrations as optional enhancers in V2 — the skill works without them, works better with them. |
-| **Team collaboration / concurrent editing** | "Multiple marketers should be able to work on the same campaign" | File-based state has no locking mechanism. Concurrent edits cause conflicts. Team features require a coordination layer (server, database) that's antithetical to the skill model. | Solo-first design. Team features deferred to V2 with explicit scope. |
-| **Automated competitor monitoring** | "Scan competitors weekly and alert me" | Cron jobs, web scraping, and persistent monitoring are server features, not skill features. Skills run when invoked, not in the background. | `/ttm-competitor-scan` command that user runs on-demand. Competitor data is manual input, skill analyzes and updates COMPETITORS.md. |
-| **Visual design / creative asset generation** | "Generate images, videos, design mockups" | Claude Code is a text-based environment. Image generation requires external APIs (DALL-E, Midjourney) with unpredictable quality. Design is a separate discipline. | Produce phase generates creative briefs for designers (image specs, copy placement, color guidance). Design handoff, not design generation. |
-| **A/B test management** | "Set up and track A/B tests for my campaigns" | A/B testing requires traffic splitting, statistical significance calculation, and real-time data collection — all infrastructure concerns. | Brief phase can include variant specifications. Measure phase can analyze results from manually pasted A/B test data. The testing infrastructure itself is out of scope. |
-| **CRM integration / lead scoring** | "Connect to my CRM and score leads from campaigns" | CRM integration is a SaaS feature requiring auth, API management, and data sync. Beyond skill scope. | Campaign briefs can specify CRM tagging conventions. Measure phase can analyze CRM export data pasted by user. |
-| **Auto-generated campaign ideas** | "Generate campaign ideas for me without a brief" | Undermines the spec-driven approach. Auto-generated ideas lack strategic intent, outcome metrics, and positioning alignment. This produces output without outcomes — the exact anti-pattern takeToMarket fights. | Discover phase (`/ttm-research`) does market/audience research to inform the user's campaign ideation. The human defines strategic intent; the skill executes it. |
-| **"One-click campaign" generation** | "Generate a full campaign from a single sentence" | Looks impressive in demos, produces generic content in practice. Skips the brief, skips quality gates, skips outcome definition. This is the content-mill approach takeToMarket exists to replace. | The 9-phase lifecycle IS the product. Each phase adds quality. Shortcuts undermine the value proposition. Speed comes from the skill handling the execution, not from skipping the thinking. |
+| Anti-Feature | Why Avoid | What to Do Instead |
+|--------------|-----------|-------------------|
+| Interactive prompts during install | npx/pnpm dlx often runs non-interactively (CI, piped); prompts block automation | Auto-detect runtime; use flags for overrides |
+| postinstall lifecycle script | Output suppressed by npm, security warnings in CI, breaks restricted environments | Use bin entry point directly (already correct) |
+| Global npm install (`npm install -g`) | Outdated pattern; npx is the standard for one-shot installers | Document `npx taketomarket` as primary path |
+| Auto-update on every run | Surprising behavior; users should opt into updates | Provide `npx taketomarket@latest` in docs |
+| Telemetry or analytics | Violates user trust for a dev tool; adds external dependency | None needed |
+| npm `prepare` or `prepublish` scripts | Adds build steps that can fail in CI; package should be publish-ready as-is | Ship only source files, no build step |
+| Multiple bin entry points | Clutters PATH; confusing which command to run | Single `taketomarket` bin entry (already correct) |
+| TypeScript source requiring transpilation | Adds build complexity; install.js must run directly | Keep plain CJS (already correct) |
+| Progress spinner/animation | The copy operation takes <1s for 125 files; animation is visual noise | Simple line-per-directory logging (already implemented) |
 
 ## Feature Dependencies
 
 ```
-[Onboarding (/ttm-init)]
-    |
-    |-- generates --> [POSITIONING.md, BRAND.md, ICP.md, CHANNELS.md, COMPETITORS.md, METRICS.md]
-    |                      |
-    |                      |-- required by --> [Campaign Lifecycle (all phases)]
-    |                                              |
-    |                                              |-- Discover --> Brief --> Produce --> Verify --> Review --> Fix --> Ship --> Measure --> Learn
-    |                                                                 |                    |                    |                          |
-    |                                                                 |                    |                    |                          |
-    |                                                                 v                    v                    v                          v
-    |                                                          [Playbooks]          [Quality Gates]      [Fix Brief +             [LEARNINGS.md
-    |                                                          (discipline-          (base + discipline    Re-verify]              + Reference
-    |                                                           specific)             specific)                                    File Updates]
-    |
-    [State Management (/ttm-state, /ttm-resume)]
-        |-- requires --> [CAMPAIGNS/<slug>/ directory structure]
-        |-- requires --> [STATE.md tracking]
-
-[Content Repurposing (/ttm-repurpose)]
-    |-- requires --> [Completed source asset (has passed Verify)]
-    |-- triggers --> [Brief > Produce > Verify per derivative]
-
-[Positioning Shift (/ttm-positioning-shift)]
-    |-- requires --> [POSITIONING.md exists]
-    |-- triggers --> [Migration plan for active campaigns]
-
-[Meta-Gates]
-    |-- requires --> [CALENDAR.md]
-    |-- requires --> [Multiple campaigns in system]
+package.json metadata (repository, author, bugs, homepage) --> npm publish
+                                                                    |
+LICENSE file exists -----------------------------------------> npm publish
+                                                                    |
+--version flag added to install.js --------------------------> npm publish (users verify version)
+                                                                    |
+.npmignore or files[] whitelist audited ---------------------> npm publish (controls tarball contents)
+                                                                    |
+version bumped to 1.0.0 ------------------------------------> npm publish (semver signal: this is stable)
+                                                                    |
+npm publish -------------------------------------------------> post-publish validation
+                                                                    |
+post-publish validation (npx taketomarket in clean env) ----> confidence to announce
 ```
 
-### Dependency Notes
+## npm Metadata Optimization Checklist
 
-- **Onboarding requires nothing:** It is the entry point. All other features depend on the reference files it generates.
-- **Campaign lifecycle requires onboarding:** Cannot brief, produce, or verify without POSITIONING.md, BRAND.md, ICP.md.
-- **Quality gates require playbooks:** Discipline-specific gates are defined in playbooks. Base gates work without playbooks.
-- **Fix phase requires Verify phase:** Fix is triggered by failed quality gates. No failures = no fix needed.
-- **Learn phase requires Measure phase:** Cannot extract lessons without outcome data.
-- **Repurposing requires a verified source asset:** Cannot repurpose unverified content (would propagate quality issues).
-- **Meta-gates require multiple campaigns:** Portfolio balance and calendar collision need campaign history. Low value for first campaign.
-- **Compound learning requires campaign history:** LEARNINGS.md value compounds over time. First campaign generates first lessons; fifth campaign benefits from all prior lessons.
+Fields that appear on the npmjs.com package page and how to optimize them:
 
-## MVP Definition
+| Field | Where It Shows | Current State | Action Needed |
+|-------|---------------|---------------|---------------|
+| `name` | Page title, install command | "taketomarket" | Good -- lowercase, no scope, memorable |
+| `version` | Sidebar, install command | "0.1.0" | Bump to 1.0.0 (matches shipped v1.0 status) |
+| `description` | Search results, below title | Present, descriptive | Good as-is |
+| `keywords` | Search indexing (not visible on page) | 5 keywords | Expand to ~10: add "marketing-automation", "ai-marketing", "positioning", "content-ops", "campaign-management" |
+| `license` | Sidebar badge | "MIT" | Good |
+| `repository` | Sidebar "Repository" link | **MISSING** | Add: `{"type": "git", "url": "git+https://github.com/taketomarket/taketomarket.git"}` |
+| `homepage` | Sidebar "Homepage" link | **MISSING** | Add: `"https://github.com/taketomarket/taketomarket"` |
+| `bugs` | Sidebar "Issues" link | **MISSING** | Add: `{"url": "https://github.com/taketomarket/taketomarket/issues"}` |
+| `author` | Sidebar under collaborators | **MISSING** | Add author name/email |
+| `README.md` | Main content area of package page | Comprehensive, well-structured | Good |
+| `files` | Controls tarball size (shown in sidebar as "Unpacked Size") | Present with whitelist | Audit: ensure .planning/, .git/, tests/, node_modules/ excluded |
+| `engines` | Not prominently displayed but used by npx for warnings | Present (>=18) | Good |
+| `funding` | "Fund this package" banner at top | Not set | Optional; add if GitHub Sponsors active |
 
-### Launch With (v1)
+## pnpm dlx Compatibility
 
-Minimum viable product — what's needed to validate the core thesis that spec-driven marketing with positioning invariance produces better outcomes than ad-hoc AI content generation.
+| Concern | Status | Action |
+|---------|--------|--------|
+| `pnpm dlx taketomarket` executes bin entry | Works if bin field is correct | Already correct |
+| postinstall scripts run by default in dlx | Not using postinstall | No issue |
+| pnpm v10 stricter binary resolution | Only affects nested deps, not top-level bin | No issue for zero-dep package |
+| `pnpx taketomarket` alias | Works automatically via pnpm | Document as alternative |
+| `--` separator for flags | `pnpm dlx taketomarket -- --runtime codex` | Document in README |
 
-- [ ] **Onboarding (`/ttm-init`)** — Interview-driven generation of all reference files. Without this, users cannot start.
-- [ ] **Campaign creation (`/ttm-new-campaign`)** — Creates campaign directory, initializes state, links to reference files.
-- [ ] **Brief phase (`/ttm-brief`)** — Generates campaign brief with output AND outcome metrics. This is where outcome-over-output is enforced.
-- [ ] **Produce phase (`/ttm-produce`)** — Generates content assets in fresh contexts with brief + positioning + brand + ICP loaded. Wave-parallel for multi-asset campaigns.
-- [ ] **Verify phase (`/ttm-verify`)** — Quality gate wall with base 10 gates. Pass/fail per gate. Deviation reports with 3 options.
-- [ ] **Review phase (`/ttm-review`)** — Human review with structured feedback collection.
-- [ ] **Fix phase (`/ttm-fix`)** — Root cause > fix brief > re-produce > re-verify. 3-attempt cap.
-- [ ] **Ship phase (`/ttm-ship`)** — Marks assets as shipped, generates publish-ready output with metadata.
-- [ ] **State management (`/ttm-state`, `/ttm-resume`)** — Persist and resume campaign state across sessions.
-- [ ] **POSITIONING.md as invariant** — Loaded into every phase, drift detection in Verify, deviation reports.
-- [ ] **2-3 discipline playbooks** — Start with SEO, Email, and LinkedIn (highest demand, most structured formats). Add others post-validation.
+## Reference: How GSD (get-shit-done-cc) Does It
 
-### Add After Validation (v1.x)
+GSD is the closest comparable package (31K+ stars, same architecture pattern). Key patterns:
 
-Features to add once the core lifecycle is working and users confirm the approach.
+| Aspect | GSD Pattern | takeToMarket Status |
+|--------|-------------|---------------------|
+| bin field | `{"get-shit-done-cc": "bin/install.js"}` matching package name | Have `{"taketomarket": "./install.js"}` -- correct |
+| description | Short, mentions key runtimes | Already good |
+| keywords | 10 keywords covering runtimes + concepts | Expand from 5 to ~10 |
+| homepage | Points to GitHub repo | **Need to add** |
+| repository | Standard `git+https://` format | **Need to add** |
+| bugs | GitHub issues URL | **Need to add** |
+| author | Organization name | **Need to add** |
+| Multiple dist-tags | latest, canary, next, experimental | Overkill for first publish; just use `latest` |
+| Version | 1.41.1 (rapid iteration) | Start at 1.0.0 |
+| Bin aliases | 3 bin entries (main + aliases) | Keep single entry for simplicity |
 
-- [ ] **Measure phase (`/ttm-measure`)** — Manual data paste + analysis against outcome metrics. Trigger: users completing Ship and wanting to close the loop.
-- [ ] **Learn phase (`/ttm-learn`)** — Extract lessons, propose reference file edits. Trigger: users completing Measure and wanting compound improvement.
-- [ ] **Remaining playbooks** — AEO, YouTube, Social, Paid Ads, Affiliate, PR/Media, Events. Trigger: user demand for specific channels.
-- [ ] **Content repurposing (`/ttm-repurpose`)** — Long-form to derivatives pipeline. Trigger: users producing long-form content and wanting channel coverage.
-- [ ] **Meta-gates** — Portfolio balance, calendar collision, theme consistency. Trigger: users running 3+ campaigns.
-- [ ] **Positioning shift workflow (`/ttm-positioning-shift`)** — Structured repositioning with migration plan. Trigger: users hitting positioning drift they want to embrace.
-- [ ] **Reference refresh commands** — `/ttm-brand-refresh`, `/ttm-icp-refresh`, `/ttm-competitor-scan`. Trigger: reference files becoming stale.
-- [ ] **Discover phase (`/ttm-research`)** — Market/audience research before briefing. Trigger: users wanting research-informed briefs.
+## Expected User Experience Flow
 
-### Future Consideration (v2+)
+### Happy Path: `npx taketomarket`
 
-Features to defer until the skill has proven its value and user base.
+```
+$ npx taketomarket
 
-- [ ] **MCP integrations** — GA, GSC, HubSpot, Search Console for automated measurement. Why defer: adds external dependencies, MVP must work without them.
-- [ ] **Team/concurrent editing** — Locks, conflict resolution, shared state. Why defer: requires coordination infrastructure beyond file-based state.
-- [ ] **Automated competitor monitoring** — Periodic scanning and alerting. Why defer: requires background execution, not a skill capability.
-- [ ] **AEO citation tracker** — Crawl AI engines for brand mentions. Why defer: complex external dependency, niche use case.
-- [ ] **Monthly positioning audit automation** — Scheduled sampling of recent assets. Why defer: cron-like behavior is a V2 concern; manual `/ttm-positioning-check` suffices.
+takeToMarket v1.0.0                          <-- Version banner (TO ADD)
+Runtime: claude (auto-detected)
+Target: /Users/foo/.claude/plugins/taketomarket
 
-## Feature Prioritization Matrix
+  Copying .claude-plugin/
+  Copying skills/
+  Copying workflows/
+  Copying templates/
+  Copying references/
+  Copying playbooks/
+  Copying gates/
+  Copying bin/
+  Copying settings.json
 
-| Feature | User Value | Implementation Cost | Priority |
-|---------|------------|---------------------|----------|
-| Onboarding (`/ttm-init`) | HIGH | MEDIUM | P1 |
-| Campaign lifecycle (9 phases) | HIGH | HIGH | P1 |
-| Positioning-as-invariant | HIGH | MEDIUM | P1 |
-| Quality gate wall (base 10) | HIGH | HIGH | P1 |
-| State persistence | HIGH | MEDIUM | P1 |
-| Outcome-over-output enforcement | HIGH | LOW | P1 |
-| Fix-as-you-go with root cause | MEDIUM | MEDIUM | P1 |
-| SEO playbook | HIGH | MEDIUM | P1 |
-| Email playbook | HIGH | MEDIUM | P1 |
-| LinkedIn playbook | MEDIUM | MEDIUM | P1 |
-| Wave-parallel production | MEDIUM | MEDIUM | P2 |
-| Content repurposing | MEDIUM | MEDIUM | P2 |
-| Measure phase | HIGH | MEDIUM | P2 |
-| Learn phase + LEARNINGS.md | HIGH | HIGH | P2 |
-| Meta-gates | MEDIUM | MEDIUM | P2 |
-| Deviation reports (3 options) | MEDIUM | LOW | P1 |
-| Positioning shift workflow | LOW | MEDIUM | P2 |
-| Remaining 7 playbooks | MEDIUM | HIGH | P2 |
-| Reference refresh commands | LOW | LOW | P2 |
-| Discover phase | MEDIUM | MEDIUM | P2 |
-| MCP integrations | MEDIUM | HIGH | P3 |
-| Team features | LOW | HIGH | P3 |
+Validation:
+  [PASS] .claude-plugin
+  [PASS] skills (27 SKILL.md files)
+  [PASS] workflows
+  [PASS] templates
+  [PASS] references
+  [PASS] playbooks
+  [PASS] gates
+  [PASS] bin
+  [PASS] plugin.json
 
-**Priority key:**
-- P1: Must have for launch — validates the core thesis
-- P2: Should have, add after core lifecycle works
-- P3: Nice to have, future consideration after product-market fit
+Installation complete!
 
-## Competitor Feature Analysis
+Quick start:
+  1. Open a project directory
+  2. Run /ttm-init to set up your marketing workspace
+  3. Run /ttm-new-campaign <name> to start your first campaign
 
-| Feature | Jasper AI | Writer.com | Generic "AI Marketing" prompts | takeToMarket |
-|---------|-----------|------------|-------------------------------|--------------|
-| Brand voice loading | Yes (Style Guide) | Yes (brand graph) | User pastes context manually | BRAND.md + POSITIONING.md loaded automatically into every phase |
-| Quality gates | Basic (brand voice check) | Basic (tone/style) | None | 10+ base gates + discipline-specific gates per playbook |
-| Campaign lifecycle | Brief > Generate > Publish | Template > Generate > Review | None (single-shot generation) | 9-phase lifecycle with state persistence |
-| Positioning enforcement | Suggestions only | Terminology enforcement | None | Hard invariant with deviation reports and 3 structured options |
-| Outcome metrics | Analytics dashboard (separate) | None | None | Required at brief time, verified at measure time |
-| Fix workflow | "Regenerate" button | "Revise" with notes | Re-prompt | Root cause > fix brief > isolated re-production > re-verify (3-attempt cap) |
-| Learning system | None | None | None | LEARNINGS.md with root-cause taxonomy, reference file update proposals |
-| Multi-channel | Template library per channel | Channel-specific generation | Manual per channel | Discipline playbooks with channel-specific quality gates |
-| Content repurposing | Content Pipelines (auto-variation) | Cross-channel adaptation | Manual | Full brief > produce > verify cycle per derivative |
-| Pricing | $49-$125/mo SaaS | Enterprise SaaS | Free (just prompts) | Free and open source (skill install) |
-| Runs where | Browser (their cloud) | Browser (their cloud) | Any chat interface | User's Claude Code / Codex environment (local) |
+Documentation: https://github.com/taketomarket/taketomarket
+```
+
+### Error Path: Missing runtime directory
+
+```
+$ npx taketomarket
+Note: Defaulting to Claude Code. Use --runtime codex if using Codex.
+
+takeToMarket v1.0.0
+Runtime: claude
+Target: /Users/foo/.claude/plugins/taketomarket
+
+  Copying .claude-plugin/
+  ...
+
+Installation complete!
+```
+
+### Dry Run: `npx taketomarket --dry-run`
+
+```
+$ npx taketomarket --dry-run
+
+takeToMarket v1.0.0
+[DRY RUN] Validating source package...
+
+Validation:
+  [PASS] .claude-plugin
+  [PASS] skills (27 SKILL.md files)
+  ...
+
+[DRY RUN] No files written.
+```
+
+## MVP Recommendation
+
+**Must-have for npm publish (blocking):**
+
+1. Add `repository`, `homepage`, `bugs`, `author` fields to package.json
+2. Add `--version` / `-v` flag to install.js (read version from package.json)
+3. Print version banner at start of install output ("takeToMarket v1.0.0")
+4. Verify LICENSE file exists and is included in tarball
+5. Audit `files` whitelist -- ensure .planning/, tests/, *.test.* excluded
+6. Bump version to 1.0.0 (semver signal: stable, matches shipped status)
+7. Expand keywords to ~10 terms for npm search discoverability
+
+**Nice-to-have (non-blocking for publish):**
+
+- `--local` flag for project-level install (team repos)
+- `funding` field in package.json
+- Colored output with NO_COLOR env var respect
+
+**Defer to post-publish iterations:**
+
+- Update notification (requires npm registry API check)
+- Multiple dist-tags (canary, next) -- justify with iteration cadence
+- Interactive runtime selection -- auto-detect + flags is the right approach
+- `--uninstall` flag -- manual rm suffices for now
 
 ## Sources
 
-- [Jasper AI](https://www.jasper.ai/) — Content pipelines, brand voice, campaign management features
-- [Typeface AI](https://www.typeface.ai/blog/content-quality-control-in-ai-marketing-enterprise-governance-and-best-practices) — Content quality control and governance patterns
-- [GSD (Get Shit Done)](https://github.com/gsd-build/get-shit-done) — Meta-prompting architecture, state management, quality gates, wave-parallel execution
-- [Claude Code Skills Docs](https://code.claude.com/docs/en/skills) — Skill architecture, slash commands, state management
-- [DOJO AI Marketing OS Guide](https://www.dojoai.com/blog/what-is-a-marketing-operating-system-the-complete-2026-guide) — Marketing OS feature landscape
-- [Spinta Digital AI Marketing OS](https://spintadigital.com/blog/ai-marketing-os/) — AI marketing OS architecture patterns
-- [Averi AI](https://www.averi.ai/learn/how-to-maintain-brand-consistency-in-ai-generated-marketing-content) — Brand consistency enforcement in AI content
-- [Growth Rocket](https://www.growth-rocket.com/blog/how-to-maintain-brand-voice-with-ai-workflows/) — Quality control in AI-powered marketing workflows
+- [npm package.json documentation](https://docs.npmjs.com/cli/v11/configuring-npm/package-json/) -- Official field specifications (HIGH confidence)
+- [npx documentation](https://docs.npmjs.com/cli/v11/commands/npx/) -- How npx resolves and runs bin entries (HIGH confidence)
+- [pnpm dlx documentation](https://pnpm.io/cli/pnx) -- pnpm equivalent behavior (HIGH confidence)
+- [get-shit-done-cc on npm](https://www.npmjs.com/package/get-shit-done-cc) -- Reference implementation for AI skill installer package (HIGH confidence, verified via `npm view`)
+- [GSD GitHub](https://github.com/gsd-build/get-shit-done) -- Distribution patterns (HIGH confidence)
+- [Installing and running Node.js bin scripts](https://2ality.com/2022/08/installing-nodejs-bin-scripts.html) -- Shebang and bin field mechanics (MEDIUM confidence)
+- [Best Practices for npm Packages](https://blog.inedo.com/npm/best-practices-for-your-organizations-npm-packages) -- Metadata organization (MEDIUM confidence)
+- [pnpm dlx vs npx discussion](https://github.com/orgs/pnpm/discussions/5820) -- Behavioral differences (MEDIUM confidence)
 
 ---
-*Feature research for: AI-powered marketing operating system (Claude Code skill)*
-*Researched: 2026-04-21*
+*Feature research for: npm publish prep and testing (v1.1 milestone)*
+*Researched: 2026-05-11*
