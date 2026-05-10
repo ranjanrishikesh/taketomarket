@@ -9,10 +9,10 @@
 - [ ] **TEST-05**: Unit tests cover health.cjs (init check, directory validation)
 - [ ] **TEST-06**: Unit tests cover commit.cjs (commit message formatting)
 - [ ] **TEST-07**: Unit tests cover core.cjs (error handling, arg parsing)
-- [ ] **TEST-08**: install.js has require.main guard for testability
+- [x] **TEST-08**: install.js has require.main guard for testability
 - [ ] **TEST-09**: E2E test validates full install flow in isolated temp directory
 - [ ] **TEST-10**: E2E test validates --dry-run produces correct validation output
-- [ ] **TEST-11**: package.json has `scripts.test` set to `node --test`
+- [x] **TEST-11**: package.json has `scripts.test` set to `node --test`
 
 ## Package Metadata & Fixes
 
@@ -62,10 +62,10 @@
 | TEST-05 | Phase 13 | Pending |
 | TEST-06 | Phase 13 | Pending |
 | TEST-07 | Phase 13 | Pending |
-| TEST-08 | Phase 12 | Pending |
+| TEST-08 | Phase 12 | Complete |
 | TEST-09 | Phase 14 | Pending |
 | TEST-10 | Phase 14 | Pending |
-| TEST-11 | Phase 12 | Pending |
+| TEST-11 | Phase 12 | Complete |
 | PKG-01 | Phase 15 | Pending |
 | PKG-02 | Phase 15 | Pending |
 | PKG-03 | Phase 15 | Pending |

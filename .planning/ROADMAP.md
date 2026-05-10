@@ -121,7 +121,7 @@ Phases execute in numeric order: 12 -> 13 -> 14 -> 15 -> 16
 | 9. Measurement, Learning, and Remaining Playbooks | v1.0 | 6/6 | Complete | 2026-05-02 |
 | 10. Distribution and Polish | v1.0 | 5/5 | Complete | 2026-05-04 |
 | 11. Gap Closure | v1.0 | 3/3 | Complete | 2026-05-04 |
-| 12. Test Infrastructure & Installer Refactor | v1.1 | 2/2 | Complete   | 2026-05-10 |
+| 12. Test Infrastructure & Installer Refactor | v1.1 | 2/2 | Complete    | 2026-05-10 |
 | 13. Unit Tests for bin/lib Modules | v1.1 | 0/? | Not started | - |
 | 14. E2E & Integration Tests | v1.1 | 0/? | Not started | - |
 | 15. Package Metadata & CLI Polish | v1.1 | 0/? | Not started | - |
