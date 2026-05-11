@@ -1,0 +1,38 @@
+# .npmignore — exclusions from the npm tarball.
+# Defense-in-depth complement to package.json `files[]` (which is the allow-list).
+# Per Phase 15 D-07: explicit exclusion of planning/dev artifacts to prevent leakage.
+
+# Project planning and ops artifacts
+.planning/
+.marketing/
+.claude/
+
+# Source control
+.git/
+.gitignore
+
+# Dev-only scripts and configs
+.cursor/
+.vscode/
+.idea/
+
+# Test infrastructure (allow-listed in files[] would be wrong — never ship tests)
+test/
+*.test.cjs
+*.test.js
+
+# Node modules and build output
+node_modules/
+coverage/
+.nyc_output/
+
+# Editor noise
+*.swp
+*.swo
+.DS_Store
+
+# Project docs that aren't user-facing
+CLAUDE.md
+AGENTS.md
+docs/
+idea.md
