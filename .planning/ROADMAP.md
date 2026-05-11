@@ -99,7 +99,10 @@ Plans:
   3. LICENSE file exists at repo root matching MIT declaration
   4. `npx taketomarket --version` prints current version and exits
   5. Install output shows version banner at start
-**Plans**: TBD
+**Plans:** 1 plan
+
+Plans:
+- [ ] 15-01-PLAN.md — Add package.json metadata + .npmignore + install.js --version/-v + version banner + manifest guard test
 
 ### Phase 16: Canary Publish & Final Release
 **Goal**: Package is live on npm and users can install from a clean environment via npx or pnpm dlx
@@ -135,5 +138,5 @@ Phases execute in numeric order: 12 -> 13 -> 14 -> 15 -> 16
 | 12. Test Infrastructure & Installer Refactor | v1.1 | 2/2 | Complete    | 2026-05-10 |
 | 13. Unit Tests for bin/lib Modules | v1.1 | 4/4 | Complete    | 2026-05-11 |
 | 14. E2E & Integration Tests | v1.1 | 1/1 | Complete    | 2026-05-11 |
-| 15. Package Metadata & CLI Polish | v1.1 | 0/? | Not started | - |
+| 15. Package Metadata & CLI Polish | v1.1 | 0/1 | Planned     | - |
 | 16. Canary Publish & Final Release | v1.1 | 0/? | Not started | - |
