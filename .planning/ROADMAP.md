@@ -83,7 +83,11 @@ Plans:
   1. E2E test installs taketomarket into an isolated temp directory and verifies all expected files exist
   2. E2E test validates --dry-run produces correct validation output without writing files
   3. Tests use child process execution with overridden HOME to prevent pollution of real environment
-**Plans**: TBD
+**Plans:** 1 plan
+
+Plans:
+**Wave 1**
+- [ ] 14-01-PLAN.md — Create test/install-e2e.test.cjs covering all 6 E2E scenarios (claude/codex happy paths, auto-detect, --dry-run clean + installed, unknown --runtime warning) via child_process.execFileSync against isolated HOME
 
 ### Phase 15: Package Metadata & CLI Polish
 **Goal**: The npm package page is complete and professional, and CLI provides version information
@@ -130,6 +134,6 @@ Phases execute in numeric order: 12 -> 13 -> 14 -> 15 -> 16
 | 11. Gap Closure | v1.0 | 3/3 | Complete | 2026-05-04 |
 | 12. Test Infrastructure & Installer Refactor | v1.1 | 2/2 | Complete    | 2026-05-10 |
 | 13. Unit Tests for bin/lib Modules | v1.1 | 4/4 | Complete    | 2026-05-11 |
-| 14. E2E & Integration Tests | v1.1 | 0/? | Not started | - |
+| 14. E2E & Integration Tests | v1.1 | 0/1 | Planned | - |
 | 15. Package Metadata & CLI Polish | v1.1 | 0/? | Not started | - |
 | 16. Canary Publish & Final Release | v1.1 | 0/? | Not started | - |
