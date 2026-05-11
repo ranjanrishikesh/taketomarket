@@ -31,7 +31,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 **Milestone Goal:** Close remaining gaps from v1.0 and publish the package to npm so users can install via `npx taketomarket` / `pnpm dlx taketomarket`.
 
 - [x] **Phase 12: Test Infrastructure & Installer Refactor** - Make install.js testable and establish test foundation (completed 2026-05-10)
-- [ ] **Phase 13: Unit Tests for bin/lib Modules** - Comprehensive unit test coverage for all CJS modules
+- [x] **Phase 13: Unit Tests for bin/lib Modules** - Comprehensive unit test coverage for all CJS modules (completed 2026-05-11)
 - [ ] **Phase 14: E2E & Integration Tests** - Full install flow validation in isolated environments
 - [ ] **Phase 15: Package Metadata & CLI Polish** - Complete npm page metadata and CLI UX improvements
 - [ ] **Phase 16: Canary Publish & Final Release** - Safe two-step publish to npm registry
@@ -66,14 +66,14 @@ Plans:
   3. state.cjs tests verify state read and state update operations
   4. campaign.cjs tests verify campaign init, state, update, and list operations
   5. health.cjs, commit.cjs, and core.cjs each have passing test files
-**Plans:** 4 plans
+**Plans:** 4/4 plans complete
 
 Plans:
 **Wave 1** *(all 4 plans run in parallel -- no file overlap)*
-- [ ] 13-01-PLAN.md — Unit tests for core.cjs (7 exports) and slug.cjs (2 exports)
-- [ ] 13-02-PLAN.md — Unit tests for state.cjs (2 exports) and commit.cjs (1 export)
-- [ ] 13-03-PLAN.md — Unit tests for health.cjs (2 exports: cmdHealth basic+full, cmdInit)
-- [ ] 13-04-PLAN.md — Extend helpers.cjs with createMockCampaign; unit tests for campaign.cjs (6 exports)
+- [x] 13-01-PLAN.md — Unit tests for core.cjs (7 exports) and slug.cjs (2 exports)
+- [x] 13-02-PLAN.md — Unit tests for state.cjs (2 exports) and commit.cjs (1 export)
+- [x] 13-03-PLAN.md — Unit tests for health.cjs (2 exports: cmdHealth basic+full, cmdInit)
+- [x] 13-04-PLAN.md — Extend helpers.cjs with createMockCampaign; unit tests for campaign.cjs (6 exports)
 
 ### Phase 14: E2E & Integration Tests
 **Goal**: The full install flow is validated end-to-end in isolated environments proving the user experience works
@@ -129,7 +129,7 @@ Phases execute in numeric order: 12 -> 13 -> 14 -> 15 -> 16
 | 10. Distribution and Polish | v1.0 | 5/5 | Complete | 2026-05-04 |
 | 11. Gap Closure | v1.0 | 3/3 | Complete | 2026-05-04 |
 | 12. Test Infrastructure & Installer Refactor | v1.1 | 2/2 | Complete    | 2026-05-10 |
-| 13. Unit Tests for bin/lib Modules | v1.1 | 0/4 | Planning | - |
+| 13. Unit Tests for bin/lib Modules | v1.1 | 4/4 | Complete   | 2026-05-11 |
 | 14. E2E & Integration Tests | v1.1 | 0/? | Not started | - |
 | 15. Package Metadata & CLI Polish | v1.1 | 0/? | Not started | - |
 | 16. Canary Publish & Final Release | v1.1 | 0/? | Not started | - |
