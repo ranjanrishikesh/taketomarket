@@ -34,7 +34,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 - [x] **Phase 13: Unit Tests for bin/lib Modules** - Comprehensive unit test coverage for all CJS modules (completed 2026-05-11)
 - [x] **Phase 14: E2E & Integration Tests** - Full install flow validation in isolated environments (completed 2026-05-11)
 - [x] **Phase 15: Package Metadata & CLI Polish** - Complete npm page metadata and CLI UX improvements (completed 2026-05-11)
-- [ ] **Phase 16: Canary Publish & Final Release** - Safe two-step publish to npm registry
+- [x] **Phase 16: Canary Publish & Final Release** - Safe two-step publish to npm registry (completed 2026-05-11)
 
 ## Phase Details
 
@@ -114,10 +114,10 @@ Plans:
   3. `pnpm dlx taketomarket --dry-run` works from a clean environment after canary publish
   4. Version is bumped to 1.0.0 and republished after canary validation
   5. npm 2FA is enabled on publisher account
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 
 Plans:
-- [ ] 16-01-PLAN.md — Canary publish 0.1.0, smoke via npx + pnpm dlx, bump to 1.0.0, final publish, git tag v1.0.0
+- [x] 16-01-PLAN.md — Canary publish 0.1.0, smoke via npx + pnpm dlx, bump to 1.0.0, final publish, git tag v1.0.0
 
 ## Progress
 
@@ -142,4 +142,4 @@ Phases execute in numeric order: 12 -> 13 -> 14 -> 15 -> 16
 | 13. Unit Tests for bin/lib Modules | v1.1 | 4/4 | Complete    | 2026-05-11 |
 | 14. E2E & Integration Tests | v1.1 | 1/1 | Complete    | 2026-05-11 |
 | 15. Package Metadata & CLI Polish | v1.1 | 1/1 | Complete    | 2026-05-11 |
-| 16. Canary Publish & Final Release | v1.1 | 0/1 | Planned     | - |
+| 16. Canary Publish & Final Release | v1.1 | 1/1 | Complete    | 2026-05-11 |

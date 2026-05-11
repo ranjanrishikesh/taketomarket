@@ -32,11 +32,11 @@
 ## Publish & Validation
 
 - [x] **PUB-01**: `npm pack --dry-run` shows all expected files without .planning/ or .git/ leakage
-- [ ] **PUB-02**: Package published to npm as `taketomarket@0.1.0` (canary)
-- [ ] **PUB-03**: `npx taketomarket --dry-run` works from clean environment after publish
-- [ ] **PUB-04**: `pnpm dlx taketomarket --dry-run` works from clean environment after publish
-- [ ] **PUB-05**: Version bumped to 1.0.0 and republished after canary validation
-- [ ] **PUB-06**: npm 2FA enabled on publisher account
+- [x] **PUB-02**: Package published to npm as `taketomarket@0.1.0` (canary)
+- [x] **PUB-03**: `npx taketomarket --dry-run` works from clean environment after publish
+- [x] **PUB-04**: `pnpm dlx taketomarket --dry-run` works from clean environment after publish
+- [x] **PUB-05**: Version bumped to 1.0.0 and republished after canary validation
+- [x] **PUB-06**: npm 2FA enabled on publisher account
 
 ## Future Requirements (Deferred)
 
@@ -76,8 +76,8 @@
 | CLI-01 | Phase 15 | Complete |
 | CLI-02 | Phase 15 | Complete |
 | PUB-01 | Phase 15 | Complete |
-| PUB-02 | Phase 16 | Pending |
-| PUB-03 | Phase 16 | Pending |
-| PUB-04 | Phase 16 | Pending |
-| PUB-05 | Phase 16 | Pending |
-| PUB-06 | Phase 16 | Pending |
+| PUB-02 | Phase 16 | Complete |
+| PUB-03 | Phase 16 | Complete |
+| PUB-04 | Phase 16 | Complete |
+| PUB-05 | Phase 16 | Complete |
+| PUB-06 | Phase 16 | Complete |
