@@ -9,6 +9,7 @@ const os = require('os');
 // ── Constants ────────────────────────────────────────────────────────────────
 
 const PACKAGE_ROOT = __dirname;
+const VERSION = require('./package.json').version;
 
 const DIRS_TO_COPY = [
   '.claude-plugin',
@@ -170,6 +171,12 @@ function validateInstall(targetDir) {
 function main() {
   const args = process.argv.slice(2);
 
+  // Check for --version / -v (D-10, D-11) — short-circuit BEFORE detectRuntime/validation.
+  if (args.includes('--version') || args.includes('-v')) {
+    process.stdout.write(`${VERSION}\n`);
+    process.exit(0);
+  }
+
   // Check for --help
   if (args.includes('--help') || args.includes('-h')) {
     console.log(`
@@ -200,7 +207,7 @@ Options:
   }
 
   console.log('');
-  console.log('takeToMarket installer');
+  console.log(`takeToMarket installer v${VERSION}`);
   console.log(`Runtime: ${runtime}`);
   console.log(`Target: ${targetDir}`);
   console.log('');
