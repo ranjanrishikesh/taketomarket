@@ -138,3 +138,11 @@ This validates directory integrity, reference file presence, and state consisten
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+## Privacy
+
+takeToMarket runs entirely on your local filesystem. No data collection, no telemetry, no servers. See [PRIVACY.md](PRIVACY.md).
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
