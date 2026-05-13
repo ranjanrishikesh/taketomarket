@@ -363,8 +363,8 @@ describe('printInstallSummary', () => {
     install.printInstallSummary(tmp.dir);
     console.log = origLog;
     const joined = lines.join('\n');
-    assert.ok(joined.includes('/taketomarket:ttm-init'), 'includes ttm-init');
-    assert.ok(joined.includes('/taketomarket:ttm-produce'), 'includes ttm-produce');
+    assert.ok(joined.includes('/ttm-init'), 'includes ttm-init');
+    assert.ok(joined.includes('/ttm-produce'), 'includes ttm-produce');
     assert.ok(joined.includes('Set up workspace'), 'includes description');
   });
 });

@@ -56,9 +56,9 @@ node install.js
 ## Quick Start
 
 ```
-/taketomarket:ttm-init             # set up workspace (one time)
-/taketomarket:ttm-new-campaign     # create first campaign
-/taketomarket:ttm-produce          # run production wave
+/ttm-init             # set up workspace (one time)
+/ttm-new-campaign     # create first campaign
+/ttm-produce          # run production wave
 ```
 
 ## Campaign Lifecycle
@@ -79,39 +79,39 @@ node install.js
 
 | Command | Description |
 |---------|-------------|
-| `/taketomarket:ttm-aeo-check` | Check citation status across AI engines for a query |
-| `/taketomarket:ttm-affiliate-kit` | Generate creative kit for affiliate partners |
-| `/taketomarket:ttm-archive` | Archive a completed campaign, finalize state, and update LEARNINGS.md |
-| `/taketomarket:ttm-brand-refresh` | Update BRAND.md with new proof points and deprecate expired ones |
-| `/taketomarket:ttm-brief` | Generate a campaign brief with mandatory outcome metrics, positioning anchor, and channel mix |
-| `/taketomarket:ttm-competitor-scan` | On-demand competitor analysis that updates COMPETITORS.md |
-| `/taketomarket:ttm-email-preflight` | Deliverability, dark-mode, and spam-trigger scan for email assets |
-| `/taketomarket:ttm-fix` | Fix phase: root cause analysis, fix brief, re-produce, re-verify (capped 3×) |
-| `/taketomarket:ttm-health` | Validate .marketing/ directory integrity, reference file completeness, and state consistency |
-| `/taketomarket:ttm-icp-refresh` | Update ICP.md from new customer data including calls, reviews, and feedback |
-| `/taketomarket:ttm-init` | Interview-driven onboarding that generates all .marketing/ reference files |
-| `/taketomarket:ttm-keyword-map` | Generate keyword cluster map with intent tags |
-| `/taketomarket:ttm-learn` | Extract lessons from campaign data, propose reference file edits, log to LEARNINGS.md |
-| `/taketomarket:ttm-measure` | Analyze campaign analytics against outcome metrics using attribution models |
-| `/taketomarket:ttm-new-campaign` | Create a new campaign directory with initialized state and reference file links |
-| `/taketomarket:ttm-next` | Guide user to the right next command based on current campaign state |
-| `/taketomarket:ttm-positioning-check` | Sample recent assets and report positioning drift percentage and analysis |
-| `/taketomarket:ttm-positioning-shift` | Controlled positioning change with reasoning, migration plan, and approval gate |
-| `/taketomarket:ttm-produce` | Generate content assets in fresh contexts loaded with brief, positioning, brand, ICP, and playbook |
-| `/taketomarket:ttm-repurpose` | Fan out a long-form asset into derivatives across channels with full brief-produce-verify per derivative |
-| `/taketomarket:ttm-research` | Market and audience research including SERP, competitor content, and narrative mapping |
-| `/taketomarket:ttm-resume` | Resume a paused campaign at its last completed phase |
-| `/taketomarket:ttm-review` | Present assets with structured review checklist for human evaluation |
-| `/taketomarket:ttm-seo-audit` | Technical and content SEO audit of a URL or sitemap |
-| `/taketomarket:ttm-ship` | Generate launch checklist confirming tracking, UTMs, funnel testing, and asset finalization |
-| `/taketomarket:ttm-state` | Display current campaign states, decisions in flight, blockers, and experiments |
-| `/taketomarket:ttm-verify` | Run all applicable quality gates on every asset with pass/fail report and line-level feedback |
+| `/ttm-aeo-check` | Check citation status across AI engines for a query |
+| `/ttm-affiliate-kit` | Generate creative kit for affiliate partners |
+| `/ttm-archive` | Archive a completed campaign, finalize state, and update LEARNINGS.md |
+| `/ttm-brand-refresh` | Update BRAND.md with new proof points and deprecate expired ones |
+| `/ttm-brief` | Generate a campaign brief with mandatory outcome metrics, positioning anchor, and channel mix |
+| `/ttm-competitor-scan` | On-demand competitor analysis that updates COMPETITORS.md |
+| `/ttm-email-preflight` | Deliverability, dark-mode, and spam-trigger scan for email assets |
+| `/ttm-fix` | Fix phase: root cause analysis, fix brief, re-produce, re-verify (capped 3×) |
+| `/ttm-health` | Validate .marketing/ directory integrity, reference file completeness, and state consistency |
+| `/ttm-icp-refresh` | Update ICP.md from new customer data including calls, reviews, and feedback |
+| `/ttm-init` | Interview-driven onboarding that generates all .marketing/ reference files |
+| `/ttm-keyword-map` | Generate keyword cluster map with intent tags |
+| `/ttm-learn` | Extract lessons from campaign data, propose reference file edits, log to LEARNINGS.md |
+| `/ttm-measure` | Analyze campaign analytics against outcome metrics using attribution models |
+| `/ttm-new-campaign` | Create a new campaign directory with initialized state and reference file links |
+| `/ttm-next` | Guide user to the right next command based on current campaign state |
+| `/ttm-positioning-check` | Sample recent assets and report positioning drift percentage and analysis |
+| `/ttm-positioning-shift` | Controlled positioning change with reasoning, migration plan, and approval gate |
+| `/ttm-produce` | Generate content assets in fresh contexts loaded with brief, positioning, brand, ICP, and playbook |
+| `/ttm-repurpose` | Fan out a long-form asset into derivatives across channels with full brief-produce-verify per derivative |
+| `/ttm-research` | Market and audience research including SERP, competitor content, and narrative mapping |
+| `/ttm-resume` | Resume a paused campaign at its last completed phase |
+| `/ttm-review` | Present assets with structured review checklist for human evaluation |
+| `/ttm-seo-audit` | Technical and content SEO audit of a URL or sitemap |
+| `/ttm-ship` | Generate launch checklist confirming tracking, UTMs, funnel testing, and asset finalization |
+| `/ttm-state` | Display current campaign states, decisions in flight, blockers, and experiments |
+| `/ttm-verify` | Run all applicable quality gates on every asset with pass/fail report and line-level feedback |
 
 ## Verify Installation
 
 Inside Claude Code, run:
 ```
-/taketomarket:ttm-health
+/ttm-health
 ```
 
 This validates directory integrity, reference file presence, and state consistency.

@@ -429,11 +429,11 @@ function printInstallSummary(packageRoot = PACKAGE_ROOT) {
   console.log('');
   console.log('Available commands:');
   for (const { name, description } of skills) {
-    const cmd = `/taketomarket:${name}`.padEnd(42);
+    const cmd = `/${name}`.padEnd(30);
     console.log(`  ${cmd} ${description}`);
   }
   console.log('');
-  console.log('Quick start: open any project in Claude Code and run /taketomarket:ttm-init');
+  console.log('Quick start: open any project in Claude Code and run /ttm-init');
 }
 
 /**
