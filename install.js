@@ -29,7 +29,7 @@ const FILES_TO_COPY = [
 
 // ── Runtime Selection ─────────────────────────────────────────────────────────
 
-const RUNTIME_MENU = ['claude', 'codex', 'cursor', 'windsurf', 'gemini'];
+const RUNTIME_MENU = ['claude', 'codex', 'cursor', 'windsurf', 'gemini', 'agents'];
 
 /**
  * Parse user input from the runtime selection prompt.
@@ -39,15 +39,15 @@ const RUNTIME_MENU = ['claude', 'codex', 'cursor', 'windsurf', 'gemini'];
 function parseRuntimeChoices(input) {
   const trimmed = input.trim();
   if (!trimmed) return null;
-  if (trimmed === '6') return [...RUNTIME_MENU];
-  if (trimmed === '7') return ['custom'];
+  if (trimmed === '7') return [...RUNTIME_MENU];
+  if (trimmed === '8') return ['custom'];
 
   const parts = trimmed.split(',').map(s => s.trim());
   const names = new Set();
   for (const part of parts) {
     const n = parseInt(part, 10);
-    if (isNaN(n) || n < 1 || n > 7) return null;
-    if (n === 7) return ['custom'];
+    if (isNaN(n) || n < 1 || n > 8) return null;
+    if (n === 8) return ['custom'];
     names.add(RUNTIME_MENU[n - 1]);
   }
   return [...names];
@@ -84,6 +84,11 @@ function buildRuntimeTargets(homeDir = os.homedir()) {
       label: 'Gemini CLI',
       skillsDir: path.join(homeDir, '.gemini', 'skills'),
       parentDir: path.join(homeDir, '.gemini'),
+    },
+    agents: {
+      label: 'All runtimes (~/.agents/skills/ — universal)',
+      skillsDir: path.join(homeDir, '.agents', 'skills'),
+      parentDir: path.join(homeDir, '.agents'),
     },
   };
 }
@@ -134,8 +139,9 @@ async function promptRuntimeSelection(args, homeDir = os.homedir()) {
   console.log('  3. Cursor');
   console.log('  4. Windsurf');
   console.log('  5. Gemini CLI');
-  console.log('  6. All of the above');
-  console.log('  7. Let me type a custom path');
+  console.log('  6. All runtimes via ~/.agents/skills/ (universal — works for Codex, Cursor, Windsurf, Gemini)');
+  console.log('  7. All of the above');
+  console.log('  8. Let me type a custom path');
   console.log('');
 
   let choices = null;
@@ -144,7 +150,7 @@ async function promptRuntimeSelection(args, homeDir = os.homedir()) {
     const input = await ask('Your choice (comma-separated, e.g. 1,3): ');
     choices = parseRuntimeChoices(input);
     if (choices === null) {
-      console.log('Invalid input. Please enter numbers 1-7 separated by commas.');
+      console.log('Invalid input. Please enter numbers 1-8 separated by commas.');
       attempts++;
     }
   }

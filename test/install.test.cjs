@@ -161,13 +161,17 @@ describe('parseRuntimeChoices', () => {
     assert.deepStrictEqual(install.parseRuntimeChoices('1,3'), ['claude', 'cursor']);
   });
 
-  it('parses "6" as all named runtimes', () => {
-    const result = install.parseRuntimeChoices('6');
-    assert.deepStrictEqual(result, ['claude', 'codex', 'cursor', 'windsurf', 'gemini']);
+  it('parses "6" as agents (universal path)', () => {
+    assert.deepStrictEqual(install.parseRuntimeChoices('6'), ['agents']);
   });
 
-  it('parses "7" as custom', () => {
-    assert.deepStrictEqual(install.parseRuntimeChoices('7'), ['custom']);
+  it('parses "7" as all named runtimes', () => {
+    const result = install.parseRuntimeChoices('7');
+    assert.deepStrictEqual(result, ['claude', 'codex', 'cursor', 'windsurf', 'gemini', 'agents']);
+  });
+
+  it('parses "8" as custom', () => {
+    assert.deepStrictEqual(install.parseRuntimeChoices('8'), ['custom']);
   });
 
   it('returns null for empty input', () => {
@@ -175,7 +179,7 @@ describe('parseRuntimeChoices', () => {
   });
 
   it('returns null for out-of-range input', () => {
-    assert.strictEqual(install.parseRuntimeChoices('8'), null);
+    assert.strictEqual(install.parseRuntimeChoices('9'), null);
   });
 
   it('returns null for non-numeric input', () => {
@@ -217,6 +221,12 @@ describe('buildRuntimeTargets', () => {
     assert.ok(targets.cursor.skillsDir.includes('.cursor/skills'));
     assert.ok(targets.windsurf.skillsDir.includes('.codeium/windsurf/skills'));
     assert.ok(targets.gemini.skillsDir.includes('.gemini/skills'));
+  });
+
+  it('has agents key with ~/.agents/skills path', () => {
+    const targets = install.buildRuntimeTargets('/home');
+    assert.ok(targets.agents, 'has agents');
+    assert.ok(targets.agents.skillsDir.includes('.agents/skills'));
   });
 });
 
