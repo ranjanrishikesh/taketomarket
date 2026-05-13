@@ -50,7 +50,7 @@ An open-source Claude Code / Codex skill that brings GSD-style spec-driven devel
 | `allowed-tools` | Include `Task` for orchestration skills | Skills that spawn subagents (produce, verify) need the Task tool. Simpler skills (state, resume) only need Read/Write/Bash. |
 ## Codex Compatibility (AGENTS.md)
 ## Plugin Distribution (PRIMARY -- Recommended)
-- Namespaces skills automatically (`/taketomarket:ttm-produce`) to avoid conflicts
+- Installs skills as flat commands to `~/.claude/skills/ttm-*/` (e.g., `/ttm-produce`)
 - Supports marketplace discovery and one-command installation
 - Handles updates via `/plugin update`
 - Packages skills, agents, hooks, and bin/ together
@@ -89,7 +89,7 @@ An open-source Claude Code / Codex skill that brings GSD-style spec-driven devel
 - Add text_mode fallback for AskUserQuestion (numbered list prompts)
 - Test that all skills work without `AskUserQuestion` tool
 - Use `--text` flag detection pattern from GSD
-- All skills namespaced as `/taketomarket:ttm-*`
+- All skills installed as `/ttm-*` flat commands via `~/.claude/skills/ttm-*/`
 - Plugin manifest at `.claude-plugin/plugin.json`
 - `bin/` directory for CLI tools (added to PATH automatically)
 - `settings.json` for default configuration
