@@ -275,7 +275,7 @@ Options:
   console.log('  2. Run /ttm-init to set up your marketing workspace');
   console.log('  3. Run /ttm-new-campaign <name> to start your first campaign');
   console.log('');
-  console.log('Documentation: https://github.com/taketomarket/taketomarket/blob/main/README.md');
+  console.log('Documentation: https://github.com/ranjanrishikesh/takeToMarket#readme');
 }
 
 /**

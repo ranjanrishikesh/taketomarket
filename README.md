@@ -33,7 +33,7 @@ After installation, the installer runs structural validation and prints a pass/f
 ### Via git clone
 
 ```bash
-git clone https://github.com/taketomarket/taketomarket.git
+git clone https://github.com/ranjanrishikesh/takeToMarket.git
 cd taketomarket
 ```
 
