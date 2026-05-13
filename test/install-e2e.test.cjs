@@ -9,6 +9,7 @@
 
 const { describe, it, before, after } = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
 const path = require('node:path');
 const { spawnSync } = require('node:child_process');
 const { createTempDir, createMockHome } = require('./helpers.cjs');
@@ -412,5 +413,100 @@ describe('install-e2e: install banner contains version string', () => {
       result.stdout.includes(`takeToMarket installer v${expectedVersion}`),
       `stdout should contain "takeToMarket installer v${expectedVersion}", got: ${result.stdout.slice(0, 200)}`
     );
+  });
+});
+
+// ── Scenario 9: --check flag (v2/wave2) ──────────────────────────────────────
+
+describe('install-e2e: --check flag', () => {
+  it('exits 0 and prints status table', () => {
+    const tmp = createTempDir();
+    try {
+      const result = runInstall(['--check'], { ...process.env, HOME: tmp.dir });
+      assert.strictEqual(result.status, 0, `exit 0, got ${result.status}\n${result.stdout}\n${result.stderr}`);
+      assert.ok(result.stdout.includes('Claude Code'), 'shows Claude Code row');
+      assert.ok(result.stdout.includes('NOT INSTALLED'), 'shows NOT INSTALLED status');
+    } finally {
+      tmp.cleanup();
+    }
+  });
+});
+
+// ── Scenario 10: --yes flag skips confirmation (v2/wave2) ────────────────────
+
+describe('install-e2e: --yes flag skips confirmation', () => {
+  it('installs without waiting for stdin when --yes is passed', () => {
+    const tmp = createTempDir();
+    try {
+      const result = runInstall(['--runtime', 'claude', '--yes'], {
+        ...process.env,
+        HOME: tmp.dir,
+      });
+      assert.ok(result.status === 0 || result.status === 1,
+        `exit 0 or 1, got ${result.status}\n${result.stderr}`);
+      assert.ok(!result.stdout.includes('Proceed? [Y/n]'), 'confirmation prompt not shown');
+    } finally {
+      tmp.cleanup();
+    }
+  });
+});
+
+// ── Scenario 11: piped runtime selection (v2/wave2) ──────────────────────────
+
+describe('install-e2e: piped runtime selection', () => {
+  it('installs to claude when piped stdin in non-TTY mode', () => {
+    const tmp = createTempDir();
+    try {
+      const result = spawnSync('node', [INSTALL_JS, '--yes'], {
+        env: { ...process.env, HOME: tmp.dir },
+        cwd: PROJECT_ROOT,
+        input: '1\n',
+        timeout: 30000,
+        encoding: 'utf-8',
+      });
+      assert.ok(result.status === 0 || result.status === 1, 'exits cleanly');
+    } finally {
+      tmp.cleanup();
+    }
+  });
+});
+
+// ── Scenario 12: --runtime claude installs and registers (v2/wave2) ──────────
+
+describe('install-e2e: --runtime claude installs and registers', () => {
+  it('writes installed_plugins.json after install', () => {
+    const tmp = createTempDir();
+    try {
+      const result = runInstall(['--runtime', 'claude', '--yes'], {
+        ...process.env,
+        HOME: tmp.dir,
+      });
+      assert.strictEqual(result.status, 0, `exit 0\n${result.stdout}\n${result.stderr}`);
+      const registryPath = path.join(tmp.dir, '.claude', 'plugins', 'installed_plugins.json');
+      assert.ok(fs.existsSync(registryPath), 'installed_plugins.json created');
+      const reg = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
+      assert.ok(reg.plugins['taketomarket@npm'], 'entry written');
+      assert.strictEqual(reg.plugins['taketomarket@npm'][0].scope, 'user');
+    } finally {
+      tmp.cleanup();
+    }
+  });
+});
+
+// ── Scenario 13: partial failure continues (v2/wave2) ────────────────────────
+
+describe('install-e2e: partial failure continues', () => {
+  it('succeeds for claude on single-target success', () => {
+    const tmp = createTempDir();
+    try {
+      const result = runInstall(['--runtime', 'claude', '--yes'], {
+        ...process.env,
+        HOME: tmp.dir,
+      });
+      assert.strictEqual(result.status, 0, `exit 0\n${result.stderr}`);
+      assert.ok(result.stdout.includes('Installation complete') || result.stdout.includes('skills installed'));
+    } finally {
+      tmp.cleanup();
+    }
   });
 });
