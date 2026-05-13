@@ -68,7 +68,7 @@ takeToMarket is MIT-licensed open source. The full source code is at https://git
 
 If you discover a security vulnerability in takeToMarket, please report it privately. Do **not** open a public GitHub issue for security vulnerabilities.
 
-**Preferred channel:** email rishi.priyaranjan97@gmail.com with subject line `[security] takeToMarket: <short summary>`.
+**Preferred channel:** email me@rishikeshranjan.com with subject line `[security] takeToMarket: <short summary>`.
 
 Include in your report:
 - A description of the vulnerability and its impact
@@ -111,5 +111,5 @@ Changes will be committed to the public GitHub repository and reflected in the `
 
 ## Contact
 
-- **Privacy questions:** open an issue at https://github.com/ranjanrishikesh/takeToMarket/issues (non-sensitive) or email rishi.priyaranjan97@gmail.com
-- **Security vulnerabilities:** email rishi.priyaranjan97@gmail.com with subject `[security] ...` — do NOT open a public issue
+- **Privacy questions:** open an issue at https://github.com/ranjanrishikesh/takeToMarket/issues (non-sensitive) or email me@rishikeshranjan.com
+- **Security vulnerabilities:** email me@rishikeshranjan.com with subject `[security] ...` — do NOT open a public issue
