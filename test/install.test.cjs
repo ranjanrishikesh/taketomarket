@@ -15,12 +15,10 @@ describe('install.js module exports', () => {
 
   it('exports all expected functions', () => {
     const expectedFns = [
-      'detectRuntime',
-      'validateInstall',
-      'copyDirSync',
-      'dirExists',
-      'fileExists',
-      'printResults',
+      'validateInstall', 'copyDirSync', 'dirExists', 'fileExists', 'printResults',
+      'registerPlugin', 'parseRuntimeChoices', 'buildRuntimeTargets', 'getInstalledRuntimes',
+      'readSkillDescriptions', 'shouldProceed', 'getClaudeStatus', 'checkStatus',
+      'confirmInstall', 'printInstallSummary',
     ];
     for (const fn of expectedFns) {
       assert.strictEqual(typeof install[fn], 'function', `exports.${fn} is a function`);

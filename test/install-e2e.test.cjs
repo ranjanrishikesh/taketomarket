@@ -79,8 +79,8 @@ describe('install-e2e: claude happy path', () => {
       'stdout contains banner "takeToMarket installer"'
     );
     assert.ok(
-      result.stdout.includes('Runtime: claude'),
-      'stdout contains "Runtime: claude"'
+      result.stdout.includes('Installing to Claude Code'),
+      'stdout contains "Installing to Claude Code"'
     );
     assert.ok(
       result.stdout.includes('Installation complete!'),
@@ -136,8 +136,8 @@ describe('install-e2e: codex happy path', () => {
 
     assert.strictEqual(result.status, 0, `install should exit 0 (stderr: ${result.stderr})`);
     assert.ok(
-      result.stdout.includes('Runtime: codex'),
-      'stdout contains "Runtime: codex"'
+      result.stdout.includes('Installing to Codex (OpenAI)'),
+      'stdout contains "Installing to Codex (OpenAI)"'
     );
     assert.ok(
       result.stdout.includes('Installation complete!'),
@@ -195,8 +195,8 @@ describe('install-e2e: auto-detect runtime from .claude/', () => {
 
     assert.strictEqual(result.status, 0, `install should exit 0 (stderr: ${result.stderr})`);
     assert.ok(
-      result.stdout.includes('Runtime: claude'),
-      'stdout contains "Runtime: claude" (auto-detected)'
+      result.stdout.includes('Installing to Claude Code'),
+      'stdout contains "Installing to Claude Code" (auto-detected)'
     );
 
     const targetDir = path.join(tmp.dir, '.claude', 'plugins', 'taketomarket');
@@ -333,8 +333,8 @@ describe('install-e2e: unknown --runtime arg defaults to claude with warning', (
       `stderr contains unknown runtime warning (got stderr: ${JSON.stringify(result.stderr)})`
     );
     assert.ok(
-      result.stdout.includes('Runtime: claude'),
-      'stdout contains "Runtime: claude" (defaulted from unknown)'
+      result.stdout.includes('Installing to Claude Code'),
+      'stdout contains "Installing to Claude Code" (defaulted from unknown)'
     );
 
     const targetDir = path.join(tmp.dir, '.claude', 'plugins', 'taketomarket');
