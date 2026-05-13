@@ -1,0 +1,25 @@
+{
+  "name": "taketomarket",
+  "displayName": "takeToMarket",
+  "description": "Marketing OS for Claude Code and Codex. Spec-driven campaigns with positioning invariants and quality gates.",
+  "version": "2.1.0",
+  "author": {
+    "name": "Rishikesh Ranjan",
+    "url": "https://github.com/ranjanrishikesh"
+  },
+  "homepage": "https://www.npmjs.com/package/taketomarket",
+  "repository": "https://github.com/ranjanrishikesh/takeToMarket",
+  "license": "MIT",
+  "source": "git",
+  "sourceUrl": "https://github.com/ranjanrishikesh/takeToMarket.git",
+  "skills": [
+    "ttm-init", "ttm-new-campaign", "ttm-brief", "ttm-research",
+    "ttm-produce", "ttm-review", "ttm-fix", "ttm-verify", "ttm-ship",
+    "ttm-measure", "ttm-learn", "ttm-health", "ttm-state", "ttm-next",
+    "ttm-resume", "ttm-archive", "ttm-positioning-check",
+    "ttm-positioning-shift", "ttm-brand-refresh", "ttm-icp-refresh",
+    "ttm-competitor-scan", "ttm-aeo-check", "ttm-seo-audit",
+    "ttm-email-preflight", "ttm-keyword-map", "ttm-affiliate-kit",
+    "ttm-repurpose", "ttm-update"
+  ]
+}
