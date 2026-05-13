@@ -1,5 +1,7 @@
 # takeToMarket
 
+[![npm](https://img.shields.io/npm/v/taketomarket)](https://www.npmjs.com/package/taketomarket)
+
 A marketing operating system for Claude Code and Codex. Spec-driven campaigns with positioning-as-invariant enforcement, quality gate walls, and compound learnings.
 
 **Core invariant:** Every marketing asset ships with a verifiable outcome metric and passes through a positioning-invariant quality gate wall — no asset ships without both, ever.
