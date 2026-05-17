@@ -42,6 +42,28 @@ test('detects monorepo from pnpm-workspace.yaml', () => {
   assert.strictEqual(result.monorepo, true);
 });
 
+test('detects monorepo from Cargo.toml [workspace] table', () => {
+  const d = tmpDir();
+  fs.writeFileSync(
+    path.join(d, 'Cargo.toml'),
+    '[workspace]\nmembers = ["crate-a", "crate-b"]\n'
+  );
+  const result = scanCodebase(d);
+  assert.strictEqual(result.monorepo, true);
+  assert.ok(result.stack.includes('rust'));
+});
+
+test('Cargo.toml without [workspace] does not flag monorepo', () => {
+  const d = tmpDir();
+  fs.writeFileSync(
+    path.join(d, 'Cargo.toml'),
+    '[package]\nname = "foo"\nversion = "0.1.0"\n'
+  );
+  const result = scanCodebase(d);
+  assert.strictEqual(result.monorepo, false);
+  assert.ok(result.stack.includes('rust'));
+});
+
 test('returns feature-area candidates from top-level dirs', () => {
   const d = tmpDir();
   fs.mkdirSync(path.join(d, 'src'));

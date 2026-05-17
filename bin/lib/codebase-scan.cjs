@@ -47,6 +47,13 @@ function detectMonorepo(cwd) {
       if (pkg.workspaces) return true;
     } catch {}
   }
+  const cargoPath = path.join(cwd, 'Cargo.toml');
+  if (fileExists(cargoPath)) {
+    try {
+      const cargo = fs.readFileSync(cargoPath, 'utf8');
+      if (/^\s*\[workspace\]/m.test(cargo)) return true;
+    } catch {}
+  }
   return false;
 }
 

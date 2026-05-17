@@ -3,7 +3,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const CONFIG_FILE = path.join('.taketomarket', 'CONFIG.md');
+// Relative path fragment. Always prepended with `cwd` in readConfig/writeConfig.
+const CONFIG_RELATIVE_PATH = path.join('.taketomarket', 'CONFIG.md');
 
 const DEFAULTS = {
   yolo: false,
@@ -43,7 +44,7 @@ function serializeYamlFrontmatter(obj) {
 }
 
 function readConfig(cwd) {
-  const p = path.join(cwd, CONFIG_FILE);
+  const p = path.join(cwd, CONFIG_RELATIVE_PATH);
   if (!fs.existsSync(p)) return { ...DEFAULTS };
   const body = fs.readFileSync(p, 'utf8');
   return { ...DEFAULTS, ...parseYamlFrontmatter(body) };
@@ -54,7 +55,7 @@ function writeConfig(cwd, cfg) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
   const merged = { ...DEFAULTS, ...cfg };
   const text = serializeYamlFrontmatter(merged) + '\n\n# takeToMarket Config\n\nManaged by `/ttm-config`. Do not edit the frontmatter manually unless you know what you are doing.\n';
-  fs.writeFileSync(path.join(cwd, CONFIG_FILE), text);
+  fs.writeFileSync(path.join(cwd, CONFIG_RELATIVE_PATH), text);
 }
 
 function setConfig(cwd, key, value) {
