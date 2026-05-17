@@ -145,3 +145,15 @@ Product: ${PRODUCT_NAME} | Sections: 5 | File: .taketomarket/AFFILIATE-KIT-[slug
 Display summary of kit contents and confirm file location.
 
 </process>
+
+## Step: Final humanization (MANDATORY)
+
+Every external kit asset (partner email templates, kit copy, promotional snippets, etc.) MUST pass through `/ttm-humanize` before write.
+
+For each draft asset produced in this phase:
+1. Invoke `/ttm-humanize <draft-path>` via the Skill tool.
+2. Wait for the rewritten version.
+3. Write the humanized output to the final asset destination.
+4. Do not write the un-humanized draft.
+
+Internal state files (campaign briefs, manifests, STATE.md) are exempt.
