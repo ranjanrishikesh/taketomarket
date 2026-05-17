@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.3.0-rc.2 — 2026-05-17
+
+### Added
+- `/ttm-humanize` skill (adapted from blader/humanizer MIT-licensed source). Mandatory final step on every audience-facing asset.
+- `/ttm-discover` skill (renamed from `/ttm-research`).
+- `/ttm-email-check` skill (renamed from `/ttm-email-preflight`).
+- `/ttm-seo` skill with subcommands `audit`, `keyword-map`, `aeo` (merged from `/ttm-aeo-check`, `/ttm-keyword-map`, `/ttm-seo-audit`).
+- `templates/next-step-footer.md` referenced by every `/ttm-*` skill.
+- `references/humanizer-patterns.md` — pattern catalog for AI-tell rewriting.
+
+### Deprecated (removal in v2.4.0)
+- `/ttm-research` → use `/ttm-discover`.
+- `/ttm-email-preflight` → use `/ttm-email-check`.
+- `/ttm-aeo-check` → use `/ttm-seo aeo`.
+- `/ttm-keyword-map` → use `/ttm-seo keyword-map`.
+- `/ttm-seo-audit` → use `/ttm-seo audit`.
+
+### Changed
+- `/ttm-produce`, `/ttm-repurpose`, `/ttm-affiliate-kit` now mandate a final `/ttm-humanize` pass on every outgoing asset.
+
 ## 2.3.0-rc.1 — 2026-05-17
 
 <!--
