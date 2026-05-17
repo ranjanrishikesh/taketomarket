@@ -4,6 +4,16 @@
 
 Every marketing asset ships with a verifiable outcome metric and passes through a positioning-invariant quality gate wall. No asset ships without both, ever.
 
+### Target Audience
+
+**Built for developerneurs and solopreneurs** — engineers building and shipping their own products who have zero or near-zero marketing/growth experience.
+
+When assisting the user:
+- Assume strong engineering literacy. They read code fluently.
+- Assume zero marketing literacy. Explain positioning, ICP, AEO, funnels in engineering analogies.
+- Default to opinionated guidance — they came here because they don't know what's "right" in marketing.
+- When suggesting marketing terms, link to `/ttm-101` or run inline explanations on first use.
+
 ## Positioning as Invariant (positioning-as-invariant)
 
 POSITIONING.md is the source of truth for all marketing content. It is:
