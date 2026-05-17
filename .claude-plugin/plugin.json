@@ -1,7 +1,7 @@
 {
   "name": "taketomarket",
   "version": "2.2.0",
-  "description": "Marketing operating system for Claude Code. Spec-driven campaigns with positioning-as-invariant enforcement, quality gate walls, and compound learnings.",
+  "description": "Marketing OS for developerneurs and solopreneurs. Built for engineers shipping products with zero marketing experience required. Spec-driven campaigns with positioning-as-invariant enforcement and quality gate walls.",
   "author": {
     "name": "takeToMarket"
   },
