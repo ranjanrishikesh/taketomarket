@@ -327,3 +327,15 @@ Display a banner with:
 - `.taketomarket/CAMPAIGNS/${SLUG}/ASSETS/R-*.md` (produced derivative assets)
 - `.taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json` (updated with derivative entries)
 </output>
+
+## Step: Final humanization (MANDATORY)
+
+Every audience-facing asset MUST pass through `/ttm-humanize` before write.
+
+For each draft asset produced in this phase:
+1. For each derivative produced (long-form → short-form, email → social, etc.), invoke `/ttm-humanize <derivative-path>` via the Skill tool.
+2. Wait for the rewritten version.
+3. Write the humanized output to the final asset destination.
+4. Do not write the un-humanized draft.
+
+Internal state files (campaign briefs, manifests, STATE.md) are exempt.
