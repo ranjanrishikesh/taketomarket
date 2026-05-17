@@ -1,15 +1,15 @@
 {
   "name": "taketomarket",
   "version": "2.2.0",
-  "description": "Marketing operating system for Claude Code. Spec-driven campaigns with positioning-as-invariant enforcement, quality gate walls, and compound learnings.",
+  "description": "Marketing OS for developerneurs and solopreneurs. Built for engineers shipping products with zero marketing experience required. Spec-driven campaigns with positioning-as-invariant enforcement and quality gate walls.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ranjanrishikesh/takeToMarket.git"
+    "url": "git+https://github.com/ranjanrishikesh/taketomarket.git"
   },
-  "homepage": "https://github.com/ranjanrishikesh/takeToMarket#readme",
+  "homepage": "https://github.com/ranjanrishikesh/taketomarket#readme",
   "bugs": {
-    "url": "https://github.com/ranjanrishikesh/takeToMarket/issues"
+    "url": "https://github.com/ranjanrishikesh/taketomarket/issues"
   },
   "author": "Rishikesh Ranjan <59333266+ranjanrishikesh@users.noreply.github.com>",
   "bin": {
@@ -45,7 +45,11 @@
     "content-marketing",
     "marketing-automation",
     "ai-agents",
-    "spec-driven"
+    "spec-driven",
+    "developerneurs",
+    "solopreneurs",
+    "engineers",
+    "indie-hackers"
   ],
   "engines": {
     "node": ">=18"
