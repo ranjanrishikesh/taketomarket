@@ -2,7 +2,7 @@
   "name": "taketomarket",
   "displayName": "takeToMarket",
   "description": "Marketing OS for developerneurs and solopreneurs. Built for engineers shipping products with zero marketing experience required. Spec-driven campaigns with positioning-as-invariant enforcement and quality gate walls.",
-  "version": "2.2.0",
+  "version": "2.3.0-rc.1",
   "author": {
     "name": "Rishikesh Ranjan",
     "url": "https://github.com/ranjanrishikesh"
