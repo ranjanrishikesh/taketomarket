@@ -2,6 +2,12 @@
 
 **Purpose:** Catalog of patterns from `obra/superpowers` and `gsd-build/get-shit-done` that takeToMarket adopts in v2.3.0. Findings are grounded in the upstream `README.md`, `.claude-plugin/plugin.json`, `package.json`, `bin/install.js`, and select `skills/*/SKILL.md` files inspected on 2026-05-17 (obra superpowers `5.1.0`, get-shit-done `1.50.0-canary.0`).
 
+**Status legend for "Adopted for v2.3.0" bullets:**
+- `[P1]` — landed in v2.3.0-rc.1 (this PR).
+- `[P1-partial]` — partial landing in P1; remainder tracked for later phase.
+- `[P2+]` — design intent for a subsequent v2.3.x phase (P2-P6); not in this PR.
+- `[deferred]` — explicitly deferred past v2.3.x (e.g. v2.4, v2.5).
+
 ## Axis 1: Distribution + Install
 
 ### Obra pattern
@@ -31,13 +37,14 @@
 
 ### Adopted for v2.3.0
 
-- Keep npx as the primary install surface (matches GSD; obra's marketplace-only model assumes Anthropic-curated approval, which we don't yet have).
-- Trim `.claude-plugin/plugin.json` to the obra-shaped minimum (`name`, `description`, `version`, `author`, `homepage`, `repository`, `license`, `keywords`). Drop the hand-maintained `skills: [...]` array — let the runtime auto-discover from `skills/`. This eliminates the 28-line drift hazard every time a skill is added or renamed.
-- Drop `displayName`, `category`, `source`, `sourceUrl` from `plugin.json` — none are part of the obra/Anthropic plugin schema; they were aspirational marketplace fields.
-- Move `install.js` to `bin/install.js` to match GSD's layout. Update `package.json` `bin` and `files` accordingly. Single bin entry stays; we don't ship an SDK.
-- Add idempotent re-run language to README troubleshooting ("Re-run the installer — it's idempotent: `npx taketomarket`").
-- Add `CHANGELOG.md`-driven release-notes link in README (obra has `RELEASE-NOTES.md`, GSD points to `docs/RELEASE-vX.Y.Z.md`).
-- Defer multi-language READMEs and badge wall — pre-mature for a v2 project; revisit once star count + downloads warrant it.
+- `[P1]` Keep npx as the primary install surface (matches GSD; obra's marketplace-only model assumes Anthropic-curated approval, which we don't yet have). (No-op — already true.)
+- `[P1]` Plugin manifest (`.claude-plugin/plugin.json`) is already obra-shaped: `name`, `version`, `description`, `author`, `license`, `keywords` only. No `skills: [...]` hand-list in this file — runtime auto-discovers.
+- `[P2+]` Trim `.claude-plugin/marketplace.json` to drop `displayName`, `category`, `source`, `sourceUrl`, and the hand-maintained `skills: [...]` array. These fields are not part of the obra/Anthropic plugin schema; they were aspirational marketplace fields. (P1 only updated description + repository URLs; field drop deferred.)
+- `[P2+]` Move `install.js` to `bin/install.js` to match GSD's layout. Update `package.json` `bin` and `files` accordingly.
+- `[P2+]` Add idempotent re-run language to README troubleshooting ("Re-run the installer — it's idempotent: `npx taketomarket`").
+- `[P2+]` Add `CHANGELOG.md`-driven release-notes link in README.
+- `[P1-partial]` Badge wall: P1 added a GitHub-stars badge (2 badges total). Full 4-badge target (npm version, npm downloads, GitHub stars, license) tracked for P2+.
+- `[deferred]` Multi-language READMEs — revisit once star count + downloads warrant it.
 
 ## Axis 2: Skill Structure + Naming
 
@@ -65,12 +72,12 @@
 
 ### Adopted for v2.3.0
 
-- Keep `ttm-*` prefix — matches the namespace convention users expect from GSD-influenced plugins and prevents collision with obra/other plugins.
-- Keep the workflow-shim pattern (thin SKILL.md, body in `workflows/`). Document it as a convention in CLAUDE.md so future skills follow the pattern.
-- Keep `disable-model-invocation: true` as the **default** for lifecycle skills (`/ttm-produce`, `/ttm-ship`, `/ttm-measure`, `/ttm-learn`). Use `disable-model-invocation: false` for advisory skills (`/ttm-positioning-check`, `/ttm-health`) so Claude can auto-trigger them.
-- Keep `context: fork` for fan-out skills (`/ttm-produce`, `/ttm-verify`, `/ttm-repurpose`) — matches GSD's wave-parallel execution pattern.
-- Defer profile system to v2.4. v2.3 ships all skills; we'll add `--profile=core|standard|full` once we have telemetry on which skills users actually invoke.
-- Adopt obra-style `description:` directives ("Use when X, before Y") in place of bare descriptions. Activation contract should read as an instruction to Claude, not a feature blurb. (See Axis 4.)
+- `[P1]` Keep `ttm-*` prefix — matches the namespace convention users expect from GSD-influenced plugins and prevents collision with obra/other plugins. (No-op — already true.)
+- `[P2+]` Keep the workflow-shim pattern (thin SKILL.md, body in `workflows/`). Document it as a convention in CLAUDE.md so future skills follow the pattern. (P1 did not add the convention note to CLAUDE.md.)
+- `[P1]` Keep `disable-model-invocation: true` as the **default** for lifecycle skills (`/ttm-produce`, `/ttm-ship`, `/ttm-measure`, `/ttm-learn`). Use `disable-model-invocation: false` for advisory skills (`/ttm-positioning-check`, `/ttm-health`). (No-op — already true.)
+- `[P1]` Keep `context: fork` for fan-out skills (`/ttm-produce`, `/ttm-verify`, `/ttm-repurpose`) — matches GSD's wave-parallel execution pattern. (No-op — already true.)
+- `[deferred]` Profile system to v2.4. v2.3 ships all skills; we'll add `--profile=core|standard|full` once we have telemetry on which skills users actually invoke.
+- `[P2+]` Adopt obra-style `description:` directives ("Use when X, before Y") in place of bare descriptions. Activation contract should read as an instruction to Claude, not a feature blurb. (See Axis 4.)
 
 ## Axis 3: README + npm Page Content
 
@@ -105,14 +112,14 @@
 
 ### Adopted for v2.3.0
 
-- Keep "What it is / What it isn't" framing — it's the strongest piece of positioning in the current README and aligns with takeToMarket's positioning-as-invariant ethos.
-- Add **3-4 functional badges** (npm version, npm downloads, GitHub stars, license) — match GSD's signal-of-life pattern. Skip Discord/X until those channels exist; skip $TOKEN equivalents permanently.
-- Add a "How It Works" narrative section between "What it is" and "Requirements" — 2-3 paragraphs explaining the 9-phase lifecycle as a story, not a table. Borrow obra's prose-first cadence.
-- Add a "Why It Works" section after Command Reference — three numbered points (positioning drift, no shared marketing memory, no verifiable outcomes) mirroring GSD's three-problem framing.
-- Add a "Philosophy" section: four bullets matching the project's core invariants (positioning as architectural invariant, every asset has a verifiable outcome, compound learnings, no asset ships without quality gate wall).
-- Keep the runtime install table — it's clearer than obra's per-runtime subsections for a smaller skill set.
-- Defer multi-language READMEs, pull-quotes, "trusted by", star history chart — needs real adoption first.
-- Add npm-page-aware language: the README ships verbatim to npmjs.com/package/taketomarket via `package.json`; the first 200 chars matter for SEO. Tighten the lede.
+- `[P1]` Keep "What it is / What it isn't" framing — it's the strongest piece of positioning in the current README and aligns with takeToMarket's positioning-as-invariant ethos.
+- `[P1-partial]` Functional badges: P1 added GitHub-stars badge (2 total). Full 4-badge target (npm version, npm downloads, GitHub stars, license) tracked for P2+. Skip Discord/X until those channels exist; skip $TOKEN equivalents permanently.
+- `[P2+]` Add a "How It Works" narrative section between "What it is" and "Requirements" — 2-3 paragraphs explaining the 9-phase lifecycle as a story, not a table. Borrow obra's prose-first cadence.
+- `[P2+]` Add a "Why It Works" section after Command Reference — three numbered points (positioning drift, no shared marketing memory, no verifiable outcomes) mirroring GSD's three-problem framing.
+- `[P2+]` Add a "Philosophy" section: four bullets matching the project's core invariants (positioning as architectural invariant, every asset has a verifiable outcome, compound learnings, no asset ships without quality gate wall).
+- `[P1]` Keep the runtime install table — it's clearer than obra's per-runtime subsections for a smaller skill set. (No-op — already true.)
+- `[deferred]` Multi-language READMEs, pull-quotes, "trusted by", star history chart — needs real adoption first.
+- `[P2+]` Add npm-page-aware language: the README ships verbatim to npmjs.com/package/taketomarket via `package.json`; the first 200 chars matter for SEO. Tighten the lede.
 
 ## Axis 4: Internal Skill Invocation Pattern
 
@@ -152,12 +159,12 @@
 
 ### Adopted for v2.3.0
 
-- Add `<HARD-GATE>` / `<EXTREMELY-IMPORTANT>` XML wrappers around the **positioning invariant** in every workflow that touches assets (`produce`, `repurpose`, `review`, `fix`, `verify`, `ship`). The invariant is takeToMarket's signature constraint; gate-language enforces it more reliably than prose.
-- Rewrite `description:` fields in obra-directive style. Pattern: `Use when <trigger>, before <next step>. <Optional warning>.` Example for `/ttm-produce`: `Use when a brief is approved and assets need to be generated. Do not invoke without a passed brief — produce will fail.`
-- Add a `## Checklist` section to every multi-step workflow with explicit TodoWrite-mappable items. Mirror obra's "create a task for each of these items and complete them in order" preamble.
-- Add cross-skill chaining declarations to each lifecycle skill: name the predecessor skill that should have run, and the successor skill that should run next. Example: `/ttm-brief` ends with "**The terminal state is invoking /ttm-produce.** Do not invoke /ttm-ship or /ttm-measure until produce → verify → review have completed."
-- Add a "Red Flags" table to `/ttm-produce` and `/ttm-verify` listing the rationalizations Claude commonly uses to skip reference loading or gate checks ("These assets look fine without verify", "Positioning is obvious here", "I already loaded BRAND.md last turn").
-- Adopt obra's instruction-priority hierarchy in `CLAUDE.md`: user CLAUDE.md/AGENTS.md > takeToMarket skills > default system prompt. Add to the project's CLAUDE.md preamble.
-- Add a `SessionStart` hook (matchers: `startup|clear|compact`) that re-orients Claude to takeToMarket conventions and reads `.taketomarket/STATE.md` frontmatter. Mirrors GSD's hook pattern.
-- Defer Graphviz digraphs and lint scripts to a later phase — high-value but require maintenance investment we can stage after the core conventions land.
-- Use the `Skill` tool inside workflows for cross-skill invocation (e.g. `/ttm-fix` should invoke `/ttm-produce` and `/ttm-verify` via the `Skill` tool, not by telling the user to run them manually). This matches obra's composition pattern and reduces user friction.
+- `[P2+]` Add `<HARD-GATE>` / `<EXTREMELY-IMPORTANT>` XML wrappers around the **positioning invariant** in every workflow that touches assets (`produce`, `repurpose`, `review`, `fix`, `verify`, `ship`). The invariant is takeToMarket's signature constraint; gate-language enforces it more reliably than prose.
+- `[P2+]` Rewrite `description:` fields in obra-directive style. Pattern: `Use when <trigger>, before <next step>. <Optional warning>.` Example for `/ttm-produce`: `Use when a brief is approved and assets need to be generated. Do not invoke without a passed brief — produce will fail.`
+- `[P2+]` Add a `## Checklist` section to every multi-step workflow with explicit TodoWrite-mappable items. Mirror obra's "create a task for each of these items and complete them in order" preamble.
+- `[P2+]` Add cross-skill chaining declarations to each lifecycle skill: name the predecessor skill that should have run, and the successor skill that should run next. Example: `/ttm-brief` ends with "**The terminal state is invoking /ttm-produce.** Do not invoke /ttm-ship or /ttm-measure until produce → verify → review have completed."
+- `[P2+]` Add a "Red Flags" table to `/ttm-produce` and `/ttm-verify` listing the rationalizations Claude commonly uses to skip reference loading or gate checks ("These assets look fine without verify", "Positioning is obvious here", "I already loaded BRAND.md last turn").
+- `[P2+]` Adopt obra's instruction-priority hierarchy in `CLAUDE.md`: user CLAUDE.md/AGENTS.md > takeToMarket skills > default system prompt. Add to the project's CLAUDE.md preamble.
+- `[P2+]` Add a `SessionStart` hook (matchers: `startup|clear|compact`) that re-orients Claude to takeToMarket conventions and reads `.taketomarket/STATE.md` frontmatter. Mirrors GSD's hook pattern.
+- `[deferred]` Graphviz digraphs and lint scripts — high-value but require maintenance investment we can stage after the core conventions land.
+- `[P2+]` Use the `Skill` tool inside workflows for cross-skill invocation (e.g. `/ttm-fix` should invoke `/ttm-produce` and `/ttm-verify` via the `Skill` tool, not by telling the user to run them manually). This matches obra's composition pattern and reduces user friction.

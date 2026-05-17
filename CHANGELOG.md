@@ -3,9 +3,9 @@
 ## 2.3.0-rc.1 — 2026-05-17
 
 ### Breaking
-- State folder renamed `.marketing/` → `.taketomarket/`. `/ttm-health` and `/ttm-update` auto-detect legacy folders and offer migration.
-- GitHub repo renamed `ranjanrishikesh/takeToMarket` → `ranjanrishikesh/taketomarket` (lowercase). Old URLs redirect.
-- `ttm-tools health --raw` JSON field renamed `marketing_dir` → `taketomarket_dir`.
+- **State folder renamed `.marketing/` → `.taketomarket/`.** After upgrading, run `/ttm-update` (or `/ttm-health`) — the auto-migration prompt will rename the directory and verify the move. State-reading commands (`/ttm-state`, `/ttm-campaign`, `/ttm-produce`, etc.) now refuse to run while a legacy `.marketing/` exists and print the exact migration command. Commit or back up the directory before accepting the prompt; the rename is fast but the workflow does not snapshot.
+- **GitHub repo renamed `ranjanrishikesh/takeToMarket` → `ranjanrishikesh/taketomarket`** (lowercase). Old URLs redirect on GitHub. No action required for clones. If you scripted anything against the previous URL form, update to lowercase to avoid the redirect hop. If your local remote uses SSH form, update with `git remote set-url origin git@github.com:ranjanrishikesh/taketomarket.git`.
+- **`ttm-tools health --raw` JSON field renamed `marketing_dir` → `taketomarket_dir`.** If any external script parses the `--raw` output, rename the field key.
 
 ### Added
 - Audience-explicit identity across README, `package.json`, plugin manifests, `CLAUDE.md`, `GEMINI.md`, templates. Built for developerneurs + solopreneurs with zero marketing experience.
