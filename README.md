@@ -1,10 +1,27 @@
 # takeToMarket
 
 [![npm](https://img.shields.io/npm/v/taketomarket)](https://www.npmjs.com/package/taketomarket)
+[![GitHub stars](https://img.shields.io/github/stars/ranjanrishikesh/taketomarket?style=social)](https://github.com/ranjanrishikesh/taketomarket)
 
-A marketing operating system for Claude Code and Codex. Spec-driven campaigns with positioning-as-invariant enforcement, quality gate walls, and compound learnings.
+**Marketing OS for developerneurs and solopreneurs.** Built for engineers shipping products with zero marketing experience required.
+
+takeToMarket is a Claude Code / Codex skill set that brings spec-driven development to marketing. Every campaign, asset, and channel is a spec-driven unit with a verifiable outcome metric and a positioning-invariant quality gate wall.
 
 **Core invariant:** Every marketing asset ships with a verifiable outcome metric and passes through a positioning-invariant quality gate wall — no asset ships without both, ever.
+
+## Who this is for
+
+- **Developerneurs** — engineers building and shipping their own products.
+- **Solopreneurs with engineering backgrounds** — founders who code their MVP themselves.
+- **Indie hackers** — anyone shipping a product who has zero or near-zero marketing/growth experience.
+
+If you can write code but have never built a landing page, written a positioning statement, or thought about ICPs — takeToMarket gives you the operating system. The AI does the marketing work; you stay in control of the decisions.
+
+## Who this is NOT for
+
+- Full-time marketers who already have a stack — takeToMarket overlaps with what you already do.
+- Agencies serving multiple clients — built for one product per workspace.
+- Anyone wanting a one-click blog generator — takeToMarket is opinionated, slower, and quality-gated by design.
 
 ## What it is / What it isn't
 
@@ -39,12 +56,12 @@ Flags:
 /plugin install taketomarket@claude-plugins-official
 ```
 
-> Status: pending marketplace approval. Check https://github.com/ranjanrishikesh/takeToMarket for current status.
+> Status: pending marketplace approval. Check https://github.com/ranjanrishikesh/taketomarket for current status.
 
 ### Option 3 — Direct from GitHub (Claude Code)
 
 ```
-/plugin marketplace add ranjanrishikesh/takeToMarket
+/plugin marketplace add ranjanrishikesh/taketomarket
 /plugin install taketomarket
 ```
 
@@ -53,7 +70,7 @@ This uses the Claude Code plugin system to install directly from the GitHub repo
 ### Option 4 — Manual (advanced)
 
 ```bash
-git clone https://github.com/ranjanrishikesh/takeToMarket
+git clone https://github.com/ranjanrishikesh/taketomarket
 cd takeToMarket
 node install.js
 ```
