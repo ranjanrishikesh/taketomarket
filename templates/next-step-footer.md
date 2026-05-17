@@ -6,7 +6,8 @@
 
 Or run one of:
 - `/ttm-state` to see all campaigns at a glance.
-- `/ttm-help` (if installed) to browse the full catalog.
+- `/ttm-health` to validate `.taketomarket/` directory integrity.
+- `/ttm-resume` to pick up where you left off.
 
-Stuck or want a skill that doesn't exist? Run `/ttm-request-skill` to file an issue. Want an existing skill improved? Run `/ttm-improve-skill`.
+Found a bug or want a new feature? File an issue at https://github.com/ranjanrishikesh/taketomarket/issues.
 <!-- /next-step-footer -->
