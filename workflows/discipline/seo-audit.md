@@ -12,7 +12,7 @@ Single-pass analysis workflow per D-07.
 <constraints>
 ## POSITIONING.md is READ-ONLY
 
-**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+**Do NOT modify `.taketomarket/POSITIONING.md` during this workflow.**
 
 POSITIONING.md is an architectural invariant. If you detect positioning drift:
 - Flag the issue and recommend running /ttm-positioning-check
@@ -43,11 +43,11 @@ If `AskUserQuestion` tool is not available in the current runtime, set `TEXT_MOD
 takeToMarket > LOADING CONTEXT FOR SEO AUDIT
 ```
 
-**Tier 1 summaries** (lines 1 to `<!-- END_SUMMARY -->`) from all 9 `.marketing/` reference files.
-**Tier 2 (full):** `.marketing/CHANNELS.md` (channel-specific SEO config).
+**Tier 1 summaries** (lines 1 to `<!-- END_SUMMARY -->`) from all 9 `.taketomarket/` reference files.
+**Tier 2 (full):** `.taketomarket/CHANNELS.md` (channel-specific SEO config).
 **Playbook gates:** @${CLAUDE_PLUGIN_ROOT}/playbooks/seo.md
 
-If `.marketing/POSITIONING.md` does not exist: Error and exit.
+If `.taketomarket/POSITIONING.md` does not exist: Error and exit.
 
 ---
 
@@ -163,7 +163,7 @@ takeToMarket > SEO AUDIT COMPLETE
 Target: ${AUDIT_TARGET} | Result: [X/8 PASS] [Y/8 WARN] [Z/8 FAIL]
 ```
 
-Offer: "Save this report to .marketing/AUDITS/seo-audit-[date].md? (yes/no)"
-If yes: create `.marketing/AUDITS/` directory if needed and write the report.
+Offer: "Save this report to .taketomarket/AUDITS/seo-audit-[date].md? (yes/no)"
+If yes: create `.taketomarket/AUDITS/` directory if needed and write the report.
 
 </process>

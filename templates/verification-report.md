@@ -54,6 +54,6 @@ overall_result: [pass|warn|fail]
 ## Run Metadata
 
 - **Verify command:** `/ttm-verify [SLUG]`
-- **Manifest:** `.marketing/CAMPAIGNS/[SLUG]/MANIFEST.json`
+- **Manifest:** `.taketomarket/CAMPAIGNS/[SLUG]/MANIFEST.json`
 - **Gate definitions:** `gates/base-gates.md`
 - **Previous runs:** [PREVIOUS_RUN_COUNT]

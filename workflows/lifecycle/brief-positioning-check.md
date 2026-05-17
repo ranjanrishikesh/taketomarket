@@ -80,7 +80,7 @@ When gate result is "warn", insert at the TOP of BRIEF.md after the title line:
 !! POSITIONING DRIFT WARNING !!
 The following items may not align with your positioning:
 - [drift detail from each failing check]
-Review .marketing/POSITIONING.md and adjust the brief if needed.
+Review .taketomarket/POSITIONING.md and adjust the brief if needed.
 Run /ttm-positioning-check for a full audit.
 -->
 ```

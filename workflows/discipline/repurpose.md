@@ -14,7 +14,7 @@ This is NOT a lightweight command -- it runs the full production lifecycle per d
 <constraints>
 ## POSITIONING.md is READ-ONLY
 
-**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+**Do NOT modify `.taketomarket/POSITIONING.md` during this workflow.**
 
 POSITIONING.md is an architectural invariant. If you detect positioning drift:
 - In verify: use the Escalate option to launch /ttm-positioning-shift
@@ -68,21 +68,21 @@ SOURCE_ASSET_PATH=$(echo "$ARGUMENTS" | sed 's/--text//g' | xargs)
 ```
 
 Read Tier 1 summaries from all 9 reference files (lines 1 to `<!-- END_SUMMARY -->`):
-- `.marketing/POSITIONING.md`
-- `.marketing/BRAND.md`
-- `.marketing/ICP.md`
-- `.marketing/CHANNELS.md`
-- `.marketing/STATE.md` (frontmatter only)
-- `.marketing/CALENDAR.md`
-- `.marketing/COMPETITORS.md`
-- `.marketing/METRICS.md`
-- `.marketing/LEARNINGS.md`
+- `.taketomarket/POSITIONING.md`
+- `.taketomarket/BRAND.md`
+- `.taketomarket/ICP.md`
+- `.taketomarket/CHANNELS.md`
+- `.taketomarket/STATE.md` (frontmatter only)
+- `.taketomarket/CALENDAR.md`
+- `.taketomarket/COMPETITORS.md`
+- `.taketomarket/METRICS.md`
+- `.taketomarket/LEARNINGS.md`
 
 Read Tier 2 (full content) for production context:
-- `.marketing/POSITIONING.md`
-- `.marketing/CHANNELS.md`
-- `.marketing/BRAND.md`
-- `.marketing/ICP.md`
+- `.taketomarket/POSITIONING.md`
+- `.taketomarket/CHANNELS.md`
+- `.taketomarket/BRAND.md`
+- `.taketomarket/ICP.md`
 
 ---
 
@@ -95,8 +95,8 @@ Parse SOURCE_ASSET_PATH from $ARGUMENTS.
 Use path.resolve() equivalent to canonicalize the path, then verify:
 
 1. **File exists** at the specified path
-2. **Path is within `.marketing/CAMPAIGNS/`** directory -- reject any path that does not
-   resolve to a location under `.marketing/CAMPAIGNS/[slug]/ASSETS/`
+2. **Path is within `.taketomarket/CAMPAIGNS/`** directory -- reject any path that does not
+   resolve to a location under `.taketomarket/CAMPAIGNS/[slug]/ASSETS/`
 3. **Campaign is in appropriate phase** -- read the campaign's STATE.md and confirm phase
    is one of: produced, verified, reviewed, fixed, or shipped
 
@@ -109,7 +109,7 @@ Extract from the validated path and campaign data:
 
 If validation fails at any step, display a specific error:
 - Path not found: "Source asset not found at [path]. Check the file path and try again."
-- Not in CAMPAIGNS: "Source asset must be within a .marketing/CAMPAIGNS/[slug]/ASSETS/ directory."
+- Not in CAMPAIGNS: "Source asset must be within a .taketomarket/CAMPAIGNS/[slug]/ASSETS/ directory."
 - Wrong phase: "Campaign [slug] is in phase [phase]. Repurpose requires produced, verified, reviewed, fixed, or shipped."
 - Not in MANIFEST: "Source asset not found in MANIFEST.json. Was this asset produced by /ttm-produce?"
 
@@ -117,7 +117,7 @@ If validation fails at any step, display a specific error:
 
 ## Step 3: Select Target Channels
 
-Read `.marketing/CHANNELS.md` active channels list.
+Read `.taketomarket/CHANNELS.md` active channels list.
 
 Parse all active channels from CHANNELS.md. Remove SOURCE_CHANNEL from the list
 (do not repurpose to the same channel the source was produced for).
@@ -166,12 +166,12 @@ takeToMarket > GENERATING DERIVATIVE BRIEFS ([N] channels)
 For each target channel, generate a channel-adapted derivative brief (per D-11).
 
 Read the source asset content and extract the core message/thesis.
-Cross-reference `.marketing/CHANNELS.md` for each target channel's configuration:
+Cross-reference `.taketomarket/CHANNELS.md` for each target channel's configuration:
 - Format requirements (content type, structure)
 - Typical length/word count for the channel
 - Audience overlap with source channel
 
-Cross-reference `.marketing/BRAND.md` for tone-per-context adjustments if defined
+Cross-reference `.taketomarket/BRAND.md` for tone-per-context adjustments if defined
 for the target channel.
 
 Write each brief with these sections:
@@ -182,7 +182,7 @@ Write each brief with these sections:
 - **Positioning Anchor:** Primary differentiator and proof points from POSITIONING.md (direct quote)
 - **Outcome Metric:** Inherit from campaign BRIEF.md, or channel-default from CHANNELS.md baselines
 
-Write each brief to: `.marketing/CAMPAIGNS/${CAMPAIGN_SLUG}/REPURPOSE-BRIEF-${CHANNEL_SLUG}.md`
+Write each brief to: `.taketomarket/CAMPAIGNS/${CAMPAIGN_SLUG}/REPURPOSE-BRIEF-${CHANNEL_SLUG}.md`
 
 ---
 
@@ -195,12 +195,12 @@ takeToMarket > REPURPOSING: HERO DERIVATIVE ([HERO_CHANNEL])
 Read the agent prompt template from `${CLAUDE_PLUGIN_ROOT}/agents/ttm-producer.md`.
 
 Fill placeholders:
-- `[BRIEF_PATH]` --> `.marketing/CAMPAIGNS/${CAMPAIGN_SLUG}/REPURPOSE-BRIEF-${HERO_CHANNEL_SLUG}.md`
-- `[POSITIONING_PATH]` --> `.marketing/POSITIONING.md`
-- `[BRAND_PATH]` --> `.marketing/BRAND.md`
-- `[ICP_PATH]` --> `.marketing/ICP.md`
+- `[BRIEF_PATH]` --> `.taketomarket/CAMPAIGNS/${CAMPAIGN_SLUG}/REPURPOSE-BRIEF-${HERO_CHANNEL_SLUG}.md`
+- `[POSITIONING_PATH]` --> `.taketomarket/POSITIONING.md`
+- `[BRAND_PATH]` --> `.taketomarket/BRAND.md`
+- `[ICP_PATH]` --> `.taketomarket/ICP.md`
 - `[PLAYBOOK_PATH]` --> resolved playbook for HERO_CHANNEL (from `${CLAUDE_PLUGIN_ROOT}/playbooks/${CHANNEL_TYPE}.md`), or `"none"` if not found
-- `[OUTPUT_PATH]` --> `.marketing/CAMPAIGNS/${CAMPAIGN_SLUG}/ASSETS/R-01-${HERO_CHANNEL_SLUG}.md`
+- `[OUTPUT_PATH]` --> `.taketomarket/CAMPAIGNS/${CAMPAIGN_SLUG}/ASSETS/R-01-${HERO_CHANNEL_SLUG}.md`
 - `[ASSET_TYPE]` --> derivative content type for this channel
 - `[CHANNEL]` --> HERO_CHANNEL name
 - `[HERO_PATH]` --> SOURCE_ASSET_PATH (the original source serves as the "hero" reference)
@@ -213,7 +213,7 @@ Call Task() with the populated prompt.
 
 After Task() returns, verify the hero derivative file exists and has content:
 ```bash
-test -s ".marketing/CAMPAIGNS/${CAMPAIGN_SLUG}/ASSETS/R-01-${HERO_CHANNEL_SLUG}.md"
+test -s ".taketomarket/CAMPAIGNS/${CAMPAIGN_SLUG}/ASSETS/R-01-${HERO_CHANNEL_SLUG}.md"
 ```
 
 If the file is empty or missing:
@@ -245,7 +245,7 @@ All derivative Task() calls run in parallel (per D-13 wave-parallel pattern).
 
 After ALL Task() calls complete, verify each output file exists and has content (> 50 chars):
 ```bash
-test -s ".marketing/CAMPAIGNS/${CAMPAIGN_SLUG}/ASSETS/R-${NN}-${CHANNEL_SLUG}.md"
+test -s ".taketomarket/CAMPAIGNS/${CAMPAIGN_SLUG}/ASSETS/R-${NN}-${CHANNEL_SLUG}.md"
 ```
 
 For any derivative that failed (file empty or missing):
@@ -323,7 +323,7 @@ Display a banner with:
 </success_criteria>
 
 <output>
-- `.marketing/CAMPAIGNS/${SLUG}/REPURPOSE-BRIEF-*.md` (per-channel derivative briefs)
-- `.marketing/CAMPAIGNS/${SLUG}/ASSETS/R-*.md` (produced derivative assets)
-- `.marketing/CAMPAIGNS/${SLUG}/MANIFEST.json` (updated with derivative entries)
+- `.taketomarket/CAMPAIGNS/${SLUG}/REPURPOSE-BRIEF-*.md` (per-channel derivative briefs)
+- `.taketomarket/CAMPAIGNS/${SLUG}/ASSETS/R-*.md` (produced derivative assets)
+- `.taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json` (updated with derivative entries)
 </output>

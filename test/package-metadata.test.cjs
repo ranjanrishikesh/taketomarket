@@ -19,14 +19,14 @@ describe('package.json metadata (PKG-01..07 + D-04)', () => {
     assert.strictEqual(pkg.repository.type, 'git');
     assert.strictEqual(
       pkg.repository.url,
-      'git+https://github.com/ranjanrishikesh/takeToMarket.git'
+      'git+https://github.com/ranjanrishikesh/taketomarket.git'
     );
   });
 
   it('has homepage field pointing at the repo README (PKG-02, D-01)', () => {
     assert.strictEqual(
       pkg.homepage,
-      'https://github.com/ranjanrishikesh/takeToMarket#readme'
+      'https://github.com/ranjanrishikesh/taketomarket#readme'
     );
   });
 
@@ -34,7 +34,7 @@ describe('package.json metadata (PKG-01..07 + D-04)', () => {
     assert.ok(pkg.bugs, 'bugs field exists');
     assert.strictEqual(
       pkg.bugs.url,
-      'https://github.com/ranjanrishikesh/takeToMarket/issues'
+      'https://github.com/ranjanrishikesh/taketomarket/issues'
     );
   });
 

@@ -14,7 +14,7 @@ const path = require('path');
 const { output, safeReadFile, parseFrontmatter } = require('./core.cjs');
 
 /**
- * Expected reference files in .marketing/ directory.
+ * Expected reference files in .taketomarket/ directory.
  */
 const REFERENCE_FILES = [
   'POSITIONING.md',
@@ -85,7 +85,7 @@ function checkCampaignStateConsistency(campaignsDir) {
       checks.push({
         name: `campaign_state_${entry.name}`,
         status: 'fail',
-        path: `.marketing/CAMPAIGNS/${entry.name}/STATE.md`,
+        path: `.taketomarket/CAMPAIGNS/${entry.name}/STATE.md`,
         detail: 'STATE.md missing',
       });
       continue;
@@ -95,14 +95,14 @@ function checkCampaignStateConsistency(campaignsDir) {
       checks.push({
         name: `campaign_state_${entry.name}`,
         status: 'fail',
-        path: `.marketing/CAMPAIGNS/${entry.name}/STATE.md`,
+        path: `.taketomarket/CAMPAIGNS/${entry.name}/STATE.md`,
         detail: `invalid phase: ${frontmatter.phase || 'undefined'}`,
       });
     } else {
       checks.push({
         name: `campaign_state_${entry.name}`,
         status: 'pass',
-        path: `.marketing/CAMPAIGNS/${entry.name}/STATE.md`,
+        path: `.taketomarket/CAMPAIGNS/${entry.name}/STATE.md`,
       });
     }
   }
@@ -111,7 +111,7 @@ function checkCampaignStateConsistency(campaignsDir) {
 
 /**
  * Check reference file staleness based on mtime.
- * @param {string} marketingDir - Path to .marketing/ directory
+ * @param {string} marketingDir - Path to .taketomarket/ directory
  * @param {number} thresholdDays - Days threshold for staleness warning (default 90)
  * @returns {Array} Array of check objects
  */
@@ -131,14 +131,14 @@ function checkReferenceStaleness(marketingDir, thresholdDays) {
         checks.push({
           name: `staleness_${file.toLowerCase().replace('.md', '')}`,
           status: 'warn',
-          path: `.marketing/${file}`,
+          path: `.taketomarket/${file}`,
           detail: `not updated in ${ageDays} days`,
         });
       } else {
         checks.push({
           name: `staleness_${file.toLowerCase().replace('.md', '')}`,
           status: 'pass',
-          path: `.marketing/${file}`,
+          path: `.taketomarket/${file}`,
         });
       }
     } catch {
@@ -183,14 +183,14 @@ function checkCampaignVelocity(campaignsDir, thresholdDays) {
       checks.push({
         name: `velocity_${entry.name}`,
         status: 'warn',
-        path: `.marketing/CAMPAIGNS/${entry.name}/STATE.md`,
+        path: `.taketomarket/CAMPAIGNS/${entry.name}/STATE.md`,
         detail: `stuck in ${frontmatter.phase} for ${ageDays} days`,
       });
     } else {
       checks.push({
         name: `velocity_${entry.name}`,
         status: 'pass',
-        path: `.marketing/CAMPAIGNS/${entry.name}/STATE.md`,
+        path: `.taketomarket/CAMPAIGNS/${entry.name}/STATE.md`,
       });
     }
   }
@@ -199,7 +199,7 @@ function checkCampaignVelocity(campaignsDir, thresholdDays) {
 
 /**
  * Check DRIFT-LOG.md structural integrity.
- * @param {string} marketingDir - Path to .marketing/ directory
+ * @param {string} marketingDir - Path to .taketomarket/ directory
  * @returns {Array} Array of check objects
  */
 function checkDriftLogIntegrity(marketingDir) {
@@ -211,7 +211,7 @@ function checkDriftLogIntegrity(marketingDir) {
     checks.push({
       name: 'drift_log_integrity',
       status: 'warn',
-      path: '.marketing/DRIFT-LOG.md',
+      path: '.taketomarket/DRIFT-LOG.md',
       detail: 'no drift log yet',
     });
     return checks;
@@ -222,21 +222,21 @@ function checkDriftLogIntegrity(marketingDir) {
     checks.push({
       name: 'drift_log_integrity',
       status: 'fail',
-      path: '.marketing/DRIFT-LOG.md',
+      path: '.taketomarket/DRIFT-LOG.md',
       detail: 'missing audit trail marker',
     });
   } else if (markerCount > 1) {
     checks.push({
       name: 'drift_log_integrity',
       status: 'fail',
-      path: '.marketing/DRIFT-LOG.md',
+      path: '.taketomarket/DRIFT-LOG.md',
       detail: 'duplicate audit trail markers',
     });
   } else {
     checks.push({
       name: 'drift_log_integrity',
       status: 'pass',
-      path: '.marketing/DRIFT-LOG.md',
+      path: '.taketomarket/DRIFT-LOG.md',
     });
   }
   return checks;
@@ -276,14 +276,14 @@ function checkGateConsistency(campaignsDir) {
       checks.push({
         name: `gate_consistency_${entry.name}`,
         status: 'fail',
-        path: `.marketing/CAMPAIGNS/${entry.name}/STATE.md`,
+        path: `.taketomarket/CAMPAIGNS/${entry.name}/STATE.md`,
         detail: `invalid gate values: ${invalidGates.join(', ')}`,
       });
     } else {
       checks.push({
         name: `gate_consistency_${entry.name}`,
         status: 'pass',
-        path: `.marketing/CAMPAIGNS/${entry.name}/STATE.md`,
+        path: `.taketomarket/CAMPAIGNS/${entry.name}/STATE.md`,
       });
     }
   }
@@ -291,11 +291,11 @@ function checkGateConsistency(campaignsDir) {
 }
 
 /**
- * Validate .marketing/ directory structure.
+ * Validate .taketomarket/ directory structure.
  *
  * Checks:
- * 1. .marketing/ directory exists
- * 2. .marketing/CAMPAIGNS/ directory exists
+ * 1. .taketomarket/ directory exists
+ * 2. .taketomarket/CAMPAIGNS/ directory exists
  * 3. Each expected reference file exists
  * 4. STATE.md has valid frontmatter (parseable)
  *
@@ -306,23 +306,23 @@ function checkGateConsistency(campaignsDir) {
  * 8. DRIFT-LOG integrity
  * 9. Gate result consistency
  *
- * healthy = true when .marketing/ and CAMPAIGNS/ both exist and no 'fail' checks.
+ * healthy = true when .taketomarket/ and CAMPAIGNS/ both exist and no 'fail' checks.
  * Reference files use "missing" status (expected before /ttm-init runs).
  *
  * @param {boolean} raw - Whether to output raw summary string
  * @param {boolean} full - Whether to run extended audit checks
  */
 function cmdHealth(raw, full) {
-  const marketingDir = path.resolve(process.cwd(), '.marketing');
+  const marketingDir = path.resolve(process.cwd(), '.taketomarket');
   const campaignsDir = path.resolve(marketingDir, 'CAMPAIGNS');
   const checks = [];
 
-  // Check .marketing/ directory
+  // Check .taketomarket/ directory
   const marketingExists = dirExists(marketingDir);
   checks.push({
-    name: 'marketing_dir',
+    name: 'taketomarket_dir',
     status: marketingExists ? 'pass' : 'fail',
-    path: '.marketing/',
+    path: '.taketomarket/',
   });
 
   // Check CAMPAIGNS/ directory
@@ -330,7 +330,7 @@ function cmdHealth(raw, full) {
   checks.push({
     name: 'campaigns_dir',
     status: campaignsExists ? 'pass' : 'fail',
-    path: '.marketing/CAMPAIGNS/',
+    path: '.taketomarket/CAMPAIGNS/',
   });
 
   // Check each reference file
@@ -346,14 +346,14 @@ function cmdHealth(raw, full) {
         checks.push({
           name,
           status: isValid ? 'pass' : 'fail',
-          path: `.marketing/${file}`,
+          path: `.taketomarket/${file}`,
           detail: isValid ? undefined : 'frontmatter unparseable',
         });
       } else {
-        checks.push({ name, status: 'pass', path: `.marketing/${file}` });
+        checks.push({ name, status: 'pass', path: `.taketomarket/${file}` });
       }
     } else {
-      checks.push({ name, status: 'missing', path: `.marketing/${file}` });
+      checks.push({ name, status: 'missing', path: `.taketomarket/${file}` });
     }
   }
 
@@ -402,12 +402,12 @@ function cmdHealth(raw, full) {
 
 /**
  * Lightweight init check.
- * Returns: { initialized, marketing_dir, reference_files_count, total_expected }
+ * Returns: { initialized, taketomarket_dir, reference_files_count, total_expected }
  *
  * @param {boolean} raw - Whether to output raw summary string
  */
 function cmdInit(raw) {
-  const marketingDir = path.resolve(process.cwd(), '.marketing');
+  const marketingDir = path.resolve(process.cwd(), '.taketomarket');
   const marketingExists = dirExists(marketingDir);
 
   let refCount = 0;
@@ -424,7 +424,7 @@ function cmdInit(raw) {
 
   const result = {
     initialized,
-    marketing_dir: marketingExists,
+    taketomarket_dir: marketingExists,
     reference_files_count: refCount,
     total_expected: totalExpected,
   };

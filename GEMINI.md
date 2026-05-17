@@ -48,7 +48,7 @@ Gemini will activate `/ttm-init` and guide you through onboarding.
 
 | Skill | Description |
 |-------|-------------|
-| ttm-init | Interview-driven onboarding that generates all .marketing/ reference files |
+| ttm-init | Interview-driven onboarding that generates all .taketomarket/ reference files |
 | ttm-new-campaign | Create a new campaign directory with initialized state |
 | ttm-brief | Generate a campaign brief with mandatory outcome metrics |
 | ttm-produce | Generate content assets in fresh contexts |
@@ -57,7 +57,7 @@ Gemini will activate `/ttm-init` and guide you through onboarding.
 | ttm-ship | Generate launch checklist |
 | ttm-measure | Analyze campaign analytics against outcome metrics |
 | ttm-learn | Extract lessons and update reference files |
-| ttm-health | Validate .marketing/ directory integrity |
+| ttm-health | Validate .taketomarket/ directory integrity |
 | ttm-state | Display current campaign states |
 | ttm-next | Guide to the right next command |
 | ttm-resume | Resume a paused campaign |

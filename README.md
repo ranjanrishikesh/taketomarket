@@ -123,9 +123,9 @@ All non-Claude runtimes also support `~/.agents/skills/` as a universal path. Se
 | `/ttm-competitor-scan` | On-demand competitor analysis that updates COMPETITORS.md |
 | `/ttm-email-preflight` | Deliverability, dark-mode, and spam-trigger scan for email assets |
 | `/ttm-fix` | Fix phase: root cause analysis, fix brief, re-produce, re-verify (capped 3×) |
-| `/ttm-health` | Validate .marketing/ directory integrity, reference file completeness, and state consistency |
+| `/ttm-health` | Validate .taketomarket/ directory integrity, reference file completeness, and state consistency |
 | `/ttm-icp-refresh` | Update ICP.md from new customer data including calls, reviews, and feedback |
-| `/ttm-init` | Interview-driven onboarding that generates all .marketing/ reference files |
+| `/ttm-init` | Interview-driven onboarding that generates all .taketomarket/ reference files |
 | `/ttm-keyword-map` | Generate keyword cluster map with intent tags |
 | `/ttm-learn` | Extract lessons from campaign data, propose reference file edits, log to LEARNINGS.md |
 | `/ttm-measure` | Analyze campaign analytics against outcome metrics using attribution models |

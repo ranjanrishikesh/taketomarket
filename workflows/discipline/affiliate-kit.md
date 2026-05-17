@@ -12,7 +12,7 @@ Single-pass analysis workflow per D-07.
 <constraints>
 ## POSITIONING.md is READ-ONLY
 
-**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+**Do NOT modify `.taketomarket/POSITIONING.md` during this workflow.**
 
 POSITIONING.md is an architectural invariant. If you detect positioning drift:
 - Flag the issue and recommend running /ttm-positioning-check
@@ -43,11 +43,11 @@ If `AskUserQuestion` tool is not available in the current runtime, set `TEXT_MOD
 takeToMarket > LOADING CONTEXT FOR AFFILIATE KIT
 ```
 
-**Tier 1 summaries** (lines 1 to `<!-- END_SUMMARY -->`) from all 9 `.marketing/` reference files.
-**Tier 2 (full):** `.marketing/POSITIONING.md`, `.marketing/BRAND.md`, `.marketing/ICP.md`, `.marketing/METRICS.md`
+**Tier 1 summaries** (lines 1 to `<!-- END_SUMMARY -->`) from all 9 `.taketomarket/` reference files.
+**Tier 2 (full):** `.taketomarket/POSITIONING.md`, `.taketomarket/BRAND.md`, `.taketomarket/ICP.md`, `.taketomarket/METRICS.md`
 **Playbook gates:** @${CLAUDE_PLUGIN_ROOT}/playbooks/affiliate.md
 
-If `.marketing/POSITIONING.md` does not exist: Error and exit.
+If `.taketomarket/POSITIONING.md` does not exist: Error and exit.
 
 ---
 
@@ -106,7 +106,7 @@ Produce a complete kit with these sections:
 ## Step 4: Write Kit File
 
 Generate a URL-safe slug from `PRODUCT_NAME`.
-Write to `.marketing/AFFILIATE-KIT-[product-slug].md`.
+Write to `.taketomarket/AFFILIATE-KIT-[product-slug].md`.
 
 Kit file structure:
 ```markdown
@@ -139,7 +139,7 @@ Cookie Window: [duration]
 ========================================
 takeToMarket > AFFILIATE KIT COMPLETE
 ========================================
-Product: ${PRODUCT_NAME} | Sections: 5 | File: .marketing/AFFILIATE-KIT-[slug].md
+Product: ${PRODUCT_NAME} | Sections: 5 | File: .taketomarket/AFFILIATE-KIT-[slug].md
 ```
 
 Display summary of kit contents and confirm file location.

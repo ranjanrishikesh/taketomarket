@@ -19,7 +19,7 @@ better. LEARNINGS.md is already loaded as Tier 1 context in the brief workflow
 <constraints>
 ## POSITIONING.md is READ-ONLY
 
-**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+**Do NOT modify `.taketomarket/POSITIONING.md` during this workflow.**
 
 POSITIONING.md is an architectural invariant. If you identify a lesson that implies
 a POSITIONING.md edit:
@@ -34,12 +34,12 @@ POSITIONING.md edits directly even if the user approves. Instead, display:
 ## Reference File Edit Targets
 
 Only the following files may be edited via this workflow (per D-09):
-- `.marketing/BRAND.md`
-- `.marketing/ICP.md`
-- `.marketing/CHANNELS.md`
-- `.marketing/POSITIONING.md` (via /ttm-positioning-shift only -- never directly)
-- `.marketing/METRICS.md`
-- `.marketing/COMPETITORS.md`
+- `.taketomarket/BRAND.md`
+- `.taketomarket/ICP.md`
+- `.taketomarket/CHANNELS.md`
+- `.taketomarket/POSITIONING.md` (via /ttm-positioning-shift only -- never directly)
+- `.taketomarket/METRICS.md`
+- `.taketomarket/COMPETITORS.md`
 
 ## Append-Only LEARNINGS.md
 
@@ -89,36 +89,36 @@ SLUG=$(echo "$ARGUMENTS" | sed 's/--text//g' | xargs)
 If SLUG is empty, error: "Usage: /ttm-learn [campaign-slug]. Provide a campaign slug." Exit.
 
 **Load Tier 1 summaries** from all 9 reference files (lines 1 to `<!-- END_SUMMARY -->`):
-- `.marketing/POSITIONING.md`
-- `.marketing/BRAND.md`
-- `.marketing/ICP.md`
-- `.marketing/CHANNELS.md`
-- `.marketing/STATE.md` (frontmatter only)
-- `.marketing/CALENDAR.md`
-- `.marketing/COMPETITORS.md`
-- `.marketing/METRICS.md`
-- `.marketing/LEARNINGS.md`
+- `.taketomarket/POSITIONING.md`
+- `.taketomarket/BRAND.md`
+- `.taketomarket/ICP.md`
+- `.taketomarket/CHANNELS.md`
+- `.taketomarket/STATE.md` (frontmatter only)
+- `.taketomarket/CALENDAR.md`
+- `.taketomarket/COMPETITORS.md`
+- `.taketomarket/METRICS.md`
+- `.taketomarket/LEARNINGS.md`
 
 **Load Tier 2 (full content)** for learning analysis:
-- `.marketing/LEARNINGS.md` (existing lessons and patterns)
-- `.marketing/METRICS.md` (metric definitions for delta interpretation)
-- `.marketing/BRAND.md` (brand guidelines for edit proposals)
-- `.marketing/ICP.md` (ICP data for edit proposals)
-- `.marketing/CHANNELS.md` (channel data for edit proposals)
-- `.marketing/COMPETITORS.md` (competitor data for edit proposals)
-- `.marketing/POSITIONING.md` (read-only -- for positioning drift detection)
+- `.taketomarket/LEARNINGS.md` (existing lessons and patterns)
+- `.taketomarket/METRICS.md` (metric definitions for delta interpretation)
+- `.taketomarket/BRAND.md` (brand guidelines for edit proposals)
+- `.taketomarket/ICP.md` (ICP data for edit proposals)
+- `.taketomarket/CHANNELS.md` (channel data for edit proposals)
+- `.taketomarket/COMPETITORS.md` (competitor data for edit proposals)
+- `.taketomarket/POSITIONING.md` (read-only -- for positioning drift detection)
 
 **Load campaign artifacts** per the scan order from learnings-extraction.md:
-- `.marketing/CAMPAIGNS/${SLUG}/STATE.md` (frontmatter for gate results, run counts)
-- `.marketing/CAMPAIGNS/${SLUG}/MEASUREMENT.md` (measurement report with outcome data)
-- `.marketing/CAMPAIGNS/${SLUG}/BRIEF.md` (original strategy and targets)
-- `.marketing/CAMPAIGNS/${SLUG}/VERIFICATION.md` (gate details if it exists)
-- `.marketing/CAMPAIGNS/${SLUG}/FIX-BRIEF-*.md` (fix details if they exist)
-- `.marketing/CAMPAIGNS/${SLUG}/REVIEW-FEEDBACK-*.md` (reviewer comments if they exist)
+- `.taketomarket/CAMPAIGNS/${SLUG}/STATE.md` (frontmatter for gate results, run counts)
+- `.taketomarket/CAMPAIGNS/${SLUG}/MEASUREMENT.md` (measurement report with outcome data)
+- `.taketomarket/CAMPAIGNS/${SLUG}/BRIEF.md` (original strategy and targets)
+- `.taketomarket/CAMPAIGNS/${SLUG}/VERIFICATION.md` (gate details if it exists)
+- `.taketomarket/CAMPAIGNS/${SLUG}/FIX-BRIEF-*.md` (fix details if they exist)
+- `.taketomarket/CAMPAIGNS/${SLUG}/REVIEW-FEEDBACK-*.md` (reviewer comments if they exist)
 
-If `.marketing/CAMPAIGNS/${SLUG}/` does not exist, error: "Campaign '${SLUG}' not found. Check the slug and try again." Exit.
+If `.taketomarket/CAMPAIGNS/${SLUG}/` does not exist, error: "Campaign '${SLUG}' not found. Check the slug and try again." Exit.
 
-If `.marketing/CAMPAIGNS/${SLUG}/MEASUREMENT.md` does not exist, error: "No measurement data found for '${SLUG}'. Run /ttm-measure first." Exit.
+If `.taketomarket/CAMPAIGNS/${SLUG}/MEASUREMENT.md` does not exist, error: "No measurement data found for '${SLUG}'. Run /ttm-measure first." Exit.
 
 ---
 
@@ -226,7 +226,7 @@ Based on campaign "${SLUG}" results, [specific observation from measurement data
 [Reasoning derived from the data and campaign artifacts].
 Therefore, [specific edit proposal describing the change].
 
-File: .marketing/${TARGET_FILE}.md
+File: .taketomarket/${TARGET_FILE}.md
 Section: [section name where the edit applies]
 Change: [specific addition, modification, or removal]
 ```
@@ -243,7 +243,7 @@ Use AskUserQuestion with options:
 
 **If TEXT_MODE=true:**
 ```
-Apply this edit to .marketing/${TARGET_FILE}.md?
+Apply this edit to .taketomarket/${TARGET_FILE}.md?
   1. Apply -- Update ${TARGET_FILE}.md with this change
   2. Skip -- Keep ${TARGET_FILE}.md unchanged, log lesson only
   3. Modify -- Edit the proposed change before applying
@@ -284,7 +284,7 @@ Track counts: `edits_proposed` (total proposed), `edits_applied` (Apply + Modify
 
 ## Step 6: Append Lessons to LEARNINGS.md (per LRNG-01, LIFE-17)
 
-1. Read `.marketing/LEARNINGS.md`
+1. Read `.taketomarket/LEARNINGS.md`
 2. Find the marker line: `<!-- LESSONS BELOW THIS LINE -->`
 3. Insert new lesson rows immediately after the marker, one row per lesson from Step 4:
    ```
@@ -379,7 +379,7 @@ Reference edits proposed: ${PROPOSED_COUNT}
 Reference edits applied: ${APPLIED_COUNT}
 Pattern extraction: ${PATTERN_STATUS}
 
-Lessons appended to: .marketing/LEARNINGS.md
+Lessons appended to: .taketomarket/LEARNINGS.md
 
 Next: Run /ttm-archive ${SLUG} to finalize the campaign, or start a new campaign.
 Future campaigns will load these lessons via /ttm-brief to prevent repeating mistakes.

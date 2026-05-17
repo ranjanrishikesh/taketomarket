@@ -12,7 +12,7 @@ workflow per D-06.
 <constraints>
 ## POSITIONING.md is READ-ONLY
 
-**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+**Do NOT modify `.taketomarket/POSITIONING.md` during this workflow.**
 
 POSITIONING.md is an architectural invariant. If you detect positioning drift:
 - Flag the issue and recommend running /ttm-positioning-check
@@ -46,20 +46,20 @@ takeToMarket > LOADING CONTEXT
 ```
 
 **Load Tier 1 summaries** from all 9 reference files (lines 1 to `<!-- END_SUMMARY -->`):
-- `.marketing/POSITIONING.md`
-- `.marketing/BRAND.md`
-- `.marketing/ICP.md`
-- `.marketing/CHANNELS.md`
-- `.marketing/STATE.md` (frontmatter only)
-- `.marketing/CALENDAR.md`
-- `.marketing/COMPETITORS.md`
-- `.marketing/METRICS.md`
-- `.marketing/LEARNINGS.md`
+- `.taketomarket/POSITIONING.md`
+- `.taketomarket/BRAND.md`
+- `.taketomarket/ICP.md`
+- `.taketomarket/CHANNELS.md`
+- `.taketomarket/STATE.md` (frontmatter only)
+- `.taketomarket/CALENDAR.md`
+- `.taketomarket/COMPETITORS.md`
+- `.taketomarket/METRICS.md`
+- `.taketomarket/LEARNINGS.md`
 
 **Load Tier 2 (full content)** for the file being refreshed:
-- `.marketing/ICP.md`
+- `.taketomarket/ICP.md`
 
-If `.marketing/ICP.md` does not exist, error:
+If `.taketomarket/ICP.md` does not exist, error:
 "ICP.md not found. Run /ttm-init first to set up your marketing system."
 Exit.
 

@@ -2,10 +2,10 @@
   "campaign": "[SLUG]",
   "produced_at": "[ISO_TIMESTAMP]",
   "context_loaded": {
-    "brief": ".marketing/CAMPAIGNS/[SLUG]/BRIEF.md",
-    "positioning": ".marketing/POSITIONING.md",
-    "brand": ".marketing/BRAND.md",
-    "icp": ".marketing/ICP.md"
+    "brief": ".taketomarket/CAMPAIGNS/[SLUG]/BRIEF.md",
+    "positioning": ".taketomarket/POSITIONING.md",
+    "brand": ".taketomarket/BRAND.md",
+    "icp": ".taketomarket/ICP.md"
   },
   "hero": {
     "asset_id": 1,

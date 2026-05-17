@@ -2,7 +2,7 @@
 
 ## Overview
 
-takeToMarket uses a two-tier context loading strategy to maximize the usable context window for actual work. Every reference file in `.marketing/` has a compact Tier 1 summary and a full Tier 2 body. Workflows load only what they need.
+takeToMarket uses a two-tier context loading strategy to maximize the usable context window for actual work. Every reference file in `.taketomarket/` has a compact Tier 1 summary and a full Tier 2 body. Workflows load only what they need.
 
 ## Tier 1: Universal Summaries
 
@@ -70,7 +70,7 @@ Tier 2 is the complete file content below `<!-- END_SUMMARY -->`. It includes de
 
 4. **Campaign-specific files are always full-loaded.** Files inside `CAMPAIGNS/<slug>/` do not use the two-tier pattern. They are loaded in full by the workflow that owns that campaign phase.
 
-5. **Playbooks are Tier 2 only.** Playbooks live in the plugin's `playbooks/` directory (not in `.marketing/`). They are loaded only by the produce workflow, one at a time, based on the campaign brief's channel selection.
+5. **Playbooks are Tier 2 only.** Playbooks live in the plugin's `playbooks/` directory (not in `.taketomarket/`). They are loaded only by the produce workflow, one at a time, based on the campaign brief's channel selection.
 
 ## Implementation Details
 
@@ -88,10 +88,10 @@ Tier 2 is the complete file content below `<!-- END_SUMMARY -->`. It includes de
 
 The AI reads from line 1 to the line containing `<!-- END_SUMMARY -->`. Everything after is ignored unless the workflow explicitly requests Tier 2.
 
-### .marketing/ Directory Structure
+### .taketomarket/ Directory Structure
 
 ```
-.marketing/
+.taketomarket/
 ├── POSITIONING.md
 ├── BRAND.md
 ├── ICP.md
@@ -104,4 +104,4 @@ The AI reads from line 1 to the line containing `<!-- END_SUMMARY -->`. Everythi
 └── CAMPAIGNS/
 ```
 
-Note: The `.marketing/` directory does NOT contain a `PLAYBOOKS/` subdirectory. Playbooks live in the plugin's `playbooks/` directory and are loaded by reference during the Produce phase.
+Note: The `.taketomarket/` directory does NOT contain a `PLAYBOOKS/` subdirectory. Playbooks live in the plugin's `playbooks/` directory and are loaded by reference during the Produce phase.

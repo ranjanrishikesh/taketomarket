@@ -14,7 +14,7 @@ consumption (per D-11).
 <constraints>
 ## POSITIONING.md is READ-ONLY
 
-**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+**Do NOT modify `.taketomarket/POSITIONING.md` during this workflow.**
 
 POSITIONING.md is an architectural invariant. If you detect positioning drift:
 - In verify: use the Escalate option to launch /ttm-positioning-shift
@@ -62,24 +62,24 @@ SLUG=$(echo "$ARGUMENTS" | sed 's/--text//g' | xargs)
 ```
 
 Read Tier 1 summaries from all 9 reference files (lines 1 to `<!-- END_SUMMARY -->`):
-- `.marketing/POSITIONING.md`
-- `.marketing/BRAND.md`
-- `.marketing/ICP.md`
-- `.marketing/CHANNELS.md`
-- `.marketing/STATE.md` (frontmatter only)
-- `.marketing/CALENDAR.md`
-- `.marketing/COMPETITORS.md`
-- `.marketing/METRICS.md`
-- `.marketing/LEARNINGS.md`
+- `.taketomarket/POSITIONING.md`
+- `.taketomarket/BRAND.md`
+- `.taketomarket/ICP.md`
+- `.taketomarket/CHANNELS.md`
+- `.taketomarket/STATE.md` (frontmatter only)
+- `.taketomarket/CALENDAR.md`
+- `.taketomarket/COMPETITORS.md`
+- `.taketomarket/METRICS.md`
+- `.taketomarket/LEARNINGS.md`
 
 Read Tier 2 (full content) for production context (per D-03):
-- `.marketing/POSITIONING.md`
-- `.marketing/BRAND.md`
-- `.marketing/ICP.md`
+- `.taketomarket/POSITIONING.md`
+- `.taketomarket/BRAND.md`
+- `.taketomarket/ICP.md`
 
 Read campaign-specific files (always full-load per context-loading.md rule 4):
-- `.marketing/CAMPAIGNS/${SLUG}/STATE.md`
-- `.marketing/CAMPAIGNS/${SLUG}/BRIEF.md`
+- `.taketomarket/CAMPAIGNS/${SLUG}/STATE.md`
+- `.taketomarket/CAMPAIGNS/${SLUG}/BRIEF.md`
 
 ---
 
@@ -114,7 +114,7 @@ Read campaign state. Check the `phase` field:
 takeToMarket > PARSING BRIEF
 ```
 
-Read `.marketing/CAMPAIGNS/${SLUG}/BRIEF.md`.
+Read `.taketomarket/CAMPAIGNS/${SLUG}/BRIEF.md`.
 
 Extract the assets list from the brief. The brief contains an "Assets List" section (created by /ttm-brief) structured as a Markdown table with columns: asset type, channel, and role.
 
@@ -207,12 +207,12 @@ Identify the hero asset (first entry in `ASSETS_LIST`).
 Read the agent prompt template from `${CLAUDE_PLUGIN_ROOT}/agents/ttm-producer.md`.
 
 Fill all placeholders with actual paths:
-- `[BRIEF_PATH]` --> `.marketing/CAMPAIGNS/${SLUG}/BRIEF.md`
-- `[POSITIONING_PATH]` --> `.marketing/POSITIONING.md`
-- `[BRAND_PATH]` --> `.marketing/BRAND.md`
-- `[ICP_PATH]` --> `.marketing/ICP.md`
+- `[BRIEF_PATH]` --> `.taketomarket/CAMPAIGNS/${SLUG}/BRIEF.md`
+- `[POSITIONING_PATH]` --> `.taketomarket/POSITIONING.md`
+- `[BRAND_PATH]` --> `.taketomarket/BRAND.md`
+- `[ICP_PATH]` --> `.taketomarket/ICP.md`
 - `[PLAYBOOK_PATH]` --> resolved playbook path from Step 4, or `"none"`
-- `[OUTPUT_PATH]` --> `.marketing/CAMPAIGNS/${SLUG}/ASSETS/01-${HERO_TYPE}-${HERO_CHANNEL}.md`
+- `[OUTPUT_PATH]` --> `.taketomarket/CAMPAIGNS/${SLUG}/ASSETS/01-${HERO_TYPE}-${HERO_CHANNEL}.md`
 - `[ASSET_TYPE]` --> hero asset type from brief (e.g., "blog-post")
 - `[CHANNEL]` --> hero asset channel from brief (e.g., "organic-search")
 - `[HERO_PATH]` --> `none` (this IS the hero asset)
@@ -223,7 +223,7 @@ Call Task() with the populated prompt.
 
 After Task() returns, verify the hero file exists and has content:
 ```bash
-test -s ".marketing/CAMPAIGNS/${SLUG}/ASSETS/01-${HERO_TYPE}-${HERO_CHANNEL}.md"
+test -s ".taketomarket/CAMPAIGNS/${SLUG}/ASSETS/01-${HERO_TYPE}-${HERO_CHANNEL}.md"
 ```
 
 If the file is empty or missing:
@@ -253,15 +253,15 @@ For each derivative asset in `ASSETS_LIST` (all entries after the hero):
    - etc.
 
 3. Fill all placeholders:
-   - `[BRIEF_PATH]` --> `.marketing/CAMPAIGNS/${SLUG}/BRIEF.md`
-   - `[POSITIONING_PATH]` --> `.marketing/POSITIONING.md`
-   - `[BRAND_PATH]` --> `.marketing/BRAND.md`
-   - `[ICP_PATH]` --> `.marketing/ICP.md`
+   - `[BRIEF_PATH]` --> `.taketomarket/CAMPAIGNS/${SLUG}/BRIEF.md`
+   - `[POSITIONING_PATH]` --> `.taketomarket/POSITIONING.md`
+   - `[BRAND_PATH]` --> `.taketomarket/BRAND.md`
+   - `[ICP_PATH]` --> `.taketomarket/ICP.md`
    - `[PLAYBOOK_PATH]` --> resolved playbook path from Step 4, or `"none"`
-   - `[OUTPUT_PATH]` --> `.marketing/CAMPAIGNS/${SLUG}/ASSETS/${NN}-${TYPE}-${CHANNEL}.md`
+   - `[OUTPUT_PATH]` --> `.taketomarket/CAMPAIGNS/${SLUG}/ASSETS/${NN}-${TYPE}-${CHANNEL}.md`
    - `[ASSET_TYPE]` --> derivative asset type
    - `[CHANNEL]` --> derivative asset channel
-   - `[HERO_PATH]` --> `.marketing/CAMPAIGNS/${SLUG}/ASSETS/${HERO_FILE}`
+   - `[HERO_PATH]` --> `.taketomarket/CAMPAIGNS/${SLUG}/ASSETS/${HERO_FILE}`
 
 4. Call Task() with the populated prompt.
 
@@ -269,7 +269,7 @@ All derivative Task() calls can run in parallel (per D-01 wave-parallel pattern)
 
 After ALL derivative Task() calls complete, verify each derivative file exists and has content:
 ```bash
-test -s ".marketing/CAMPAIGNS/${SLUG}/ASSETS/${NN}-${TYPE}-${CHANNEL}.md"
+test -s ".taketomarket/CAMPAIGNS/${SLUG}/ASSETS/${NN}-${TYPE}-${CHANNEL}.md"
 ```
 
 For any derivative that failed (file empty or missing):
@@ -295,10 +295,10 @@ Fill with actual values:
   "campaign": "${SLUG}",
   "produced_at": "${ISO_TIMESTAMP}",
   "context_loaded": {
-    "brief": ".marketing/CAMPAIGNS/${SLUG}/BRIEF.md",
-    "positioning": ".marketing/POSITIONING.md",
-    "brand": ".marketing/BRAND.md",
-    "icp": ".marketing/ICP.md"
+    "brief": ".taketomarket/CAMPAIGNS/${SLUG}/BRIEF.md",
+    "positioning": ".taketomarket/POSITIONING.md",
+    "brand": ".taketomarket/BRAND.md",
+    "icp": ".taketomarket/ICP.md"
   },
   "hero": {
     "asset_id": 1,
@@ -331,7 +331,7 @@ TIMESTAMP=$(node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" timestamp --raw)
 Only include successfully produced assets (those that passed the `test -s` check) in the manifest.
 If any derivatives failed, `total_assets` reflects only the successful count.
 
-Write the completed manifest to `.marketing/CAMPAIGNS/${SLUG}/MANIFEST.json`.
+Write the completed manifest to `.taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json`.
 
 The manifest is the ONLY bridge between produce and verify contexts (per D-11). Verify reads
 this file to discover which assets exist and what context was loaded during production.
@@ -357,7 +357,7 @@ takeToMarket > PRODUCTION COMPLETE
 Assets produced: ${TOTAL_SUCCESSFUL_ASSETS}
 Hero: 01-${HERO_TYPE}-${HERO_CHANNEL}.md
 Derivatives: [list of derivative filenames]
-Manifest: .marketing/CAMPAIGNS/${SLUG}/MANIFEST.json
+Manifest: .taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json
 
 [If any derivatives failed:]
 WARNING: ${FAILED_COUNT} derivative(s) failed production. Check the manifest for details.
@@ -378,6 +378,6 @@ Next: Run /ttm-verify ${SLUG} to validate assets against quality gates
 </success_criteria>
 
 <output>
-- `.marketing/CAMPAIGNS/${SLUG}/ASSETS/*.md` (produced content files)
-- `.marketing/CAMPAIGNS/${SLUG}/MANIFEST.json` (production manifest for /ttm-verify)
+- `.taketomarket/CAMPAIGNS/${SLUG}/ASSETS/*.md` (produced content files)
+- `.taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json` (production manifest for /ttm-verify)
 </output>

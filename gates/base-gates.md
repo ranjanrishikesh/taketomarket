@@ -7,7 +7,7 @@
 ## Gate 1: Positioning Drift (GATE-01) -- Tier 1
 
 **Checks:** Asset content alignment with approved positioning
-**Against:** `.marketing/POSITIONING.md`
+**Against:** `.taketomarket/POSITIONING.md`
 
 ### Evaluation Criteria
 
@@ -31,7 +31,7 @@
 ## Gate 2: Claim Accuracy (GATE-02) -- Tier 1
 
 **Checks:** Factual and numeric claims against approved proof points
-**Against:** `.marketing/BRAND.md` proof points section
+**Against:** `.taketomarket/BRAND.md` proof points section
 
 ### Evaluation Criteria
 
@@ -55,7 +55,7 @@
 ## Gate 3: Voice Drift (GATE-03) -- Tier 2
 
 **Checks:** Tone, vocabulary, and register against brand voice definition
-**Against:** `.marketing/BRAND.md` voice archetype and banned words list
+**Against:** `.taketomarket/BRAND.md` voice archetype and banned words list
 
 ### Evaluation Criteria
 
@@ -79,7 +79,7 @@
 ## Gate 4: Outcome Alignment (GATE-04) -- Tier 1
 
 **Checks:** Whether the asset is designed to drive the campaign's stated outcome metric
-**Against:** `.marketing/CAMPAIGNS/<slug>/BRIEF.md` outcome metric
+**Against:** `.taketomarket/CAMPAIGNS/<slug>/BRIEF.md` outcome metric
 
 ### Evaluation Criteria
 
@@ -98,7 +98,7 @@
 ## Gate 5: Funnel Integrity (GATE-05) -- Tier 2
 
 **Checks:** CTA presence, destination, and conversion path logic
-**Against:** `.marketing/CAMPAIGNS/<slug>/BRIEF.md` funnel/CTA section
+**Against:** `.taketomarket/CAMPAIGNS/<slug>/BRIEF.md` funnel/CTA section
 
 ### Evaluation Criteria
 
@@ -125,7 +125,7 @@
 ## Gate 6: UTM Hygiene (GATE-06) -- Tier 2
 
 **Checks:** UTM parameter presence and naming convention compliance
-**Against:** `.marketing/CHANNELS.md` UTM schema
+**Against:** `.taketomarket/CHANNELS.md` UTM schema
 
 ### Evaluation Criteria
 
@@ -178,7 +178,7 @@
 ## Gate 8: Competitor Collision (GATE-08) -- Tier 2
 
 **Checks:** Unintended competitor promotion or positioning echo
-**Against:** `.marketing/COMPETITORS.md`
+**Against:** `.taketomarket/COMPETITORS.md`
 
 ### Evaluation Criteria
 
@@ -202,7 +202,7 @@
 ## Gate 9: ICP Fit (GATE-09) -- Tier 2
 
 **Checks:** Whether content speaks to the target ICP in their language
-**Against:** `.marketing/ICP.md`
+**Against:** `.taketomarket/ICP.md`
 
 ### Evaluation Criteria
 

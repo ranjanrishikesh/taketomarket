@@ -17,7 +17,7 @@ takeToMarket is an open-source skill that runs entirely on your local filesystem
 
 1. **Installation** — the `npx taketomarket` installer copies Markdown files from the npm package to local directories on your machine (e.g., `~/.claude/skills/`, `~/.taketomarket/`). No data leaves your machine.
 2. **Skill execution** — each slash command (e.g., `/ttm-init`, `/ttm-produce`) is a Markdown workflow file read by your AI runtime. The runtime (Claude Code, Codex, etc.) executes the workflow locally. takeToMarket itself does not communicate with any server.
-3. **State storage** — all campaign data, briefs, assets, reference files, learnings, and state are stored in plain Markdown files inside your project's `.marketing/` directory. These files never leave your machine unless you choose to share or commit them.
+3. **State storage** — all campaign data, briefs, assets, reference files, learnings, and state are stored in plain Markdown files inside your project's `.taketomarket/` directory. These files never leave your machine unless you choose to share or commit them.
 4. **Update check** — the optional `/ttm-update` command runs `npm show taketomarket version` to compare the installed version against the latest published version on npm. This is a single read-only query to the public npm registry. No data about you, your projects, or your campaigns is sent.
 
 ### What takeToMarket does NOT do
@@ -43,7 +43,7 @@ Relevant policies:
 
 ### Data retention
 
-Because takeToMarket does not collect any data, there is no data retention. Your campaign data lives in files on your machine for as long as you keep those files. Deleting your `.marketing/` directory removes all takeToMarket-related project data.
+Because takeToMarket does not collect any data, there is no data retention. Your campaign data lives in files on your machine for as long as you keep those files. Deleting your `.taketomarket/` directory removes all takeToMarket-related project data.
 
 ### Children's privacy
 

@@ -16,7 +16,7 @@ Auto-approves to ship-ready on successful fix (D-14).
 <constraints>
 ## POSITIONING.md is READ-ONLY
 
-**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+**Do NOT modify `.taketomarket/POSITIONING.md` during this workflow.**
 
 POSITIONING.md is an architectural invariant. If you detect positioning drift:
 - In verify: use the Escalate option to launch /ttm-positioning-shift
@@ -66,37 +66,37 @@ SLUG=$(echo "$ARGUMENTS" | sed 's/--text//g' | xargs)
 If SLUG is empty, error: "Usage: /ttm-fix [campaign-slug]. Provide a campaign slug." Exit.
 
 **Load Tier 1 summaries** from all 9 reference files (lines 1 to `<!-- END_SUMMARY -->`):
-- `.marketing/POSITIONING.md`
-- `.marketing/BRAND.md`
-- `.marketing/ICP.md`
-- `.marketing/CHANNELS.md`
-- `.marketing/STATE.md` (frontmatter only)
-- `.marketing/CALENDAR.md`
-- `.marketing/COMPETITORS.md`
-- `.marketing/METRICS.md`
-- `.marketing/LEARNINGS.md`
+- `.taketomarket/POSITIONING.md`
+- `.taketomarket/BRAND.md`
+- `.taketomarket/ICP.md`
+- `.taketomarket/CHANNELS.md`
+- `.taketomarket/STATE.md` (frontmatter only)
+- `.taketomarket/CALENDAR.md`
+- `.taketomarket/COMPETITORS.md`
+- `.taketomarket/METRICS.md`
+- `.taketomarket/LEARNINGS.md`
 
 **Load Tier 2 (full content)** for gate evaluation (same as verify per context-loading.md):
-- `.marketing/POSITIONING.md` (needed for GATE-01 Positioning Drift)
-- `.marketing/BRAND.md` (needed for GATE-02 Claim Accuracy, GATE-03 Voice Drift)
-- `.marketing/ICP.md` (needed for GATE-09 ICP Fit)
-- `.marketing/COMPETITORS.md` (needed for GATE-08 Competitor Collision)
-- `.marketing/CHANNELS.md` (needed for GATE-06 UTM Hygiene)
+- `.taketomarket/POSITIONING.md` (needed for GATE-01 Positioning Drift)
+- `.taketomarket/BRAND.md` (needed for GATE-02 Claim Accuracy, GATE-03 Voice Drift)
+- `.taketomarket/ICP.md` (needed for GATE-09 ICP Fit)
+- `.taketomarket/COMPETITORS.md` (needed for GATE-08 Competitor Collision)
+- `.taketomarket/CHANNELS.md` (needed for GATE-06 UTM Hygiene)
 
 **Load campaign-specific files** (always full-load per context-loading.md rule 4):
-- `.marketing/CAMPAIGNS/${SLUG}/STATE.md`
-- `.marketing/CAMPAIGNS/${SLUG}/BRIEF.md`
+- `.taketomarket/CAMPAIGNS/${SLUG}/STATE.md`
+- `.taketomarket/CAMPAIGNS/${SLUG}/BRIEF.md`
 
 **Load MANIFEST.json:**
-Read `.marketing/CAMPAIGNS/${SLUG}/MANIFEST.json`. If the file does not exist, error:
+Read `.taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json`. If the file does not exist, error:
 "No production manifest found for campaign '${SLUG}'. Run /ttm-produce first." Exit.
 
 **Load VERIFICATION.md:**
-Read `.marketing/CAMPAIGNS/${SLUG}/VERIFICATION.md`. If the file does not exist, error:
+Read `.taketomarket/CAMPAIGNS/${SLUG}/VERIFICATION.md`. If the file does not exist, error:
 "No verification report found for campaign '${SLUG}'. Run /ttm-verify first." Exit.
 
 **Load LEARNINGS.md Tier 2** (for root-cause taxonomy categories):
-- `.marketing/LEARNINGS.md` (full content -- needed for root-cause category matching)
+- `.taketomarket/LEARNINGS.md` (full content -- needed for root-cause category matching)
 
 ---
 
@@ -136,7 +136,7 @@ Parse MANIFEST.json for assets where `review_status == "needs-fix"`.
 
 Collect from both `hero` and `derivatives` entries. For each matching asset, record:
 - `asset_id`, `name`, `file`, `type`, `channel`, `playbook`
-- Load its review feedback file: `.marketing/CAMPAIGNS/${SLUG}/REVIEW-FEEDBACK-${NAME}.md`
+- Load its review feedback file: `.taketomarket/CAMPAIGNS/${SLUG}/REVIEW-FEEDBACK-${NAME}.md`
   If the feedback file does not exist, log warning and use VERIFICATION.md failures only.
 
 If no assets need fix:
@@ -157,7 +157,7 @@ Assets needing fix: ${COUNT}
 ## Step 4: Initialize Fix Log
 
 Check if FIX-LOG.md exists in campaign directory:
-`.marketing/CAMPAIGNS/${SLUG}/FIX-LOG.md`
+`.taketomarket/CAMPAIGNS/${SLUG}/FIX-LOG.md`
 
 If not, create it from `${CLAUDE_PLUGIN_ROOT}/templates/fix-log.md` template:
 - Replace `[SLUG]` with campaign slug
@@ -209,7 +209,7 @@ Initialize `attempt_count` from prior attempts in FIX-LOG.md (0 if no prior atte
   - `[ATTEMPT_NUMBER]` -> current attempt (1, 2, or 3)
   - `[ROOT_CAUSE_CATEGORY]` -> confirmed root cause category
   - `[ROOT_CAUSE_EXPLANATION]` -> explanation text
-  - `[BRIEF_PATH]` -> `.marketing/CAMPAIGNS/${SLUG}/BRIEF.md`
+  - `[BRIEF_PATH]` -> `.taketomarket/CAMPAIGNS/${SLUG}/BRIEF.md`
   - `[FAILURE_LIST]` -> extract all WARN/FAIL findings for this asset from VERIFICATION.md,
     plus review feedback items from REVIEW-FEEDBACK-${NAME}.md
   - `[PASSING_LIST]` -> extract all PASS findings for this asset from VERIFICATION.md
@@ -217,19 +217,19 @@ Initialize `attempt_count` from prior attempts in FIX-LOG.md (0 if no prior atte
   - `[CORRECTIONS_LIST]` -> derive specific corrections from root cause + review feedback
   - `[ISO_TIMESTAMP]` -> current timestamp
 
-  Write fix brief to: `.marketing/CAMPAIGNS/${SLUG}/FIX-BRIEF-${ASSET_ID}-attempt-${N}.md`
+  Write fix brief to: `.taketomarket/CAMPAIGNS/${SLUG}/FIX-BRIEF-${ASSET_ID}-attempt-${N}.md`
 
   ### 5c. Re-Produce Asset (Task() subagent)
 
   Read agent prompt template from `${CLAUDE_PLUGIN_ROOT}/agents/ttm-producer.md`.
   Fill placeholders -- **CRITICAL: use the FIX BRIEF path as `[BRIEF_PATH]`**, NOT the
   original BRIEF.md:
-  - `[BRIEF_PATH]` -> `.marketing/CAMPAIGNS/${SLUG}/FIX-BRIEF-${ASSET_ID}-attempt-${N}.md`
-  - `[POSITIONING_PATH]` -> `.marketing/POSITIONING.md`
-  - `[BRAND_PATH]` -> `.marketing/BRAND.md`
-  - `[ICP_PATH]` -> `.marketing/ICP.md`
+  - `[BRIEF_PATH]` -> `.taketomarket/CAMPAIGNS/${SLUG}/FIX-BRIEF-${ASSET_ID}-attempt-${N}.md`
+  - `[POSITIONING_PATH]` -> `.taketomarket/POSITIONING.md`
+  - `[BRAND_PATH]` -> `.taketomarket/BRAND.md`
+  - `[ICP_PATH]` -> `.taketomarket/ICP.md`
   - `[PLAYBOOK_PATH]` -> playbook path from MANIFEST.json or `"none"`
-  - `[OUTPUT_PATH]` -> `.marketing/CAMPAIGNS/${SLUG}/${ASSET_FILE}` (overwrite failing version)
+  - `[OUTPUT_PATH]` -> `.taketomarket/CAMPAIGNS/${SLUG}/${ASSET_FILE}` (overwrite failing version)
   - `[ASSET_TYPE]` -> from MANIFEST.json
   - `[CHANNEL]` -> from MANIFEST.json
   - `[HERO_PATH]` -> hero asset path if this is a derivative, else `"none"`
@@ -238,7 +238,7 @@ Initialize `attempt_count` from prior attempts in FIX-LOG.md (0 if no prior atte
 
   Verify the re-produced file exists and has content:
   ```bash
-  test -s ".marketing/CAMPAIGNS/${SLUG}/${ASSET_FILE}"
+  test -s ".taketomarket/CAMPAIGNS/${SLUG}/${ASSET_FILE}"
   ```
   If file missing/empty: log as failed attempt in FIX-LOG.md, continue loop.
 
@@ -306,7 +306,7 @@ Initialize `attempt_count` from prior attempts in FIX-LOG.md (0 if no prior atte
 
   ### 5f. Log Attempt to FIX-LOG.md
 
-  Append to `.marketing/CAMPAIGNS/${SLUG}/FIX-LOG.md`:
+  Append to `.taketomarket/CAMPAIGNS/${SLUG}/FIX-LOG.md`:
   ```markdown
   ## Asset: [ASSET_NAME]
 
@@ -373,7 +373,7 @@ Set asset `review_status` to `"needs-human-fix"` in memory.
 
 ## Step 7: Update MANIFEST.json
 
-Read MANIFEST.json from `.marketing/CAMPAIGNS/${SLUG}/MANIFEST.json`.
+Read MANIFEST.json from `.taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json`.
 
 Update `review_status` for each processed asset:
 - `"ship-ready"` if fix succeeded or user approved anyway
@@ -457,7 +457,7 @@ Assets processed: ${TOTAL}
   Fixed (ship-ready): ${FIXED_COUNT}
   Needs human fix: ${ESCALATED_COUNT}
 
-Fix log: .marketing/CAMPAIGNS/${SLUG}/FIX-LOG.md
+Fix log: .taketomarket/CAMPAIGNS/${SLUG}/FIX-LOG.md
 ```
 
 **If any ship-ready assets:**
@@ -488,8 +488,8 @@ Edit the flagged files manually, then run /ttm-verify ${SLUG} to re-check
 </success_criteria>
 
 <output>
-- `.marketing/CAMPAIGNS/${SLUG}/FIX-LOG.md` (fix attempt history -- append-only)
-- `.marketing/CAMPAIGNS/${SLUG}/FIX-BRIEF-*-attempt-*.md` (fix briefs per attempt -- persistent)
-- `.marketing/CAMPAIGNS/${SLUG}/MANIFEST.json` (updated with fix results per asset)
-- `.marketing/CAMPAIGNS/${SLUG}/VERIFICATION.md` (updated with latest gate results)
+- `.taketomarket/CAMPAIGNS/${SLUG}/FIX-LOG.md` (fix attempt history -- append-only)
+- `.taketomarket/CAMPAIGNS/${SLUG}/FIX-BRIEF-*-attempt-*.md` (fix briefs per attempt -- persistent)
+- `.taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json` (updated with fix results per asset)
+- `.taketomarket/CAMPAIGNS/${SLUG}/VERIFICATION.md` (updated with latest gate results)
 </output>

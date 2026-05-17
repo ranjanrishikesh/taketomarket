@@ -94,7 +94,7 @@ describe('cmdCampaignInit', () => {
 
   before(() => {
     tmp = createTempDir();
-    fs.mkdirSync(path.join(tmp.dir, '.marketing', 'CAMPAIGNS'), { recursive: true });
+    fs.mkdirSync(path.join(tmp.dir, '.taketomarket', 'CAMPAIGNS'), { recursive: true });
     originalCwd = process.cwd;
     process.cwd = () => tmp.dir;
   });
@@ -122,7 +122,7 @@ describe('cmdCampaignInit', () => {
     const parsed = captureJson(stdoutMock);
     assert.strictEqual(parsed.created, true);
     assert.strictEqual(parsed.slug, 'test-camp');
-    const campDir = path.join(tmp.dir, '.marketing', 'CAMPAIGNS', 'test-camp');
+    const campDir = path.join(tmp.dir, '.taketomarket', 'CAMPAIGNS', 'test-camp');
     assert.ok(fs.existsSync(path.join(campDir, 'STATE.md')), 'STATE.md exists');
     assert.ok(fs.existsSync(path.join(campDir, 'RESEARCH.md')), 'RESEARCH.md exists');
     assert.ok(fs.existsSync(path.join(campDir, 'BRIEF.md')), 'BRIEF.md exists');
@@ -137,7 +137,7 @@ describe('cmdCampaignInit', () => {
 
   it('writes STATE.md with phase=created in frontmatter', () => {
     const content = fs.readFileSync(
-      path.join(tmp.dir, '.marketing', 'CAMPAIGNS', 'test-camp', 'STATE.md'),
+      path.join(tmp.dir, '.taketomarket', 'CAMPAIGNS', 'test-camp', 'STATE.md'),
       'utf-8'
     );
     assert.ok(content.includes('phase: created'), 'contains phase: created');
@@ -149,7 +149,7 @@ describe('cmdCampaignInit', () => {
     const parsed = captureJson(stdoutMock);
     assert.strictEqual(parsed.slug, 'helloworld');
     assert.ok(
-      fs.existsSync(path.join(tmp.dir, '.marketing', 'CAMPAIGNS', 'helloworld', 'STATE.md')),
+      fs.existsSync(path.join(tmp.dir, '.taketomarket', 'CAMPAIGNS', 'helloworld', 'STATE.md')),
       'sanitized directory created'
     );
   });
@@ -183,7 +183,7 @@ describe('cmdCampaignState', () => {
 
   before(() => {
     tmp = createTempDir();
-    fs.mkdirSync(path.join(tmp.dir, '.marketing', 'CAMPAIGNS'), { recursive: true });
+    fs.mkdirSync(path.join(tmp.dir, '.taketomarket', 'CAMPAIGNS'), { recursive: true });
     createMockCampaign(tmp.dir, 'state-test', { phase: 'briefed' });
     originalCwd = process.cwd;
     process.cwd = () => tmp.dir;
@@ -241,7 +241,7 @@ describe('cmdCampaignUpdate', () => {
 
   before(() => {
     tmp = createTempDir();
-    fs.mkdirSync(path.join(tmp.dir, '.marketing', 'CAMPAIGNS'), { recursive: true });
+    fs.mkdirSync(path.join(tmp.dir, '.taketomarket', 'CAMPAIGNS'), { recursive: true });
     createMockCampaign(tmp.dir, 'update-test', { phase: 'created' });
     originalCwd = process.cwd;
     process.cwd = () => tmp.dir;
@@ -270,7 +270,7 @@ describe('cmdCampaignUpdate', () => {
     assert.strictEqual(parsed.updated, 'phase');
     assert.strictEqual(parsed.value, 'produced');
     const content = fs.readFileSync(
-      path.join(tmp.dir, '.marketing', 'CAMPAIGNS', 'update-test', 'STATE.md'),
+      path.join(tmp.dir, '.taketomarket', 'CAMPAIGNS', 'update-test', 'STATE.md'),
       'utf-8'
     );
     assert.ok(content.includes('phase: produced'), 'disk has updated phase');
@@ -323,7 +323,7 @@ describe('cmdCampaignList', () => {
 
   before(() => {
     tmp = createTempDir();
-    fs.mkdirSync(path.join(tmp.dir, '.marketing', 'CAMPAIGNS'), { recursive: true });
+    fs.mkdirSync(path.join(tmp.dir, '.taketomarket', 'CAMPAIGNS'), { recursive: true });
     createMockCampaign(tmp.dir, 'camp-active', { phase: 'produced' });
     createMockCampaign(tmp.dir, 'camp-shipped', {
       phase: 'shipped',
@@ -401,7 +401,7 @@ describe('cmdCampaignArchive', () => {
 
   before(() => {
     tmp = createTempDir();
-    fs.mkdirSync(path.join(tmp.dir, '.marketing', 'CAMPAIGNS'), { recursive: true });
+    fs.mkdirSync(path.join(tmp.dir, '.taketomarket', 'CAMPAIGNS'), { recursive: true });
     originalCwd = process.cwd;
     process.cwd = () => tmp.dir;
   });
@@ -429,18 +429,18 @@ describe('cmdCampaignArchive', () => {
     const parsed = captureJson(stdoutMock);
     assert.strictEqual(parsed.archived, true);
     assert.ok(
-      fs.existsSync(path.join(tmp.dir, '.marketing', 'CAMPAIGNS', 'ARCHIVE', 'arch-test', 'STATE.md')),
+      fs.existsSync(path.join(tmp.dir, '.taketomarket', 'CAMPAIGNS', 'ARCHIVE', 'arch-test', 'STATE.md')),
       'archived STATE.md exists'
     );
     assert.ok(
-      !fs.existsSync(path.join(tmp.dir, '.marketing', 'CAMPAIGNS', 'arch-test')),
+      !fs.existsSync(path.join(tmp.dir, '.taketomarket', 'CAMPAIGNS', 'arch-test')),
       'source directory removed'
     );
   });
 
   it('updates archived STATE.md with phase=archived', () => {
     const archivedState = fs.readFileSync(
-      path.join(tmp.dir, '.marketing', 'CAMPAIGNS', 'ARCHIVE', 'arch-test', 'STATE.md'),
+      path.join(tmp.dir, '.taketomarket', 'CAMPAIGNS', 'ARCHIVE', 'arch-test', 'STATE.md'),
       'utf-8'
     );
     assert.ok(archivedState.includes('phase: archived'), 'contains phase: archived');
@@ -483,7 +483,7 @@ describe('cmdRepurposeManifest', () => {
 
   before(() => {
     tmp = createTempDir();
-    fs.mkdirSync(path.join(tmp.dir, '.marketing', 'CAMPAIGNS'), { recursive: true });
+    fs.mkdirSync(path.join(tmp.dir, '.taketomarket', 'CAMPAIGNS'), { recursive: true });
     createMockCampaign(tmp.dir, 'repurpose-test', { phase: 'produced' });
     originalCwd = process.cwd;
     process.cwd = () => tmp.dir;
@@ -513,7 +513,7 @@ describe('cmdRepurposeManifest', () => {
     const parsed = captureJson(stdoutMock);
     assert.strictEqual(parsed.updated, true);
     assert.strictEqual(parsed.derivatives_added, 1);
-    const manifestPath = path.join(tmp.dir, '.marketing', 'CAMPAIGNS', 'repurpose-test', 'MANIFEST.json');
+    const manifestPath = path.join(tmp.dir, '.taketomarket', 'CAMPAIGNS', 'repurpose-test', 'MANIFEST.json');
     const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
     assert.strictEqual(manifest.derivatives.length, 1);
     assert.strictEqual(manifest.derivatives[0].source_asset_id, 1);
@@ -525,7 +525,7 @@ describe('cmdRepurposeManifest', () => {
     ], false);
     const parsed = captureJson(stdoutMock);
     assert.strictEqual(parsed.updated, true);
-    const manifestPath = path.join(tmp.dir, '.marketing', 'CAMPAIGNS', 'repurpose-test', 'MANIFEST.json');
+    const manifestPath = path.join(tmp.dir, '.taketomarket', 'CAMPAIGNS', 'repurpose-test', 'MANIFEST.json');
     const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
     assert.strictEqual(manifest.derivatives.length, 2);
   });

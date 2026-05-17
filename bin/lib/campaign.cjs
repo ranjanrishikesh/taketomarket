@@ -32,7 +32,7 @@ function resolveCampaignStatePath(slug) {
   // Re-sanitize slug (defense in depth -- caller may pass unsanitized input)
   const safe = slug.toLowerCase().replace(/[^a-z0-9-]/g, '');
   if (!safe) error('campaign slug must contain at least one alphanumeric character after sanitization');
-  const statePath = path.resolve(process.cwd(), '.marketing', 'CAMPAIGNS', safe, 'STATE.md');
+  const statePath = path.resolve(process.cwd(), '.taketomarket', 'CAMPAIGNS', safe, 'STATE.md');
   const projectRoot = path.resolve(process.cwd());
   if (!statePath.startsWith(projectRoot + path.sep)) {
     error('campaign STATE.md path escapes project directory');
@@ -55,7 +55,7 @@ function cmdCampaignInit(slug, name, raw) {
   const safe = slug.toLowerCase().replace(/[^a-z0-9-]/g, '');
   if (!safe) error('campaign slug must contain at least one alphanumeric character after sanitization');
 
-  const campaignDir = path.resolve(process.cwd(), '.marketing', 'CAMPAIGNS', safe);
+  const campaignDir = path.resolve(process.cwd(), '.taketomarket', 'CAMPAIGNS', safe);
   const assetsDir = path.resolve(campaignDir, 'ASSETS');
   const statePath = path.resolve(campaignDir, 'STATE.md');
 
@@ -268,7 +268,7 @@ function cmdCampaignList(filter, sinceArg, raw) {
     error('--active/--shipped-since-last-audit and --since are mutually exclusive');
   }
 
-  const campaignsDir = path.resolve(process.cwd(), '.marketing', 'CAMPAIGNS');
+  const campaignsDir = path.resolve(process.cwd(), '.taketomarket', 'CAMPAIGNS');
 
   // If no campaigns directory, return empty
   let entries;
@@ -303,7 +303,7 @@ function cmdCampaignList(filter, sinceArg, raw) {
     const shippedCampaigns = campaigns.filter(c => c['phase.shipped'] && c['phase.shipped'] !== 'null');
     let lastAuditTimestamp = null;
 
-    const driftLogPath = path.resolve(process.cwd(), '.marketing', 'DRIFT-LOG.md');
+    const driftLogPath = path.resolve(process.cwd(), '.taketomarket', 'DRIFT-LOG.md');
     const driftLogContent = safeReadFile(driftLogPath);
     if (driftLogContent) {
       // Find last audit event timestamp in the Audit Trail table
@@ -366,8 +366,8 @@ function cmdCampaignArchive(slug, raw) {
   const safe = slug.toLowerCase().replace(/[^a-z0-9-]/g, '');
   if (!safe) error('campaign slug must contain at least one alphanumeric character after sanitization');
   const projectRoot = path.resolve(process.cwd());
-  const srcDir = path.resolve(projectRoot, '.marketing', 'CAMPAIGNS', safe);
-  const destDir = path.resolve(projectRoot, '.marketing', 'CAMPAIGNS', 'ARCHIVE', safe);
+  const srcDir = path.resolve(projectRoot, '.taketomarket', 'CAMPAIGNS', safe);
+  const destDir = path.resolve(projectRoot, '.taketomarket', 'CAMPAIGNS', 'ARCHIVE', safe);
 
   // Security check: both paths must be inside project root
   if (!srcDir.startsWith(projectRoot + path.sep)) {
@@ -468,7 +468,7 @@ function cmdRepurposeManifest(slug, sourceAssetId, derivatives, raw) {
   const safeSlug = slug.toLowerCase().replace(/[^a-z0-9-]/g, '');
   if (!safeSlug) error('campaign slug must contain at least one alphanumeric character after sanitization');
   const projectRoot = path.resolve(process.cwd());
-  const manifestPath = path.resolve(projectRoot, '.marketing', 'CAMPAIGNS', safeSlug, 'MANIFEST.json');
+  const manifestPath = path.resolve(projectRoot, '.taketomarket', 'CAMPAIGNS', safeSlug, 'MANIFEST.json');
 
   // Security: path must stay within project root (T-10-12)
   if (!manifestPath.startsWith(projectRoot + path.sep)) {

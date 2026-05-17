@@ -1,5 +1,5 @@
 <purpose>
-Health audit workflow for /ttm-health. Validates .marketing/ directory integrity,
+Health audit workflow for /ttm-health. Validates .taketomarket/ directory integrity,
 reference file completeness, per-campaign state consistency, reference file staleness,
 campaign velocity, DRIFT-LOG integrity, and gate result consistency. Reports text
 output with pass/warn/fail per check category. Does NOT self-heal -- only reports.
@@ -12,7 +12,7 @@ output with pass/warn/fail per check category. Does NOT self-heal -- only report
 <constraints>
 ## POSITIONING.md is READ-ONLY
 
-**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+**Do NOT modify `.taketomarket/POSITIONING.md` during this workflow.**
 
 POSITIONING.md is an architectural invariant. If you detect positioning drift:
 - In verify: use the Escalate option to launch /ttm-positioning-shift
@@ -107,7 +107,7 @@ Group checks by category based on their `name` prefix or type:
 ## Health Report
 
 ### Structural Integrity
-  [PASS] .marketing/ directory exists
+  [PASS] .taketomarket/ directory exists
   [PASS] CAMPAIGNS/ directory exists
   [PASS] Required subdirectories present
 

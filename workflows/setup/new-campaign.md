@@ -52,7 +52,7 @@ Display: `Campaign slug: ${CAMPAIGN_SLUG}`
 ## Step 3: Check for Existing Campaign
 
 ```bash
-ls .marketing/CAMPAIGNS/${CAMPAIGN_SLUG}/ 2>/dev/null && echo "exists" || echo "new"
+ls .taketomarket/CAMPAIGNS/${CAMPAIGN_SLUG}/ 2>/dev/null && echo "exists" || echo "new"
 ```
 
 **If "exists":**
@@ -81,10 +81,10 @@ This creates:
 
 Verify all 4 items exist:
 ```bash
-ls .marketing/CAMPAIGNS/${CAMPAIGN_SLUG}/STATE.md && \
-ls .marketing/CAMPAIGNS/${CAMPAIGN_SLUG}/RESEARCH.md && \
-ls .marketing/CAMPAIGNS/${CAMPAIGN_SLUG}/BRIEF.md && \
-ls -d .marketing/CAMPAIGNS/${CAMPAIGN_SLUG}/ASSETS/ && \
+ls .taketomarket/CAMPAIGNS/${CAMPAIGN_SLUG}/STATE.md && \
+ls .taketomarket/CAMPAIGNS/${CAMPAIGN_SLUG}/RESEARCH.md && \
+ls .taketomarket/CAMPAIGNS/${CAMPAIGN_SLUG}/BRIEF.md && \
+ls -d .taketomarket/CAMPAIGNS/${CAMPAIGN_SLUG}/ASSETS/ && \
 echo "scaffold complete"
 ```
 
@@ -106,7 +106,7 @@ node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" state update current_campaign "${
 ```
 takeToMarket > CAMPAIGN CREATED: ${CAMPAIGN_SLUG}
 
-.marketing/CAMPAIGNS/${CAMPAIGN_SLUG}/
+.taketomarket/CAMPAIGNS/${CAMPAIGN_SLUG}/
   STATE.md       (phase: created)
   RESEARCH.md    (pending -- run /ttm-research)
   BRIEF.md       (pending -- run /ttm-brief)
@@ -127,8 +127,8 @@ Next: Run /ttm-research ${CAMPAIGN_SLUG}
 </success_criteria>
 
 <output>
-- `.marketing/CAMPAIGNS/<slug>/STATE.md`
-- `.marketing/CAMPAIGNS/<slug>/RESEARCH.md`
-- `.marketing/CAMPAIGNS/<slug>/BRIEF.md`
-- `.marketing/CAMPAIGNS/<slug>/ASSETS/` (empty directory)
+- `.taketomarket/CAMPAIGNS/<slug>/STATE.md`
+- `.taketomarket/CAMPAIGNS/<slug>/RESEARCH.md`
+- `.taketomarket/CAMPAIGNS/<slug>/BRIEF.md`
+- `.taketomarket/CAMPAIGNS/<slug>/ASSETS/` (empty directory)
 </output>

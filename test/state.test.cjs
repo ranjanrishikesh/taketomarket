@@ -67,7 +67,7 @@ describe('state.cjs', () => {
     });
 
     it('reports not found when STATE.md does not exist', () => {
-      const statePath = path.join(tmp.dir, '.marketing', 'STATE.md');
+      const statePath = path.join(tmp.dir, '.taketomarket', 'STATE.md');
       const backupPath = statePath + '.bak';
       try {
         fs.renameSync(statePath, backupPath);
@@ -92,7 +92,7 @@ describe('state.cjs', () => {
 
       // Verify on disk
       const content = fs.readFileSync(
-        path.join(tmp.dir, '.marketing', 'STATE.md'),
+        path.join(tmp.dir, '.taketomarket', 'STATE.md'),
         'utf-8'
       );
       assert.ok(content.includes('campaign_count: 5'));
@@ -108,7 +108,7 @@ describe('state.cjs', () => {
 
     it('preserves existing frontmatter fields on update', () => {
       const contentBefore = fs.readFileSync(
-        path.join(tmp.dir, '.marketing', 'STATE.md'),
+        path.join(tmp.dir, '.taketomarket', 'STATE.md'),
         'utf-8'
       );
       assert.ok(contentBefore.includes('status: active'));
@@ -116,7 +116,7 @@ describe('state.cjs', () => {
       cmdStateUpdate('new_field', 'new_value', false);
 
       const contentAfter = fs.readFileSync(
-        path.join(tmp.dir, '.marketing', 'STATE.md'),
+        path.join(tmp.dir, '.taketomarket', 'STATE.md'),
         'utf-8'
       );
       assert.ok(contentAfter.includes('status: active'));
@@ -134,7 +134,7 @@ describe('state.cjs', () => {
     });
 
     it('errors when STATE.md does not exist', () => {
-      const statePath = path.join(tmp.dir, '.marketing', 'STATE.md');
+      const statePath = path.join(tmp.dir, '.taketomarket', 'STATE.md');
       const backupPath = statePath + '.bak';
       try {
         fs.renameSync(statePath, backupPath);

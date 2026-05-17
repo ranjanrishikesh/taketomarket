@@ -15,7 +15,7 @@ context:fork (per LIFE-09, D-10). Tier 1 failures prompt for deviation action
 <constraints>
 ## POSITIONING.md is READ-ONLY
 
-**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+**Do NOT modify `.taketomarket/POSITIONING.md` during this workflow.**
 
 POSITIONING.md is an architectural invariant. If you detect positioning drift:
 - In verify: use the Escalate option to launch /ttm-positioning-shift
@@ -65,33 +65,33 @@ SLUG=$(echo "$ARGUMENTS" | sed 's/--text//g' | xargs)
 If SLUG is empty, error: "Usage: /ttm-verify [campaign-slug]. Provide a campaign slug." Exit.
 
 **Load Tier 1 summaries** from all 9 reference files (lines 1 to `<!-- END_SUMMARY -->`):
-- `.marketing/POSITIONING.md`
-- `.marketing/BRAND.md`
-- `.marketing/ICP.md`
-- `.marketing/CHANNELS.md`
-- `.marketing/STATE.md` (frontmatter only)
-- `.marketing/CALENDAR.md`
-- `.marketing/COMPETITORS.md`
-- `.marketing/METRICS.md`
-- `.marketing/LEARNINGS.md`
+- `.taketomarket/POSITIONING.md`
+- `.taketomarket/BRAND.md`
+- `.taketomarket/ICP.md`
+- `.taketomarket/CHANNELS.md`
+- `.taketomarket/STATE.md` (frontmatter only)
+- `.taketomarket/CALENDAR.md`
+- `.taketomarket/COMPETITORS.md`
+- `.taketomarket/METRICS.md`
+- `.taketomarket/LEARNINGS.md`
 
 **Load Tier 2 (full content)** for gate evaluation:
-- `.marketing/POSITIONING.md` (needed for GATE-01 Positioning Drift)
-- `.marketing/BRAND.md` (needed for GATE-02 Claim Accuracy, GATE-03 Voice Drift)
-- `.marketing/ICP.md` (needed for GATE-09 ICP Fit)
-- `.marketing/COMPETITORS.md` (needed for GATE-08 Competitor Collision)
-- `.marketing/CHANNELS.md` (needed for GATE-06 UTM Hygiene)
+- `.taketomarket/POSITIONING.md` (needed for GATE-01 Positioning Drift)
+- `.taketomarket/BRAND.md` (needed for GATE-02 Claim Accuracy, GATE-03 Voice Drift)
+- `.taketomarket/ICP.md` (needed for GATE-09 ICP Fit)
+- `.taketomarket/COMPETITORS.md` (needed for GATE-08 Competitor Collision)
+- `.taketomarket/CHANNELS.md` (needed for GATE-06 UTM Hygiene)
 
 **Load campaign-specific files** (always full-load per context-loading.md rule 4):
-- `.marketing/CAMPAIGNS/${SLUG}/STATE.md`
-- `.marketing/CAMPAIGNS/${SLUG}/BRIEF.md` (needed for GATE-04, GATE-05)
+- `.taketomarket/CAMPAIGNS/${SLUG}/STATE.md`
+- `.taketomarket/CAMPAIGNS/${SLUG}/BRIEF.md` (needed for GATE-04, GATE-05)
 
 **Load MANIFEST.json:**
 ```bash
-MANIFEST_PATH=".marketing/CAMPAIGNS/${SLUG}/MANIFEST.json"
+MANIFEST_PATH=".taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json"
 ```
 
-Read `.marketing/CAMPAIGNS/${SLUG}/MANIFEST.json`. If the file does not exist, error:
+Read `.taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json`. If the file does not exist, error:
 "No production manifest found for campaign '${SLUG}'. Run /ttm-produce first."
 Exit.
 
@@ -140,7 +140,7 @@ for each derivative in manifest.derivatives:
     ASSETS.push({ name: derivative.name, file: derivative.file, type: derivative.type })
 ```
 
-For each asset, read the file from `.marketing/CAMPAIGNS/${SLUG}/${asset.file}`.
+For each asset, read the file from `.taketomarket/CAMPAIGNS/${SLUG}/${asset.file}`.
 
 If any asset file is missing from disk:
 - Display warning: "Asset file not found: ${asset.file} -- skipping this asset"
@@ -237,7 +237,7 @@ Load detailed evaluation instructions:
    node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign list --raw
    ```
 2. Include the current campaign (${SLUG}) in the evaluation even if not yet in "active" list
-3. Read `.marketing/CALENDAR.md` for quarterly theme and launch dates
+3. Read `.taketomarket/CALENDAR.md` for quarterly theme and launch dates
 4. Evaluate each meta-gate per the criteria in meta-gate-evaluation.md:
    - META-01: Portfolio Balance (funnel stage + channel diversity)
    - META-02: Calendar Collision (launch date overlap + audience collision)
@@ -411,7 +411,7 @@ from Step 6.
 
 ## Step 8: Write Verification Report
 
-Write VERIFICATION.md to `.marketing/CAMPAIGNS/${SLUG}/VERIFICATION.md`.
+Write VERIFICATION.md to `.taketomarket/CAMPAIGNS/${SLUG}/VERIFICATION.md`.
 
 Use the templates/verification-report.md format. Include:
 - YAML frontmatter: campaign slug, run number, date, total assets, overall result
@@ -480,8 +480,8 @@ Assets verified: ${ASSET_COUNT}
 Tier 1 failures: [count] ([count] corrected, [count] accepted, [count] escalated)
 Tier 2 advisories: [count]
 
-Report: .marketing/CAMPAIGNS/${SLUG}/VERIFICATION.md
-Deviations: .marketing/CAMPAIGNS/${SLUG}/DEVIATIONS.md
+Report: .taketomarket/CAMPAIGNS/${SLUG}/VERIFICATION.md
+Deviations: .taketomarket/CAMPAIGNS/${SLUG}/DEVIATIONS.md
 
 Next: Run /ttm-review ${SLUG} to conduct human review
 ```
@@ -502,6 +502,6 @@ Next: Run /ttm-review ${SLUG} to conduct human review
 </success_criteria>
 
 <output>
-- `.marketing/CAMPAIGNS/${SLUG}/VERIFICATION.md` (verification report -- overwritten per run)
-- `.marketing/CAMPAIGNS/${SLUG}/DEVIATIONS.md` (deviation log -- append-only, created on first Accept+log)
+- `.taketomarket/CAMPAIGNS/${SLUG}/VERIFICATION.md` (verification report -- overwritten per run)
+- `.taketomarket/CAMPAIGNS/${SLUG}/DEVIATIONS.md` (deviation log -- append-only, created on first Accept+log)
 </output>

@@ -13,7 +13,7 @@ Single-pass analysis workflow per D-07.
 <constraints>
 ## POSITIONING.md is READ-ONLY
 
-**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+**Do NOT modify `.taketomarket/POSITIONING.md` during this workflow.**
 
 POSITIONING.md is an architectural invariant. If you detect positioning drift:
 - Flag the issue and recommend running /ttm-positioning-check
@@ -44,10 +44,10 @@ If `AskUserQuestion` tool is not available in the current runtime, set `TEXT_MOD
 takeToMarket > LOADING CONTEXT FOR KEYWORD MAP
 ```
 
-**Tier 1 summaries** (lines 1 to `<!-- END_SUMMARY -->`) from all 9 `.marketing/` reference files.
-**Tier 2 (full):** `.marketing/POSITIONING.md`, `.marketing/CHANNELS.md`, `.marketing/COMPETITORS.md`
+**Tier 1 summaries** (lines 1 to `<!-- END_SUMMARY -->`) from all 9 `.taketomarket/` reference files.
+**Tier 2 (full):** `.taketomarket/POSITIONING.md`, `.taketomarket/CHANNELS.md`, `.taketomarket/COMPETITORS.md`
 
-If `.marketing/POSITIONING.md` does not exist: Error and exit.
+If `.taketomarket/POSITIONING.md` does not exist: Error and exit.
 
 ---
 
@@ -85,7 +85,7 @@ Group into topic clusters with pillar-cluster relationships.
 
 ## Step 4: Output Keyword Map
 
-Write to `.marketing/KEYWORD-MAP.md`:
+Write to `.taketomarket/KEYWORD-MAP.md`:
 
 ```markdown
 # Keyword Map
@@ -117,7 +117,7 @@ Keywords competitors rank for that are not covered:
 ========================================
 takeToMarket > KEYWORD MAP COMPLETE
 ========================================
-Clusters: [N] | Keywords: [total] | File: .marketing/KEYWORD-MAP.md
+Clusters: [N] | Keywords: [total] | File: .taketomarket/KEYWORD-MAP.md
 ```
 
 Display a summary table of clusters with keyword counts per cluster.

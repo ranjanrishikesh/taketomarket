@@ -23,10 +23,10 @@ const {
 /**
  * Resolve and validate the STATE.md path.
  * Security: uses path.resolve() and rejects paths containing '..' after resolution.
- * @returns {string} Absolute path to .marketing/STATE.md
+ * @returns {string} Absolute path to .taketomarket/STATE.md
  */
 function resolveStatePath() {
-  const statePath = path.resolve(process.cwd(), '.marketing', 'STATE.md');
+  const statePath = path.resolve(process.cwd(), '.taketomarket', 'STATE.md');
   // Reject paths that escape the project directory
   const projectRoot = path.resolve(process.cwd());
   if (!statePath.startsWith(projectRoot)) {
@@ -36,7 +36,7 @@ function resolveStatePath() {
 }
 
 /**
- * Read .marketing/STATE.md, parse frontmatter, output as JSON.
+ * Read .taketomarket/STATE.md, parse frontmatter, output as JSON.
  * If STATE.md does not exist, outputs { exists: false, error: "..." }.
  *
  * @param {boolean} raw - Whether to output raw string

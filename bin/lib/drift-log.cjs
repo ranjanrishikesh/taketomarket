@@ -46,7 +46,7 @@ function sanitizeDetails(text) {
  */
 function resolveDriftLogPath() {
   const projectRoot = path.resolve(process.cwd());
-  const driftLogPath = path.resolve(process.cwd(), '.marketing', 'DRIFT-LOG.md');
+  const driftLogPath = path.resolve(process.cwd(), '.taketomarket', 'DRIFT-LOG.md');
   if (!driftLogPath.startsWith(projectRoot)) {
     error('DRIFT-LOG.md path escapes project directory');
   }
@@ -83,7 +83,7 @@ function ensureDriftLog(driftLogPath) {
         '<!-- DEPRECATION ENTRIES BELOW THIS LINE -->',
       ].join('\n');
 
-  // Ensure .marketing directory exists
+  // Ensure .taketomarket directory exists
   const dir = path.dirname(driftLogPath);
   fs.mkdirSync(dir, { recursive: true });
 
@@ -96,7 +96,7 @@ function ensureDriftLog(driftLogPath) {
 }
 
 /**
- * Append a drift event entry to .marketing/DRIFT-LOG.md.
+ * Append a drift event entry to .taketomarket/DRIFT-LOG.md.
  *
  * @param {string} eventType - Event type (shift, audit, deviation)
  * @param {string} source - Source command or campaign that triggered the event
@@ -157,7 +157,7 @@ function cmdDriftLogAppend(eventType, source, details, affectedCount, raw) {
 }
 
 /**
- * Append a deprecation entry to .marketing/DRIFT-LOG.md Deprecation Backlog.
+ * Append a deprecation entry to .taketomarket/DRIFT-LOG.md Deprecation Backlog.
  *
  * @param {string} asset - Asset identifier
  * @param {string} campaign - Campaign slug

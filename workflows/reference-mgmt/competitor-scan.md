@@ -13,7 +13,7 @@ differentiation gaps and opportunities. Single-pass workflow per D-06 and D-09.
 <constraints>
 ## POSITIONING.md is READ-ONLY
 
-**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+**Do NOT modify `.taketomarket/POSITIONING.md` during this workflow.**
 
 POSITIONING.md is an architectural invariant. If you detect positioning drift:
 - Flag the issue and recommend running /ttm-positioning-check
@@ -47,21 +47,21 @@ takeToMarket > LOADING CONTEXT
 ```
 
 **Load Tier 1 summaries** from all 9 reference files (lines 1 to `<!-- END_SUMMARY -->`):
-- `.marketing/POSITIONING.md`
-- `.marketing/BRAND.md`
-- `.marketing/ICP.md`
-- `.marketing/CHANNELS.md`
-- `.marketing/STATE.md` (frontmatter only)
-- `.marketing/CALENDAR.md`
-- `.marketing/COMPETITORS.md`
-- `.marketing/METRICS.md`
-- `.marketing/LEARNINGS.md`
+- `.taketomarket/POSITIONING.md`
+- `.taketomarket/BRAND.md`
+- `.taketomarket/ICP.md`
+- `.taketomarket/CHANNELS.md`
+- `.taketomarket/STATE.md` (frontmatter only)
+- `.taketomarket/CALENDAR.md`
+- `.taketomarket/COMPETITORS.md`
+- `.taketomarket/METRICS.md`
+- `.taketomarket/LEARNINGS.md`
 
 **Load Tier 2 (full content)** for analysis:
-- `.marketing/COMPETITORS.md`
-- `.marketing/POSITIONING.md`
+- `.taketomarket/COMPETITORS.md`
+- `.taketomarket/POSITIONING.md`
 
-If `.marketing/COMPETITORS.md` does not exist, error:
+If `.taketomarket/COMPETITORS.md` does not exist, error:
 "COMPETITORS.md not found. Run /ttm-init first to set up your marketing system."
 Exit.
 
@@ -180,7 +180,7 @@ Validate all proposed updates:
 - No update contradicts POSITIONING.md differentiator or must-not-say terms
 - Gap opportunities align with our positioning scope
 
-Write updated `.marketing/COMPETITORS.md`:
+Write updated `.taketomarket/COMPETITORS.md`:
 - Update existing competitor entries with new findings (positioning, strengths, weaknesses)
 - Add new competitors with full profiles (name, positioning, strength, weakness)
 - Mark inactive competitors with `[INACTIVE: YYYY-MM-DD]` suffix in name column
@@ -207,7 +207,7 @@ Positioning overlaps detected: ${OVERLAP_COUNT}
 Research method: ${SEARCH_MODE}
 
 Next steps:
-- Review updated .marketing/COMPETITORS.md
+- Review updated .taketomarket/COMPETITORS.md
 - Run /ttm-positioning-check if overlaps concern you
 ```
 

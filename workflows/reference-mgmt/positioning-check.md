@@ -2,7 +2,7 @@
 Positioning drift audit workflow for /ttm-positioning-check. Samples recent assets
 across all campaigns within a configurable time window (default 30 days per D-01),
 evaluates each against GATE-01 positioning drift checks, generates a structured
-audit report, and appends the results to .marketing/DRIFT-LOG.md.
+audit report, and appends the results to .taketomarket/DRIFT-LOG.md.
 
 This workflow can be invoked manually or auto-suggested by the ship workflow
 after every 3rd campaign ships since the last audit (per D-02).
@@ -17,7 +17,7 @@ after every 3rd campaign ships since the last audit (per D-02).
 <constraints>
 ## POSITIONING.md is READ-ONLY
 
-**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+**Do NOT modify `.taketomarket/POSITIONING.md` during this workflow.**
 
 POSITIONING.md is an architectural invariant. If you detect positioning drift:
 - In verify: use the Escalate option to launch /ttm-positioning-shift
@@ -60,20 +60,20 @@ takeToMarket > LOADING CONTEXT FOR POSITIONING AUDIT
 ```
 
 **Load Tier 1 summaries** from all 9 reference files (lines 1 to `<!-- END_SUMMARY -->`):
-- `.marketing/POSITIONING.md`
-- `.marketing/BRAND.md`
-- `.marketing/ICP.md`
-- `.marketing/CHANNELS.md`
-- `.marketing/STATE.md` (frontmatter only)
-- `.marketing/CALENDAR.md`
-- `.marketing/COMPETITORS.md`
-- `.marketing/METRICS.md`
-- `.marketing/LEARNINGS.md`
+- `.taketomarket/POSITIONING.md`
+- `.taketomarket/BRAND.md`
+- `.taketomarket/ICP.md`
+- `.taketomarket/CHANNELS.md`
+- `.taketomarket/STATE.md` (frontmatter only)
+- `.taketomarket/CALENDAR.md`
+- `.taketomarket/COMPETITORS.md`
+- `.taketomarket/METRICS.md`
+- `.taketomarket/LEARNINGS.md`
 
 **Load Tier 2 (full content)** for drift evaluation:
-- `.marketing/POSITIONING.md` (needed for all 3 GATE-01 checks)
+- `.taketomarket/POSITIONING.md` (needed for all 3 GATE-01 checks)
 
-If `.marketing/POSITIONING.md` does not exist: Error:
+If `.taketomarket/POSITIONING.md` does not exist: Error:
 "No POSITIONING.md found. Run /ttm-init first to set up your marketing workspace."
 Exit.
 
@@ -125,10 +125,10 @@ Exit.
 For each campaign in the result:
 1. Read the campaign's ASSETS/ directory:
    ```
-   Glob: .marketing/CAMPAIGNS/${SLUG}/ASSETS/*
+   Glob: .taketomarket/CAMPAIGNS/${SLUG}/ASSETS/*
    ```
 2. Collect all asset files found
-3. Also read `.marketing/CAMPAIGNS/${SLUG}/DEVIATIONS.md` if it exists
+3. Also read `.taketomarket/CAMPAIGNS/${SLUG}/DEVIATIONS.md` if it exists
    - Filter for rows where Gate = `positioning_drift` (GATE-01 deviations per D-13)
    - Store these as accepted deviations for the cross-reference section
 
@@ -238,7 +238,7 @@ These values feed into the Bleeding Analysis section of the report generated in 
 
 ## Step 6: Trend Comparison
 
-Read `.marketing/DRIFT-LOG.md`. Find the most recent entry with Event = `audit`.
+Read `.taketomarket/DRIFT-LOG.md`. Find the most recent entry with Event = `audit`.
 
 **If a prior audit entry exists (per D-03):**
 1. Parse the Details column to extract the prior aggregate drift percentage
@@ -279,7 +279,7 @@ not scoped to a single campaign directory).
 
 ## Step 8: Log to DRIFT-LOG.md
 
-Append the audit results to `.marketing/DRIFT-LOG.md` via CLI:
+Append the audit results to `.taketomarket/DRIFT-LOG.md` via CLI:
 
 ```bash
 node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" drift-log append \
@@ -295,7 +295,7 @@ consistent formatting.
 
 Display:
 ```
-takeToMarket > AUDIT LOGGED TO .marketing/DRIFT-LOG.md
+takeToMarket > AUDIT LOGGED TO .taketomarket/DRIFT-LOG.md
 ```
 
 ---
@@ -311,7 +311,7 @@ Window: last ${WINDOW} | Assets audited: ${ASSET_COUNT}
 Aggregate drift: ${AGGREGATE_DRIFT}% ${TREND_ARROW}
 Campaigns covered: ${CAMPAIGN_COUNT}
 
-Drift logged to: .marketing/DRIFT-LOG.md
+Drift logged to: .taketomarket/DRIFT-LOG.md
 
 Next steps:
 - Run /ttm-fix [campaign-slug] to address specific FAIL results
@@ -335,5 +335,5 @@ Next steps:
 
 <output>
 - Audit report displayed to stdout (cross-campaign, no file written)
-- `.marketing/DRIFT-LOG.md` updated with audit entry via CLI
+- `.taketomarket/DRIFT-LOG.md` updated with audit entry via CLI
 </output>

@@ -54,7 +54,7 @@ If a check is N/A (e.g., UTM hygiene for an asset without links), record:
 
 ### Evaluating GATE-01: Positioning Drift
 
-**Load:** `.marketing/POSITIONING.md` (Tier 2 full)
+**Load:** `.taketomarket/POSITIONING.md` (Tier 2 full)
 **Asset content:** Full asset text
 
 **Evaluate:**
@@ -69,7 +69,7 @@ If a check is N/A (e.g., UTM hygiene for an asset without links), record:
 
 ### Evaluating GATE-02: Claim Accuracy
 
-**Load:** `.marketing/BRAND.md` (Tier 2 full -- proof points section)
+**Load:** `.taketomarket/BRAND.md` (Tier 2 full -- proof points section)
 **Asset content:** Full asset text
 
 **Evaluate:**
@@ -84,7 +84,7 @@ If a check is N/A (e.g., UTM hygiene for an asset without links), record:
 
 ### Evaluating GATE-03: Voice Drift
 
-**Load:** `.marketing/BRAND.md` (Tier 2 full -- voice archetype and banned words sections)
+**Load:** `.taketomarket/BRAND.md` (Tier 2 full -- voice archetype and banned words sections)
 **Asset content:** Full asset text
 
 **Evaluate:**
@@ -99,7 +99,7 @@ If a check is N/A (e.g., UTM hygiene for an asset without links), record:
 
 ### Evaluating GATE-04: Outcome Alignment
 
-**Load:** `.marketing/CAMPAIGNS/<slug>/BRIEF.md` (outcome metric section)
+**Load:** `.taketomarket/CAMPAIGNS/<slug>/BRIEF.md` (outcome metric section)
 **Asset content:** Full asset text
 
 **Evaluate:**
@@ -113,7 +113,7 @@ If a check is N/A (e.g., UTM hygiene for an asset without links), record:
 
 ### Evaluating GATE-05: Funnel Integrity
 
-**Load:** `.marketing/CAMPAIGNS/<slug>/BRIEF.md` (funnel/CTA section)
+**Load:** `.taketomarket/CAMPAIGNS/<slug>/BRIEF.md` (funnel/CTA section)
 **Asset content:** Full asset text
 
 **Evaluate:**
@@ -128,7 +128,7 @@ If a check is N/A (e.g., UTM hygiene for an asset without links), record:
 
 ### Evaluating GATE-06: UTM Hygiene
 
-**Load:** `.marketing/CHANNELS.md` (UTM schema section)
+**Load:** `.taketomarket/CHANNELS.md` (UTM schema section)
 **Asset content:** Full asset text
 
 **Evaluate:**
@@ -158,7 +158,7 @@ If a check is N/A (e.g., UTM hygiene for an asset without links), record:
 
 ### Evaluating GATE-08: Competitor Collision
 
-**Load:** `.marketing/COMPETITORS.md` (Tier 2 full)
+**Load:** `.taketomarket/COMPETITORS.md` (Tier 2 full)
 **Asset content:** Full asset text
 
 **Evaluate:**
@@ -173,7 +173,7 @@ If a check is N/A (e.g., UTM hygiene for an asset without links), record:
 
 ### Evaluating GATE-09: ICP Fit
 
-**Load:** `.marketing/ICP.md` (Tier 2 full)
+**Load:** `.taketomarket/ICP.md` (Tier 2 full)
 **Asset content:** Full asset text
 
 **Evaluate:**

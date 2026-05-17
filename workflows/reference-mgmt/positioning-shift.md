@@ -3,7 +3,7 @@ Controlled positioning shift workflow for /ttm-positioning-shift. Requires expli
 reasoning for the change, collects new positioning fields, generates a migration plan
 for active campaigns, sets deprecation schedule for shipped assets, presents a
 before/after diff for mandatory human approval, and atomically updates POSITIONING.md
-with History table archival. Logs all changes to .marketing/DRIFT-LOG.md.
+with History table archival. Logs all changes to .taketomarket/DRIFT-LOG.md.
 </purpose>
 
 <required_reading>
@@ -15,7 +15,7 @@ with History table archival. Logs all changes to .marketing/DRIFT-LOG.md.
 <constraints>
 ## This Workflow WRITES to POSITIONING.md
 
-This is one of only two workflows authorized to modify `.marketing/POSITIONING.md`
+This is one of only two workflows authorized to modify `.taketomarket/POSITIONING.md`
 (the other is `/ttm-init`). All writes are gated behind mandatory human approval
 in Step 4. Never write to POSITIONING.md without explicit "Approve" from the user.
 </constraints>
@@ -54,20 +54,20 @@ takeToMarket > LOADING CONTEXT
 ```
 
 **Load Tier 1 summaries** from all 9 reference files (lines 1 to `<!-- END_SUMMARY -->`):
-- `.marketing/POSITIONING.md`
-- `.marketing/BRAND.md`
-- `.marketing/ICP.md`
-- `.marketing/CHANNELS.md`
-- `.marketing/STATE.md` (frontmatter only)
-- `.marketing/CALENDAR.md`
-- `.marketing/COMPETITORS.md`
-- `.marketing/METRICS.md`
-- `.marketing/LEARNINGS.md`
+- `.taketomarket/POSITIONING.md`
+- `.taketomarket/BRAND.md`
+- `.taketomarket/ICP.md`
+- `.taketomarket/CHANNELS.md`
+- `.taketomarket/STATE.md` (frontmatter only)
+- `.taketomarket/CALENDAR.md`
+- `.taketomarket/COMPETITORS.md`
+- `.taketomarket/METRICS.md`
+- `.taketomarket/LEARNINGS.md`
 
 **Load Tier 2 (full content)** for before/after diff:
-- `.marketing/POSITIONING.md` (full -- needed for field comparison and History table)
+- `.taketomarket/POSITIONING.md` (full -- needed for field comparison and History table)
 
-If `.marketing/POSITIONING.md` does not exist, error:
+If `.taketomarket/POSITIONING.md` does not exist, error:
 "POSITIONING.md not found. Run /ttm-init first to set up your marketing system."
 Exit.
 
@@ -180,7 +180,7 @@ Exit.
 
 For each active campaign from `ACTIVE_JSON`:
 
-1. List all assets in `.marketing/CAMPAIGNS/<slug>/ASSETS/` or from MANIFEST.json
+1. List all assets in `.taketomarket/CAMPAIGNS/<slug>/ASSETS/` or from MANIFEST.json
 2. Quick-evaluate each asset against the NEW positioning using GATE-01 3-check logic:
    - Does the asset align with the NEW differentiator?
    - Are claims backed by NEW proof points?
@@ -335,7 +335,7 @@ takeToMarket > POSITIONING SHIFT COMPLETE
 Old positioning archived in POSITIONING.md History table.
 New positioning is now active for all future campaigns.
 
-Changes logged: .marketing/DRIFT-LOG.md
+Changes logged: .taketomarket/DRIFT-LOG.md
 Deprecation items: [count] (deadline: [DEPRECATION_DEADLINE or "N/A"])
 Active campaigns: [ACTIVE_COUNT] -- review migration plan above
 
@@ -363,6 +363,6 @@ Next steps:
 </success_criteria>
 
 <output>
-- `.marketing/POSITIONING.md` (updated with new positioning and History table entry)
-- `.marketing/DRIFT-LOG.md` (shift event appended + deprecation entries)
+- `.taketomarket/POSITIONING.md` (updated with new positioning and History table entry)
+- `.taketomarket/DRIFT-LOG.md` (shift event appended + deprecation entries)
 </output>

@@ -12,7 +12,7 @@ Single-pass analysis workflow per D-07.
 <constraints>
 ## POSITIONING.md is READ-ONLY
 
-**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+**Do NOT modify `.taketomarket/POSITIONING.md` during this workflow.**
 
 POSITIONING.md is an architectural invariant. If you detect positioning drift:
 - Flag the issue and recommend running /ttm-positioning-check
@@ -43,11 +43,11 @@ If `AskUserQuestion` tool is not available in the current runtime, set `TEXT_MOD
 takeToMarket > LOADING CONTEXT FOR EMAIL PREFLIGHT
 ```
 
-**Tier 1 summaries** (lines 1 to `<!-- END_SUMMARY -->`) from all 9 `.marketing/` reference files.
-**Tier 2 (full):** `.marketing/BRAND.md` (voice/banned words check).
+**Tier 1 summaries** (lines 1 to `<!-- END_SUMMARY -->`) from all 9 `.taketomarket/` reference files.
+**Tier 2 (full):** `.taketomarket/BRAND.md` (voice/banned words check).
 **Playbook gates:** @${CLAUDE_PLUGIN_ROOT}/playbooks/email.md
 
-If `.marketing/POSITIONING.md` does not exist: Error and exit.
+If `.taketomarket/POSITIONING.md` does not exist: Error and exit.
 
 ---
 

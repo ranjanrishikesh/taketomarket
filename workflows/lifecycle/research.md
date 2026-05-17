@@ -19,20 +19,20 @@ takeToMarket > LOADING CONTEXT
 ```
 
 Read Tier 1 summary blocks (content between `<!-- _SUMMARY -->` and `<!-- END_SUMMARY -->`)
-from all 9 `.marketing/` reference files:
+from all 9 `.taketomarket/` reference files:
 
-- `.marketing/POSITIONING.md` (lines 1 to `<!-- END_SUMMARY -->`)
-- `.marketing/BRAND.md` (lines 1 to `<!-- END_SUMMARY -->`)
-- `.marketing/ICP.md` (lines 1 to `<!-- END_SUMMARY -->`)
-- `.marketing/CHANNELS.md` (lines 1 to `<!-- END_SUMMARY -->`)
-- `.marketing/STATE.md` (frontmatter only)
-- `.marketing/CALENDAR.md` (lines 1 to `<!-- END_SUMMARY -->`)
-- `.marketing/COMPETITORS.md` (lines 1 to `<!-- END_SUMMARY -->`)
-- `.marketing/METRICS.md` (lines 1 to `<!-- END_SUMMARY -->`)
-- `.marketing/LEARNINGS.md` (lines 1 to `<!-- END_SUMMARY -->`)
+- `.taketomarket/POSITIONING.md` (lines 1 to `<!-- END_SUMMARY -->`)
+- `.taketomarket/BRAND.md` (lines 1 to `<!-- END_SUMMARY -->`)
+- `.taketomarket/ICP.md` (lines 1 to `<!-- END_SUMMARY -->`)
+- `.taketomarket/CHANNELS.md` (lines 1 to `<!-- END_SUMMARY -->`)
+- `.taketomarket/STATE.md` (frontmatter only)
+- `.taketomarket/CALENDAR.md` (lines 1 to `<!-- END_SUMMARY -->`)
+- `.taketomarket/COMPETITORS.md` (lines 1 to `<!-- END_SUMMARY -->`)
+- `.taketomarket/METRICS.md` (lines 1 to `<!-- END_SUMMARY -->`)
+- `.taketomarket/LEARNINGS.md` (lines 1 to `<!-- END_SUMMARY -->`)
 
 Read Tier 2 (full content) for:
-- `.marketing/COMPETITORS.md` (per context-loading.md loading matrix -- research loads Tier 2 COMPETITORS.md)
+- `.taketomarket/COMPETITORS.md` (per context-loading.md loading matrix -- research loads Tier 2 COMPETITORS.md)
 
 ---
 
@@ -47,7 +47,7 @@ If `$SLUG` is empty: ask the user "Which campaign should I research? Provide the
 
 Check the campaign exists:
 ```bash
-ls ".marketing/CAMPAIGNS/${SLUG}/STATE.md" 2>/dev/null && echo "exists" || echo "missing"
+ls ".taketomarket/CAMPAIGNS/${SLUG}/STATE.md" 2>/dev/null && echo "exists" || echo "missing"
 ```
 
 **If "missing":**
@@ -61,7 +61,7 @@ node "${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs" campaign state "${SLUG}" --raw
 ```
 
 Read the full campaign STATE.md (campaign files are always full-loaded per context-loading.md rule 4):
-- `.marketing/CAMPAIGNS/${SLUG}/STATE.md`
+- `.taketomarket/CAMPAIGNS/${SLUG}/STATE.md`
 
 Store the campaign name from the state for use in RESEARCH.md generation.
 
@@ -109,7 +109,7 @@ takeToMarket > RESEARCH MODE: WEB
 - Use WebSearch for SERP queries based on `RESEARCH_TOPIC` and campaign keywords
 - Search for: market trends, competitor content, audience discussions, content gaps
 - Use WebFetch for competitor page content extraction when specific URLs are found
-- Cross-reference findings against `.marketing/COMPETITORS.md` (already loaded in Tier 2)
+- Cross-reference findings against `.taketomarket/COMPETITORS.md` (already loaded in Tier 2)
 - Tag insights with confidence levels:
   - **HIGH**: verified source URL or cited data from web search results
   - **MEDIUM**: indirect evidence or partial match from search results
@@ -209,7 +209,7 @@ opportunity, the key audience insight, and the competitive angle.
 
 Write the completed research to:
 ```
-.marketing/CAMPAIGNS/${SLUG}/RESEARCH.md
+.taketomarket/CAMPAIGNS/${SLUG}/RESEARCH.md
 ```
 
 ---
@@ -235,7 +235,7 @@ Display summary:
 ```
 takeToMarket > RESEARCH COMPLETE
 
-Research saved to .marketing/CAMPAIGNS/${SLUG}/RESEARCH.md
+Research saved to .taketomarket/CAMPAIGNS/${SLUG}/RESEARCH.md
 Method: [web-search|manual-paste|hybrid]
 Insights: [count] with confidence breakdown
   HIGH: [count]
@@ -260,5 +260,5 @@ Next: Run /ttm-brief ${SLUG}
 </success_criteria>
 
 <output>
-- `.marketing/CAMPAIGNS/<slug>/RESEARCH.md` (populated with research)
+- `.taketomarket/CAMPAIGNS/<slug>/RESEARCH.md` (populated with research)
 </output>

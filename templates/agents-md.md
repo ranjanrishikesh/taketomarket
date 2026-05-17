@@ -43,10 +43,10 @@ Each phase has a dedicated `/ttm-*` command. Phases cannot be skipped.
 
 ## File Paths
 
-- Marketing state: `.marketing/`
-- Reference files: `.marketing/POSITIONING.md`, `.marketing/BRAND.md`, etc.
-- Campaigns: `.marketing/CAMPAIGNS/<slug>/`
-- Campaign state: `.marketing/CAMPAIGNS/<slug>/STATE.md`
+- Marketing state: `.taketomarket/`
+- Reference files: `.taketomarket/POSITIONING.md`, `.taketomarket/BRAND.md`, etc.
+- Campaigns: `.taketomarket/CAMPAIGNS/<slug>/`
+- Campaign state: `.taketomarket/CAMPAIGNS/<slug>/STATE.md`
 
 ## Deterministic Operations
 

@@ -16,7 +16,7 @@ data is available for the measurement window.
 
 ## Positioning Constraint (Read-Only)
 
-`.marketing/POSITIONING.md` is loaded for context only. This workflow MUST NOT modify
+`.taketomarket/POSITIONING.md` is loaded for context only. This workflow MUST NOT modify
 POSITIONING.md. Positioning changes require `/ttm-positioning` -- never alter positioning
 as a side effect of measurement.
 
@@ -61,25 +61,25 @@ SLUG=$(echo "$ARGUMENTS" | sed 's/--text//g' | xargs)
 If SLUG is empty, error: "Usage: /ttm-measure [campaign-slug]. Provide a campaign slug." Exit.
 
 Read Tier 1 summary blocks (content between `<!-- _SUMMARY -->` and `<!-- END_SUMMARY -->`)
-from all 9 `.marketing/` reference files:
+from all 9 `.taketomarket/` reference files:
 
-- `.marketing/POSITIONING.md` (lines 1 to `<!-- END_SUMMARY -->`)
-- `.marketing/BRAND.md` (lines 1 to `<!-- END_SUMMARY -->`)
-- `.marketing/ICP.md` (lines 1 to `<!-- END_SUMMARY -->`)
-- `.marketing/CHANNELS.md` (lines 1 to `<!-- END_SUMMARY -->`)
-- `.marketing/STATE.md` (frontmatter only)
-- `.marketing/CALENDAR.md` (lines 1 to `<!-- END_SUMMARY -->`)
-- `.marketing/COMPETITORS.md` (lines 1 to `<!-- END_SUMMARY -->`)
-- `.marketing/METRICS.md` (lines 1 to `<!-- END_SUMMARY -->`)
-- `.marketing/LEARNINGS.md` (lines 1 to `<!-- END_SUMMARY -->`)
+- `.taketomarket/POSITIONING.md` (lines 1 to `<!-- END_SUMMARY -->`)
+- `.taketomarket/BRAND.md` (lines 1 to `<!-- END_SUMMARY -->`)
+- `.taketomarket/ICP.md` (lines 1 to `<!-- END_SUMMARY -->`)
+- `.taketomarket/CHANNELS.md` (lines 1 to `<!-- END_SUMMARY -->`)
+- `.taketomarket/STATE.md` (frontmatter only)
+- `.taketomarket/CALENDAR.md` (lines 1 to `<!-- END_SUMMARY -->`)
+- `.taketomarket/COMPETITORS.md` (lines 1 to `<!-- END_SUMMARY -->`)
+- `.taketomarket/METRICS.md` (lines 1 to `<!-- END_SUMMARY -->`)
+- `.taketomarket/LEARNINGS.md` (lines 1 to `<!-- END_SUMMARY -->`)
 
 Read Tier 2 (full content) for:
-- `.marketing/METRICS.md` (needed for metric definitions and outcome/output classification)
-- `.marketing/CHANNELS.md` (needed for channel attribution mapping)
+- `.taketomarket/METRICS.md` (needed for metric definitions and outcome/output classification)
+- `.taketomarket/CHANNELS.md` (needed for channel attribution mapping)
 
 Read campaign-specific files (always full-load per context-loading.md rule 4):
-- `.marketing/CAMPAIGNS/${SLUG}/STATE.md`
-- `.marketing/CAMPAIGNS/${SLUG}/BRIEF.md`
+- `.taketomarket/CAMPAIGNS/${SLUG}/STATE.md`
+- `.taketomarket/CAMPAIGNS/${SLUG}/BRIEF.md`
 
 Extract from brief:
 - **Outcome metric:** name, target value, measurement window, data source
@@ -322,7 +322,7 @@ Preserve the original pasted/collected data for audit trail.
 
 Write completed report to:
 ```
-.marketing/CAMPAIGNS/${SLUG}/MEASUREMENT.md
+.taketomarket/CAMPAIGNS/${SLUG}/MEASUREMENT.md
 ```
 
 ---
@@ -359,7 +359,7 @@ Display the Outcome Assessment section inline (the metrics table from Step 6).
 ```
 takeToMarket > MEASUREMENT COMPLETE
 
-Report written to: .marketing/CAMPAIGNS/${SLUG}/MEASUREMENT.md
+Report written to: .taketomarket/CAMPAIGNS/${SLUG}/MEASUREMENT.md
 Analytics source: ${ANALYTICS_MODE}
 Outcome metric: ${OUTCOME_METRIC_NAME}
 Result: ${OUTCOME_MET} (${OUTCOME_DELTA} from target)

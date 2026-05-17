@@ -14,7 +14,7 @@ State is loaded directly from CAMPAIGNS/<slug>/STATE.md (no separate handoff fil
 <constraints>
 ## POSITIONING.md is READ-ONLY
 
-**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+**Do NOT modify `.taketomarket/POSITIONING.md` during this workflow.**
 
 POSITIONING.md is an architectural invariant. If you detect positioning drift:
 - In verify: use the Escalate option to launch /ttm-positioning-shift
@@ -76,7 +76,7 @@ Parse the full JSON output. Extract:
 
 Also read the FULL STATE.md file (not just CLI output) to get body content:
 ```bash
-Read .marketing/CAMPAIGNS/${SLUG}/STATE.md
+Read .taketomarket/CAMPAIGNS/${SLUG}/STATE.md
 ```
 
 The body contains "Phase:" and "Next step:" lines plus any additional notes,

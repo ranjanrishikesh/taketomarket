@@ -67,7 +67,7 @@ function cmdDeviationAppend(slug, gate, result, justification, asset, raw, extra
   // Validate slug via path.resolve to prevent traversal
   const safe = slug.toLowerCase().replace(/[^a-z0-9-]/g, '');
   const projectRoot = path.resolve(process.cwd());
-  const campaignDir = path.resolve(projectRoot, '.marketing', 'CAMPAIGNS', safe);
+  const campaignDir = path.resolve(projectRoot, '.taketomarket', 'CAMPAIGNS', safe);
   if (!campaignDir.startsWith(projectRoot)) {
     error('campaign path escapes project directory');
   }

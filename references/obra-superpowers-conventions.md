@@ -142,7 +142,7 @@
 ### takeToMarket current state
 
 - **GSD-style invocation, obra-style state-as-preamble.** Users type `/ttm-produce`; the skill reads its workflow and the workflow's first action is to load 9 reference files plus campaign-specific state.
-- **No hard-gate XML wrappers.** Workflows use `<purpose>`, `<required_reading>`, `<constraints>`, `<process>` tags as section delimiters, but the language inside is descriptive ("Do NOT modify `.marketing/POSITIONING.md` during this workflow") not gate-enforced.
+- **No hard-gate XML wrappers.** Workflows use `<purpose>`, `<required_reading>`, `<constraints>`, `<process>` tags as section delimiters, but the language inside is descriptive ("Do NOT modify `.taketomarket/POSITIONING.md` during this workflow") not gate-enforced.
 - **No checklist preamble.** Workflows are sequential `## Step 1`, `## Step 2` headers without an upfront todo-list template.
 - **No process digraphs.** Workflows are prose + numbered steps; no Graphviz state machines.
 - **No cross-skill chaining declarations.** Skills don't explicitly name their successor (e.g. `/ttm-brief` doesn't say "the only skill you invoke next is `/ttm-produce`").
@@ -158,6 +158,6 @@
 - Add cross-skill chaining declarations to each lifecycle skill: name the predecessor skill that should have run, and the successor skill that should run next. Example: `/ttm-brief` ends with "**The terminal state is invoking /ttm-produce.** Do not invoke /ttm-ship or /ttm-measure until produce → verify → review have completed."
 - Add a "Red Flags" table to `/ttm-produce` and `/ttm-verify` listing the rationalizations Claude commonly uses to skip reference loading or gate checks ("These assets look fine without verify", "Positioning is obvious here", "I already loaded BRAND.md last turn").
 - Adopt obra's instruction-priority hierarchy in `CLAUDE.md`: user CLAUDE.md/AGENTS.md > takeToMarket skills > default system prompt. Add to the project's CLAUDE.md preamble.
-- Add a `SessionStart` hook (matchers: `startup|clear|compact`) that re-orients Claude to takeToMarket conventions and reads `.marketing/STATE.md` frontmatter. Mirrors GSD's hook pattern.
+- Add a `SessionStart` hook (matchers: `startup|clear|compact`) that re-orients Claude to takeToMarket conventions and reads `.taketomarket/STATE.md` frontmatter. Mirrors GSD's hook pattern.
 - Defer Graphviz digraphs and lint scripts to a later phase — high-value but require maintenance investment we can stage after the core conventions land.
 - Use the `Skill` tool inside workflows for cross-skill invocation (e.g. `/ttm-fix` should invoke `/ttm-produce` and `/ttm-verify` via the `Skill` tool, not by telling the user to run them manually). This matches obra's composition pattern and reduces user friction.

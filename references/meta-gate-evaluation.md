@@ -12,7 +12,7 @@ Meta-gates operate at the **portfolio level**, not on individual assets. They ev
 node ${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs campaign list --raw
 ```
 
-Additional data sources: `.marketing/CALENDAR.md`, `.marketing/CAMPAIGNS/<slug>/BRIEF.md`
+Additional data sources: `.taketomarket/CALENDAR.md`, `.taketomarket/CAMPAIGNS/<slug>/BRIEF.md`
 
 ## Structured Output Format
 
@@ -67,7 +67,7 @@ Count the distinct channels used across all active campaigns.
 
 **Tier:** 2 (Advisory)
 
-**Data source:** `campaign list --raw` output + `.marketing/CALENDAR.md` + each campaign's BRIEF.md (launch date, audience segment)
+**Data source:** `campaign list --raw` output + `.taketomarket/CALENDAR.md` + each campaign's BRIEF.md (launch date, audience segment)
 
 ### Evaluation Criteria
 
@@ -101,7 +101,7 @@ Compare target audience segments across campaigns launching in the same 2-week w
 
 **Tier:** 2 (Advisory)
 
-**Data source:** `.marketing/CALENDAR.md` (quarterly theme section) + each campaign's BRIEF.md
+**Data source:** `.taketomarket/CALENDAR.md` (quarterly theme section) + each campaign's BRIEF.md
 
 ### Evaluation Criteria
 

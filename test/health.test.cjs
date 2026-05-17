@@ -17,11 +17,11 @@ const REFERENCE_FILES = [
 ];
 
 /**
- * Create a complete .marketing/ directory with CAMPAIGNS/ and all 9 reference files.
+ * Create a complete .taketomarket/ directory with CAMPAIGNS/ and all 9 reference files.
  * STATE.md gets valid frontmatter; other files get a heading.
  */
 function createFullMarketing(baseDir) {
-  const marketingDir = path.join(baseDir, '.marketing');
+  const marketingDir = path.join(baseDir, '.taketomarket');
   const campaignsDir = path.join(marketingDir, 'CAMPAIGNS');
   fs.mkdirSync(campaignsDir, { recursive: true });
   for (const file of REFERENCE_FILES) {
@@ -63,7 +63,7 @@ describe('health.cjs module exports', () => {
 
 describe('cmdHealth basic mode', () => {
 
-  describe('with complete .marketing/', () => {
+  describe('with complete .taketomarket/', () => {
     let tmp;
     let originalCwd;
 
@@ -86,15 +86,15 @@ describe('cmdHealth basic mode', () => {
       assert.ok(parsed.summary.includes('/'), 'summary contains slash (X/Y format)');
     });
 
-    it('includes check entries for marketing_dir, campaigns_dir, and all ref files', () => {
+    it('includes check entries for taketomarket_dir, campaigns_dir, and all ref files', () => {
       const stdout = captureStdout(() => cmdHealth(false, false));
       const parsed = JSON.parse(stdout);
       assert.ok(Array.isArray(parsed.checks), 'checks is an array');
       // 2 dirs + 9 ref files = 11 minimum
       assert.ok(parsed.checks.length >= 11, `expected >= 11 checks, got ${parsed.checks.length}`);
-      const marketingCheck = parsed.checks.find(c => c.name === 'marketing_dir');
-      assert.ok(marketingCheck, 'has marketing_dir check');
-      assert.strictEqual(marketingCheck.status, 'pass', 'marketing_dir passes');
+      const marketingCheck = parsed.checks.find(c => c.name === 'taketomarket_dir');
+      assert.ok(marketingCheck, 'has taketomarket_dir check');
+      assert.strictEqual(marketingCheck.status, 'pass', 'taketomarket_dir passes');
     });
 
     it('outputs raw summary string with HEALTHY', () => {
@@ -103,13 +103,13 @@ describe('cmdHealth basic mode', () => {
     });
   });
 
-  describe('with missing .marketing/', () => {
+  describe('with missing .taketomarket/', () => {
     let tmp;
     let originalCwd;
 
     before(() => {
       tmp = createTempDir();
-      // No .marketing/ created -- empty temp dir
+      // No .taketomarket/ created -- empty temp dir
       originalCwd = process.cwd;
       process.cwd = () => tmp.dir;
     });
@@ -119,7 +119,7 @@ describe('cmdHealth basic mode', () => {
       tmp.cleanup();
     });
 
-    it('reports unhealthy when .marketing/ does not exist', () => {
+    it('reports unhealthy when .taketomarket/ does not exist', () => {
       const stdout = captureStdout(() => cmdHealth(false, false));
       const parsed = JSON.parse(stdout);
       assert.strictEqual(parsed.healthy, false, 'should be unhealthy');
@@ -131,14 +131,14 @@ describe('cmdHealth basic mode', () => {
     });
   });
 
-  describe('with partial .marketing/', () => {
+  describe('with partial .taketomarket/', () => {
     let tmp;
     let originalCwd;
 
     before(() => {
       tmp = createTempDir();
-      // Create only .marketing/ dir (no CAMPAIGNS/, no ref files)
-      fs.mkdirSync(path.join(tmp.dir, '.marketing'), { recursive: true });
+      // Create only .taketomarket/ dir (no CAMPAIGNS/, no ref files)
+      fs.mkdirSync(path.join(tmp.dir, '.taketomarket'), { recursive: true });
       originalCwd = process.cwd;
       process.cwd = () => tmp.dir;
     });
@@ -179,7 +179,7 @@ describe('cmdHealth full mode', () => {
       tmp = createTempDir();
       createFullMarketing(tmp.dir);
       // Create campaign with valid phase
-      const campaignDir = path.join(tmp.dir, '.marketing', 'CAMPAIGNS', 'test-campaign');
+      const campaignDir = path.join(tmp.dir, '.taketomarket', 'CAMPAIGNS', 'test-campaign');
       fs.mkdirSync(campaignDir, { recursive: true });
       fs.writeFileSync(
         path.join(campaignDir, 'STATE.md'),
@@ -211,7 +211,7 @@ describe('cmdHealth full mode', () => {
       tmp = createTempDir();
       createFullMarketing(tmp.dir);
       // Create campaign with invalid phase
-      const campaignDir = path.join(tmp.dir, '.marketing', 'CAMPAIGNS', 'bad-campaign');
+      const campaignDir = path.join(tmp.dir, '.taketomarket', 'CAMPAIGNS', 'bad-campaign');
       fs.mkdirSync(campaignDir, { recursive: true });
       fs.writeFileSync(
         path.join(campaignDir, 'STATE.md'),
@@ -263,7 +263,7 @@ describe('cmdHealth full mode', () => {
 
     it('passes when drift log has single audit trail marker', () => {
       fs.writeFileSync(
-        path.join(tmp.dir, '.marketing', 'DRIFT-LOG.md'),
+        path.join(tmp.dir, '.taketomarket', 'DRIFT-LOG.md'),
         '# Drift Log\n\n<!-- Audit Trail -->\n| type | timestamp | source |\n'
       );
       const stdout = captureStdout(() => cmdHealth(false, true));
@@ -275,7 +275,7 @@ describe('cmdHealth full mode', () => {
 
     it('fails when drift log has duplicate audit trail markers', () => {
       fs.writeFileSync(
-        path.join(tmp.dir, '.marketing', 'DRIFT-LOG.md'),
+        path.join(tmp.dir, '.taketomarket', 'DRIFT-LOG.md'),
         '# Drift Log\n\n<!-- Audit Trail -->\n| type | timestamp | source |\n\n<!-- Audit Trail -->\n| type | timestamp | source |\n'
       );
       const stdout = captureStdout(() => cmdHealth(false, true));
@@ -304,7 +304,7 @@ describe('cmdHealth full mode', () => {
     });
 
     it('passes for valid gate values', () => {
-      const campaignDir = path.join(tmp.dir, '.marketing', 'CAMPAIGNS', 'gated-campaign');
+      const campaignDir = path.join(tmp.dir, '.taketomarket', 'CAMPAIGNS', 'gated-campaign');
       fs.mkdirSync(campaignDir, { recursive: true });
       fs.writeFileSync(
         path.join(campaignDir, 'STATE.md'),
@@ -318,7 +318,7 @@ describe('cmdHealth full mode', () => {
     });
 
     it('fails for invalid gate values', () => {
-      const campaignDir = path.join(tmp.dir, '.marketing', 'CAMPAIGNS', 'bad-gate-campaign');
+      const campaignDir = path.join(tmp.dir, '.taketomarket', 'CAMPAIGNS', 'bad-gate-campaign');
       fs.mkdirSync(campaignDir, { recursive: true });
       fs.writeFileSync(
         path.join(campaignDir, 'STATE.md'),
@@ -376,7 +376,7 @@ describe('cmdInit', () => {
 
     before(() => {
       tmp = createTempDir();
-      // No .marketing/ directory
+      // No .taketomarket/ directory
       originalCwd = process.cwd;
       process.cwd = () => tmp.dir;
     });
@@ -386,11 +386,11 @@ describe('cmdInit', () => {
       tmp.cleanup();
     });
 
-    it('reports not initialized when .marketing/ missing', () => {
+    it('reports not initialized when .taketomarket/ missing', () => {
       const stdout = captureStdout(() => cmdInit(false));
       const parsed = JSON.parse(stdout);
       assert.strictEqual(parsed.initialized, false, 'should not be initialized');
-      assert.strictEqual(parsed.marketing_dir, false, 'marketing_dir is false');
+      assert.strictEqual(parsed.taketomarket_dir, false, 'taketomarket_dir is false');
     });
 
     it('outputs "not initialized" in raw mode', () => {
@@ -405,8 +405,8 @@ describe('cmdInit', () => {
 
     before(() => {
       tmp = createTempDir();
-      // Create .marketing/ with only STATE.md (1 of 9 files)
-      const marketingDir = path.join(tmp.dir, '.marketing');
+      // Create .taketomarket/ with only STATE.md (1 of 9 files)
+      const marketingDir = path.join(tmp.dir, '.taketomarket');
       fs.mkdirSync(marketingDir, { recursive: true });
       fs.writeFileSync(path.join(marketingDir, 'STATE.md'), '---\nstatus: active\n---\n# State\n');
       originalCwd = process.cwd;
@@ -423,7 +423,7 @@ describe('cmdInit', () => {
       const parsed = JSON.parse(stdout);
       assert.strictEqual(parsed.initialized, false, 'should not be initialized');
       assert.strictEqual(parsed.reference_files_count, 1, 'only 1 ref file found');
-      assert.strictEqual(parsed.marketing_dir, true, 'marketing_dir exists');
+      assert.strictEqual(parsed.taketomarket_dir, true, 'taketomarket_dir exists');
     });
   });
 });

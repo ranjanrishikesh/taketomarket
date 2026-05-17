@@ -11,11 +11,11 @@
  * Commands:
  *   slug <text>              Generate URL-safe slug from text
  *   timestamp [format]       Get timestamp (full|date|filename)
- *   init                     Check .marketing/ initialization status
- *   state <read|update>      Read or update .marketing/STATE.md
+ *   init                     Check .taketomarket/ initialization status
+ *   state <read|update>      Read or update .taketomarket/STATE.md
  *   campaign <sub> [args]    Campaign operations (init, state, update, list)
  *   drift-log <sub> [args]   Drift log operations (append, deprecation)
- *   health                   Validate .marketing/ directory structure
+ *   health                   Validate .taketomarket/ directory structure
  *   commit <msg> [--files]   Stage files and git commit
  */
 

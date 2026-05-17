@@ -1,7 +1,7 @@
 ---
 name: ttm-health
 description: >
-  Validate .marketing/ directory integrity, reference file completeness,
+  Validate .taketomarket/ directory integrity, reference file completeness,
   and state consistency. Auto-triggers when potential issues detected.
 disable-model-invocation: false
 allowed-tools: Read Bash Glob Grep

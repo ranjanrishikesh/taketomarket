@@ -13,7 +13,7 @@ status allows staggered launches (D-11). Only ship-ready assets can ship.
 <constraints>
 ## POSITIONING.md is READ-ONLY
 
-**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+**Do NOT modify `.taketomarket/POSITIONING.md` during this workflow.**
 
 POSITIONING.md is an architectural invariant. If you detect positioning drift:
 - In verify: use the Escalate option to launch /ttm-positioning-shift
@@ -63,34 +63,34 @@ SLUG=$(echo "$ARGUMENTS" | sed 's/--text//g' | xargs)
 If SLUG is empty, error: "Usage: /ttm-ship [campaign-slug]. Provide a campaign slug." Exit.
 
 **Load Tier 1 summaries** from all 9 reference files (lines 1 to `<!-- END_SUMMARY -->`):
-- `.marketing/POSITIONING.md`
-- `.marketing/BRAND.md`
-- `.marketing/ICP.md`
-- `.marketing/CHANNELS.md`
-- `.marketing/STATE.md` (frontmatter only)
-- `.marketing/CALENDAR.md`
-- `.marketing/COMPETITORS.md`
-- `.marketing/METRICS.md`
-- `.marketing/LEARNINGS.md`
+- `.taketomarket/POSITIONING.md`
+- `.taketomarket/BRAND.md`
+- `.taketomarket/ICP.md`
+- `.taketomarket/CHANNELS.md`
+- `.taketomarket/STATE.md` (frontmatter only)
+- `.taketomarket/CALENDAR.md`
+- `.taketomarket/COMPETITORS.md`
+- `.taketomarket/METRICS.md`
+- `.taketomarket/LEARNINGS.md`
 
 **Load Tier 2 (full content)** for ship checklist generation:
-- `.marketing/CHANNELS.md` (needed for UTM schema and channel-specific details)
+- `.taketomarket/CHANNELS.md` (needed for UTM schema and channel-specific details)
 
 **Load campaign-specific files** (always full-load per context-loading.md rule 4):
-- `.marketing/CAMPAIGNS/${SLUG}/STATE.md`
-- `.marketing/CAMPAIGNS/${SLUG}/BRIEF.md`
+- `.taketomarket/CAMPAIGNS/${SLUG}/STATE.md`
+- `.taketomarket/CAMPAIGNS/${SLUG}/BRIEF.md`
 
 **Load MANIFEST.json:**
 ```bash
-MANIFEST_PATH=".marketing/CAMPAIGNS/${SLUG}/MANIFEST.json"
+MANIFEST_PATH=".taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json"
 ```
 
-Read `.marketing/CAMPAIGNS/${SLUG}/MANIFEST.json`. If the file does not exist, error:
+Read `.taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json`. If the file does not exist, error:
 "No production manifest found for campaign '${SLUG}'. Run /ttm-produce first."
 Exit.
 
 **Load VERIFICATION.md:**
-Read `.marketing/CAMPAIGNS/${SLUG}/VERIFICATION.md`. If the file does not exist, error:
+Read `.taketomarket/CAMPAIGNS/${SLUG}/VERIFICATION.md`. If the file does not exist, error:
 "No verification report found for campaign '${SLUG}'. Run /ttm-verify first."
 Exit.
 
@@ -224,7 +224,7 @@ the ship-ready asset files and campaign data.
 Scan each ship-ready asset file for URLs containing `utm_` parameters.
 - Check format: `utm_source`, `utm_medium`, `utm_campaign` must all be present in each
   tracked URL.
-- Cross-reference against `.marketing/CHANNELS.md` UTM schema if available.
+- Cross-reference against `.taketomarket/CHANNELS.md` UTM schema if available.
 - Result: PASS (valid UTMs found on all trackable links), WARN (no trackable links found
   in assets -- may be expected for some asset types), FAIL (malformed UTMs -- missing
   required parameters or inconsistent naming).
@@ -517,5 +517,5 @@ If SHIPPED_COUNT < 3, do not display anything.
 </success_criteria>
 
 <output>
-- `.marketing/CAMPAIGNS/${SLUG}/MANIFEST.json` (updated with ship_status and shipped_at per asset)
+- `.taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json` (updated with ship_status and shipped_at per asset)
 </output>

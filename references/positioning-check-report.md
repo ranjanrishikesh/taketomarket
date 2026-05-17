@@ -69,7 +69,7 @@ Example: 5 assets, 3 WARN findings, 1 FAIL finding = 4 / 15 * 100 = 26.7% aggreg
 
 ## Trend Comparison Logic
 
-When a prior audit entry exists in `.marketing/DRIFT-LOG.md`:
+When a prior audit entry exists in `.taketomarket/DRIFT-LOG.md`:
 
 1. Find the most recent row in the Audit Trail table where Event = `audit`
 2. Parse the Details column to extract the prior aggregate drift percentage
@@ -89,7 +89,7 @@ If no prior audit entry exists: display "First audit -- no trend data available.
 
 For each campaign in the audit window:
 
-1. Read `.marketing/CAMPAIGNS/<slug>/DEVIATIONS.md` if it exists
+1. Read `.taketomarket/CAMPAIGNS/<slug>/DEVIATIONS.md` if it exists
 2. Filter for rows where Gate = `positioning_drift` (GATE-01 deviations)
 3. These are assets where drift was previously detected but explicitly accepted by the user
 4. Include in the "Accepted Deviations" section of the report

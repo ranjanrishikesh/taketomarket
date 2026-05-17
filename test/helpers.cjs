@@ -21,13 +21,13 @@ function createTempDir(prefix = 'ttm-test-') {
 }
 
 /**
- * Create a mock .marketing/ directory structure inside baseDir.
+ * Create a mock .taketomarket/ directory structure inside baseDir.
  * Includes STATE.md and POSITIONING.md matching real takeToMarket layout.
- * @param {string} baseDir - Directory to create .marketing/ inside
- * @returns {string} Path to the created .marketing/ directory
+ * @param {string} baseDir - Directory to create .taketomarket/ inside
+ * @returns {string} Path to the created .taketomarket/ directory
  */
 function createMockMarketing(baseDir) {
-  const marketingDir = path.join(baseDir, '.marketing');
+  const marketingDir = path.join(baseDir, '.taketomarket');
   fs.mkdirSync(marketingDir, { recursive: true });
   fs.writeFileSync(
     path.join(marketingDir, 'STATE.md'),
@@ -53,9 +53,9 @@ function createMockHome(baseDir) {
 }
 
 /**
- * Create a mock campaign directory with STATE.md inside .marketing/CAMPAIGNS/.
- * Assumes .marketing/ already exists (call createMockMarketing first or create manually).
- * @param {string} baseDir - Project root (with .marketing/ already created)
+ * Create a mock campaign directory with STATE.md inside .taketomarket/CAMPAIGNS/.
+ * Assumes .taketomarket/ already exists (call createMockMarketing first or create manually).
+ * @param {string} baseDir - Project root (with .taketomarket/ already created)
  * @param {string} slug - Campaign slug
  * @param {object} [opts] - Optional overrides
  * @param {string} [opts.phase='created'] - Campaign phase
@@ -66,7 +66,7 @@ function createMockHome(baseDir) {
 function createMockCampaign(baseDir, slug, opts = {}) {
   const phase = opts.phase || 'created';
   const name = opts.name || `Test Campaign ${slug}`;
-  const campaignDir = path.join(baseDir, '.marketing', 'CAMPAIGNS', slug);
+  const campaignDir = path.join(baseDir, '.taketomarket', 'CAMPAIGNS', slug);
   const assetsDir = path.join(campaignDir, 'ASSETS');
   fs.mkdirSync(assetsDir, { recursive: true });
   const timestamp = new Date().toISOString();

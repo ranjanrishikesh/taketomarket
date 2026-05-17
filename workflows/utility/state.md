@@ -12,7 +12,7 @@ and enriches with per-campaign STATE.md data.
 <constraints>
 ## POSITIONING.md is READ-ONLY
 
-**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+**Do NOT modify `.taketomarket/POSITIONING.md` during this workflow.**
 
 POSITIONING.md is an architectural invariant. If you detect positioning drift:
 - In verify: use the Escalate option to launch /ttm-positioning-shift
@@ -68,14 +68,14 @@ Exit.
 
 **Check for archived campaigns:**
 ```bash
-ls .marketing/CAMPAIGNS/ARCHIVE/ 2>/dev/null
+ls .taketomarket/CAMPAIGNS/ARCHIVE/ 2>/dev/null
 ```
 
 For each archived directory found, read its STATE.md frontmatter to get archive date
 and outcome information.
 
 **Read global state for portfolio context:**
-Read `.marketing/STATE.md` body content (below frontmatter) for portfolio-level
+Read `.taketomarket/STATE.md` body content (below frontmatter) for portfolio-level
 decisions, blockers, and experiments.
 
 ---
@@ -109,9 +109,9 @@ For each active campaign, also display a detail section:
 **Created:** <date> | **Last Updated:** <date>
 **Gate Results:** <summary of pass/fail counts from review.overall_result>
 **Fix Attempts:** <fix.run_count or 0>
-**Decisions in flight:** <from global .marketing/STATE.md body if any>
-**Blockers:** <from global .marketing/STATE.md body if any>
-**Experiments:** <from global .marketing/STATE.md body if any>
+**Decisions in flight:** <from global .taketomarket/STATE.md body if any>
+**Blockers:** <from global .taketomarket/STATE.md body if any>
+**Experiments:** <from global .taketomarket/STATE.md body if any>
 ```
 
 If no active campaigns exist, display:
@@ -198,7 +198,7 @@ If the campaign has no body content in STATE.md, display:
 - [ ] Dashboard displays active campaigns with detail sections
 - [ ] Archived campaigns shown as collapsed rows
 - [ ] Single campaign mode shows full detail when slug provided
-- [ ] Global .marketing/STATE.md body read for portfolio-level context
+- [ ] Global .taketomarket/STATE.md body read for portfolio-level context
 - [ ] No files modified (read-only command)
 </success_criteria>
 

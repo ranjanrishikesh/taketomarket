@@ -1,5 +1,5 @@
 <purpose>
-Interview-driven onboarding that generates all .marketing/ reference files
+Interview-driven onboarding that generates all .taketomarket/ reference files
 from structured questioning. Use when setting up takeToMarket for a new project.
 Orchestrates a 6-section interview with specificity validation, then generates
 9 reference files plus CLAUDE.md and AGENTS.md instruction files.
@@ -55,7 +55,7 @@ node ${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs init --raw
 
 Use AskUserQuestion:
 - header: "Existing Setup"
-- question: ".marketing/ already contains reference files. What would you like to do?"
+- question: ".taketomarket/ already contains reference files. What would you like to do?"
 - options:
   - label: "Start fresh"
     description: "Delete existing files and re-run the full interview"
@@ -64,14 +64,14 @@ Use AskUserQuestion:
   - label: "Cancel"
     description: "Exit without changes"
 
-**If "Start fresh":** Delete .marketing/ contents (except CAMPAIGNS/ and PLAYBOOKS/) and continue to Step 2.
+**If "Start fresh":** Delete .taketomarket/ contents (except CAMPAIGNS/ and PLAYBOOKS/) and continue to Step 2.
 **If "Update specific files":** Present file picker using AskUserQuestion with multiSelect: true listing all 9 reference files. Run only the interview sections that map to selected files (see Question-to-Template Mapping in init-questions.md). Skip unselected sections and jump to Step 9 for generation.
 **If "Cancel":** Exit with message "No changes made."
 
 **If result is "not initialized":**
 ```bash
-mkdir -p .marketing/CAMPAIGNS
-mkdir -p .marketing/PLAYBOOKS
+mkdir -p .taketomarket/CAMPAIGNS
+mkdir -p .taketomarket/PLAYBOOKS
 ```
 Continue to Step 2.
 
@@ -261,7 +261,7 @@ Use AskUserQuestion:
 - question: "Here's what I'll use to generate your reference files. Ready to proceed?"
 - options:
   - label: "Generate files"
-    description: "Create all .marketing/ reference files"
+    description: "Create all .taketomarket/ reference files"
   - label: "Revise a section"
     description: "Go back and update specific answers"
 
@@ -286,44 +286,44 @@ For each reference file, follow this pattern:
    - Summary section must be under 200 words
    - Preserve all table structures from the template
    - For dates, use: `node ${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs timestamp date --raw`
-4. Write to `.marketing/{FILENAME}.md`
+4. Write to `.taketomarket/{FILENAME}.md`
 
 **Generate files in this order:**
 
 ### 1. POSITIONING.md (from Section 1 data)
 Read template: `${CLAUDE_PLUGIN_ROOT}/templates/reference-files/positioning.md`
 Fill: Category, Target audience, Primary differentiator, Proof points, Must-not-say, Competitive frame, Positioning History date.
-Write to: `.marketing/POSITIONING.md`
+Write to: `.taketomarket/POSITIONING.md`
 
 ### 2. BRAND.md (from Section 2 data)
 Read template: `${CLAUDE_PLUGIN_ROOT}/templates/reference-files/brand.md`
 Fill: Voice archetype, Voice attributes, Tone per context, Banned words with reasoning, Proof points, Good and bad examples.
-Write to: `.marketing/BRAND.md`
+Write to: `.taketomarket/BRAND.md`
 
 ### 3. ICP.md (from Section 3 data)
 Read template: `${CLAUDE_PLUGIN_ROOT}/templates/reference-files/icp.md`
 Fill: Primary segment, Demographics, Psychographics, JTBD, Pain points with severity and frequency, Buying triggers, Anti-ICP, Customer language library.
-Write to: `.marketing/ICP.md`
+Write to: `.taketomarket/ICP.md`
 
 ### 4. CHANNELS.md (from Section 4 data)
 Read template: `${CLAUDE_PLUGIN_ROOT}/templates/reference-files/channels.md`
 Fill: Active channels with baselines, Primary channel, Dormant channels with reasons, Banned channels with reasons, Budget allocation, Channel-specific rules.
-Write to: `.marketing/CHANNELS.md`
+Write to: `.taketomarket/CHANNELS.md`
 
 ### 5. COMPETITORS.md (from Section 5 data)
 Read template: `${CLAUDE_PLUGIN_ROOT}/templates/reference-files/competitors.md`
 Fill: Direct competitors (positioning, strength, weakness), Positioning map axes and positions, Share of voice baseline.
-Write to: `.marketing/COMPETITORS.md`
+Write to: `.taketomarket/COMPETITORS.md`
 
 ### 6. METRICS.md (from Section 6 data -- metrics portion)
 Read template: `${CLAUDE_PLUGIN_ROOT}/templates/reference-files/metrics.md`
 Fill: Primary outcome metric (metric/target/window/source), Secondary metrics, Leading indicators, Baselines, Attribution model.
-Write to: `.marketing/METRICS.md`
+Write to: `.taketomarket/METRICS.md`
 
 ### 7. CALENDAR.md (from Section 6 data -- calendar portion)
 Read template: `${CLAUDE_PLUGIN_ROOT}/templates/reference-files/calendar.md`
 Fill: Quarterly themes, Launch calendar, Always-on cadence, Blackout dates.
-Write to: `.marketing/CALENDAR.md`
+Write to: `.taketomarket/CALENDAR.md`
 
 ### 8. STATE.md (template copy with timestamp)
 Read template: `${CLAUDE_PLUGIN_ROOT}/templates/reference-files/state.md`
@@ -332,7 +332,7 @@ Read template: `${CLAUDE_PLUGIN_ROOT}/templates/reference-files/state.md`
 node ${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs timestamp date --raw
 ```
 Do NOT fill interview data into STATE.md -- it is initialized with default values.
-Write to: `.marketing/STATE.md`
+Write to: `.taketomarket/STATE.md`
 
 ### 9. LEARNINGS.md (template copy with zeroed counters)
 Read template: `${CLAUDE_PLUGIN_ROOT}/templates/reference-files/learnings.md`
@@ -341,7 +341,7 @@ Read template: `${CLAUDE_PLUGIN_ROOT}/templates/reference-files/learnings.md`
 - Last lesson date: none
 - Top pattern: none
 Do NOT fill interview data -- learnings are populated during campaign Learn phases.
-Write to: `.marketing/LEARNINGS.md`
+Write to: `.taketomarket/LEARNINGS.md`
 
 ---
 
@@ -384,7 +384,7 @@ node ${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs state update status initialized
 ```
 
 **Warning tracking:** If any interview section accumulated 3 or more SPECIFICITY_WARNING flags
-during the interview, append to `.marketing/STATE.md` under a `## Follow-up Needed` heading:
+during the interview, append to `.taketomarket/STATE.md` under a `## Follow-up Needed` heading:
 - Section [N] ([name]): [count] specificity warnings -- recommend re-running with [relevant /ttm-* command]
 
 Use these commands per section:
@@ -403,15 +403,15 @@ Use these commands per section:
 takeToMarket > INITIALIZED
 
 Reference files created:
-  .marketing/POSITIONING.md
-  .marketing/BRAND.md
-  .marketing/ICP.md
-  .marketing/CHANNELS.md
-  .marketing/STATE.md
-  .marketing/METRICS.md
-  .marketing/COMPETITORS.md
-  .marketing/CALENDAR.md
-  .marketing/LEARNINGS.md
+  .taketomarket/POSITIONING.md
+  .taketomarket/BRAND.md
+  .taketomarket/ICP.md
+  .taketomarket/CHANNELS.md
+  .taketomarket/STATE.md
+  .taketomarket/METRICS.md
+  .taketomarket/COMPETITORS.md
+  .taketomarket/CALENDAR.md
+  .taketomarket/LEARNINGS.md
 
 Instruction files created:
   CLAUDE.md
@@ -428,22 +428,22 @@ Next step: Run /ttm-new-campaign to create your first campaign.
 - [ ] Pre-flight check completed (existing init detected or directories created)
 - [ ] All 6 interview sections completed with specificity validation
 - [ ] Confirmation gate passed
-- [ ] 9 reference files generated in .marketing/ with _SUMMARY/END_SUMMARY preserved
+- [ ] 9 reference files generated in .taketomarket/ with _SUMMARY/END_SUMMARY preserved
 - [ ] CLAUDE.md and AGENTS.md copied to project root
-- [ ] Health check passes (all 11 checks: marketing_dir + campaigns_dir + 9 files)
+- [ ] Health check passes (all 11 checks: taketomarket_dir + campaigns_dir + 9 files)
 - [ ] STATE.md status set to "initialized"
 </success_criteria>
 
 <output>
-- `.marketing/POSITIONING.md`
-- `.marketing/BRAND.md`
-- `.marketing/ICP.md`
-- `.marketing/CHANNELS.md`
-- `.marketing/STATE.md`
-- `.marketing/METRICS.md`
-- `.marketing/COMPETITORS.md`
-- `.marketing/CALENDAR.md`
-- `.marketing/LEARNINGS.md`
+- `.taketomarket/POSITIONING.md`
+- `.taketomarket/BRAND.md`
+- `.taketomarket/ICP.md`
+- `.taketomarket/CHANNELS.md`
+- `.taketomarket/STATE.md`
+- `.taketomarket/METRICS.md`
+- `.taketomarket/COMPETITORS.md`
+- `.taketomarket/CALENDAR.md`
+- `.taketomarket/LEARNINGS.md`
 - `CLAUDE.md`
 - `AGENTS.md`
 </output>

@@ -13,7 +13,7 @@ revision feedback on Revise (D-12). Auto-triggers /ttm-fix for revised assets (D
 <constraints>
 ## POSITIONING.md is READ-ONLY
 
-**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+**Do NOT modify `.taketomarket/POSITIONING.md` during this workflow.**
 
 POSITIONING.md is an architectural invariant. If you detect positioning drift:
 - In verify: use the Escalate option to launch /ttm-positioning-shift
@@ -63,33 +63,33 @@ SLUG=$(echo "$ARGUMENTS" | sed 's/--text//g' | xargs)
 If SLUG is empty, error: "Usage: /ttm-review [campaign-slug]. Provide a campaign slug." Exit.
 
 **Load Tier 1 summaries** from all 9 reference files (lines 1 to `<!-- END_SUMMARY -->`):
-- `.marketing/POSITIONING.md`
-- `.marketing/BRAND.md`
-- `.marketing/ICP.md`
-- `.marketing/CHANNELS.md`
-- `.marketing/STATE.md` (frontmatter only)
-- `.marketing/CALENDAR.md`
-- `.marketing/COMPETITORS.md`
-- `.marketing/METRICS.md`
-- `.marketing/LEARNINGS.md`
+- `.taketomarket/POSITIONING.md`
+- `.taketomarket/BRAND.md`
+- `.taketomarket/ICP.md`
+- `.taketomarket/CHANNELS.md`
+- `.taketomarket/STATE.md` (frontmatter only)
+- `.taketomarket/CALENDAR.md`
+- `.taketomarket/COMPETITORS.md`
+- `.taketomarket/METRICS.md`
+- `.taketomarket/LEARNINGS.md`
 
 **Tier 2:** None for review (per context-loading.md matrix -- review is human-driven).
 
 **Load campaign-specific files** (always full-load per context-loading.md rule 4):
-- `.marketing/CAMPAIGNS/${SLUG}/STATE.md`
-- `.marketing/CAMPAIGNS/${SLUG}/BRIEF.md`
+- `.taketomarket/CAMPAIGNS/${SLUG}/STATE.md`
+- `.taketomarket/CAMPAIGNS/${SLUG}/BRIEF.md`
 
 **Load MANIFEST.json:**
 ```bash
-MANIFEST_PATH=".marketing/CAMPAIGNS/${SLUG}/MANIFEST.json"
+MANIFEST_PATH=".taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json"
 ```
 
-Read `.marketing/CAMPAIGNS/${SLUG}/MANIFEST.json`. If the file does not exist, error:
+Read `.taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json`. If the file does not exist, error:
 "No production manifest found for campaign '${SLUG}'. Run /ttm-produce first."
 Exit.
 
 **Load VERIFICATION.md:**
-Read `.marketing/CAMPAIGNS/${SLUG}/VERIFICATION.md`. If the file does not exist, error:
+Read `.taketomarket/CAMPAIGNS/${SLUG}/VERIFICATION.md`. If the file does not exist, error:
 "No verification report found for campaign '${SLUG}'. Run /ttm-verify first."
 Exit.
 
@@ -150,7 +150,7 @@ GATE_RESULTS[asset_name] = {
 ```
 
 **Load content previews** from disk. For each asset:
-- Read the file from `.marketing/CAMPAIGNS/${SLUG}/${asset.file}`
+- Read the file from `.taketomarket/CAMPAIGNS/${SLUG}/${asset.file}`
 - Extract the first ~500 characters for the hero, first ~300 characters for derivatives (D-04)
 - If an asset file is missing from disk, display warning and skip it
 
@@ -169,7 +169,7 @@ Display the hero asset in full detail:
 
 ```
 ## [HERO_ASSET_NAME]
-File: .marketing/CAMPAIGNS/${SLUG}/${HERO_FILE}
+File: .taketomarket/CAMPAIGNS/${SLUG}/${HERO_FILE}
 
 ### Gate Summary
 | Gate | Result |
@@ -187,7 +187,7 @@ File: .marketing/CAMPAIGNS/${SLUG}/${HERO_FILE}
 
 ### Content Preview
 [First ~500 characters of the asset]
-[Full file: .marketing/CAMPAIGNS/${SLUG}/${HERO_FILE}]
+[Full file: .taketomarket/CAMPAIGNS/${SLUG}/${HERO_FILE}]
 ```
 
 **Present the 4 mandatory review questions** from review-checklist.md. Use
@@ -251,7 +251,7 @@ Collect structured revision feedback per D-12 (see review-checklist.md):
 
 Set hero `review_status` = `"needs-fix"` in memory.
 
-Write the structured feedback to `.marketing/CAMPAIGNS/${SLUG}/REVIEW-FEEDBACK-${HERO_NAME}.md`:
+Write the structured feedback to `.taketomarket/CAMPAIGNS/${SLUG}/REVIEW-FEEDBACK-${HERO_NAME}.md`:
 ```markdown
 # Review Feedback: [HERO_ASSET_NAME]
 
@@ -296,12 +296,12 @@ For each derivative asset:
 Show abbreviated gate summary (PASS count / WARN count / FAIL count -- not full table):
 ```
 ## [DERIVATIVE_NAME]
-File: .marketing/CAMPAIGNS/${SLUG}/${DERIVATIVE_FILE}
+File: .taketomarket/CAMPAIGNS/${SLUG}/${DERIVATIVE_FILE}
 Gates: ${PASS_COUNT} PASS / ${WARN_COUNT} WARN / ${FAIL_COUNT} FAIL
 
 ### Content Preview
 [First ~300 characters of the asset]
-[Full file: .marketing/CAMPAIGNS/${SLUG}/${DERIVATIVE_FILE}]
+[Full file: .taketomarket/CAMPAIGNS/${SLUG}/${DERIVATIVE_FILE}]
 ```
 
 ### Review Questions (Batch Mode)
@@ -317,7 +317,7 @@ Same 3 outcome options (Approve/Revise/Reject) per D-03.
 If **Approve**: Set derivative `review_status` = `"approved"` in memory.
 
 If **Revise**: Collect same structured revision feedback (failed items, severity,
-specific feedback). Write to `.marketing/CAMPAIGNS/${SLUG}/REVIEW-FEEDBACK-${DERIVATIVE_NAME}.md`.
+specific feedback). Write to `.taketomarket/CAMPAIGNS/${SLUG}/REVIEW-FEEDBACK-${DERIVATIVE_NAME}.md`.
 Set derivative `review_status` = `"needs-fix"` in memory.
 
 If **Reject**: Collect rejection reason. Set derivative `review_status` = `"rejected"` in memory.
@@ -326,7 +326,7 @@ If **Reject**: Collect rejection reason. Set derivative `review_status` = `"reje
 
 ## Step 6: Update MANIFEST.json with Review Status (D-11, D-13)
 
-Read MANIFEST.json from `.marketing/CAMPAIGNS/${SLUG}/MANIFEST.json`.
+Read MANIFEST.json from `.taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json`.
 
 Add `review_status` field to hero and each derivative:
 - `"approved"` for Approve outcomes
@@ -427,6 +427,6 @@ After fixes, approved + fixed assets can ship together via `/ttm-ship ${SLUG}`.
 </success_criteria>
 
 <output>
-- `.marketing/CAMPAIGNS/${SLUG}/MANIFEST.json` (updated with review_status per asset)
-- `.marketing/CAMPAIGNS/${SLUG}/REVIEW-FEEDBACK-*.md` (one per revised asset)
+- `.taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json` (updated with review_status per asset)
+- `.taketomarket/CAMPAIGNS/${SLUG}/REVIEW-FEEDBACK-*.md` (one per revised asset)
 </output>

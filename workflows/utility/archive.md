@@ -17,7 +17,7 @@ as cautionary records (D-08).
 <constraints>
 ## POSITIONING.md is READ-ONLY
 
-**Do NOT modify `.marketing/POSITIONING.md` during this workflow.**
+**Do NOT modify `.taketomarket/POSITIONING.md` during this workflow.**
 
 POSITIONING.md is an architectural invariant. If you detect positioning drift:
 - In verify: use the Escalate option to launch /ttm-positioning-shift
@@ -124,9 +124,9 @@ Following the learnings-extraction.md reference guide, scan campaign artifacts.
 
 **Read these files from the campaign directory:**
 
-1. `.marketing/CAMPAIGNS/${SLUG}/STATE.md` (full file -- frontmatter and body)
-2. `.marketing/CAMPAIGNS/${SLUG}/MANIFEST.json` (if exists -- per-asset gate results)
-3. `.marketing/CAMPAIGNS/${SLUG}/BRIEF.md` (if exists -- original strategy)
+1. `.taketomarket/CAMPAIGNS/${SLUG}/STATE.md` (full file -- frontmatter and body)
+2. `.taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json` (if exists -- per-asset gate results)
+3. `.taketomarket/CAMPAIGNS/${SLUG}/BRIEF.md` (if exists -- original strategy)
 4. `VERIFICATION.md` in the campaign directory (gate details)
 5. Any `FIX-BRIEF-*.md` files (fix attempts and outcomes)
 6. Any `REVIEW-FEEDBACK-*.md` files (human review feedback)
@@ -242,7 +242,7 @@ If the command returns an error:
 - Exit with the error context
 
 The CLI command handles:
-- Moving the campaign directory to `.marketing/CAMPAIGNS/ARCHIVE/${SLUG}/`
+- Moving the campaign directory to `.taketomarket/CAMPAIGNS/ARCHIVE/${SLUG}/`
 - Updating the campaign state to "archived"
 - Validating the campaign is in "shipped" or "learned" phase before allowing archive
 
@@ -258,7 +258,7 @@ takeToMarket > UPDATING LEARNINGS
 The campaign is now in ARCHIVE/ with phase set to "archived". Writing learnings after
 archive confirmation prevents data-loss on retry (duplicate rows) if archive were to fail.
 
-Read `.marketing/LEARNINGS.md`.
+Read `.taketomarket/LEARNINGS.md`.
 
 **Duplicate guard:** Before inserting rows, scan existing LEARNINGS.md content for
 any row containing `| ${SLUG} |` with today's date. If matching rows already exist
@@ -305,7 +305,7 @@ Display completion summary:
 |------|----------|----------|--------|-------------|
 ${extracted_rows}
 
-Campaign directory moved to `.marketing/CAMPAIGNS/ARCHIVE/${SLUG}/`
+Campaign directory moved to `.taketomarket/CAMPAIGNS/ARCHIVE/${SLUG}/`
 
 ### Next Steps
 - Lessons are now available in LEARNINGS.md for future campaigns
@@ -329,6 +329,6 @@ Campaign directory moved to `.marketing/CAMPAIGNS/ARCHIVE/${SLUG}/`
 </success_criteria>
 
 <output>
-- `.marketing/LEARNINGS.md` (updated with extracted lessons)
-- `.marketing/CAMPAIGNS/ARCHIVE/${SLUG}/STATE.md` (phase set to archived, via CLI)
+- `.taketomarket/LEARNINGS.md` (updated with extracted lessons)
+- `.taketomarket/CAMPAIGNS/ARCHIVE/${SLUG}/STATE.md` (phase set to archived, via CLI)
 </output>
