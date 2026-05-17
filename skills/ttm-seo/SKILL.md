@@ -26,6 +26,7 @@ Parse first positional arg:
 - `keyword-map` → read and follow `${CLAUDE_PLUGIN_ROOT}/workflows/discipline/seo/keyword-map.md`
 - `aeo` → read and follow `${CLAUDE_PLUGIN_ROOT}/workflows/discipline/seo/aeo.md`
 - anything else: print usage and exit.
+- After matching a subcommand, strip it from `$ARGUMENTS` and forward the remainder to the workflow as the new `$ARGUMENTS` value. Example: `/ttm-seo audit https://example.com` → workflow receives `$ARGUMENTS=https://example.com`.
 
 ## Next steps
 
