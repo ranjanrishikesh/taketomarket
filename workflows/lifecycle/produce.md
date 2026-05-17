@@ -365,24 +365,9 @@ WARNING: ${FAILED_COUNT} derivative(s) failed production. Check the manifest for
 Next: Run /ttm-verify ${SLUG} to validate assets against quality gates
 ```
 
-</process>
+---
 
-<success_criteria>
-- [ ] All assets from brief's assets list written to CAMPAIGNS/<slug>/ASSETS/
-- [ ] Hero asset produced before derivatives (sequential then parallel)
-- [ ] Each subagent loaded with brief + positioning (full) + brand (full) + ICP (full) + playbook
-- [ ] MANIFEST.json written with all successful asset entries
-- [ ] Campaign STATE.md updated to phase=produced with timestamp
-- [ ] No playbook errors (graceful fallback for missing playbooks with warning)
-- [ ] Failed derivatives logged but do not abort the run
-</success_criteria>
-
-<output>
-- `.taketomarket/CAMPAIGNS/${SLUG}/ASSETS/*.md` (produced content files)
-- `.taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json` (production manifest for /ttm-verify)
-</output>
-
-## Step: Final humanization (MANDATORY)
+## Step 9: Final humanization (MANDATORY)
 
 Every audience-facing asset MUST pass through `/ttm-humanize` before write.
 
@@ -393,3 +378,21 @@ For each draft asset produced in this phase:
 4. Do not write the un-humanized draft.
 
 Internal state files (campaign briefs, manifests, STATE.md) are exempt.
+
+</process>
+
+<success_criteria>
+- [ ] All assets from brief's assets list written to CAMPAIGNS/<slug>/ASSETS/
+- [ ] Hero asset produced before derivatives (sequential then parallel)
+- [ ] Each subagent loaded with brief + positioning (full) + brand (full) + ICP (full) + playbook
+- [ ] MANIFEST.json written with all successful asset entries
+- [ ] Campaign STATE.md updated to phase=produced with timestamp
+- [ ] No playbook errors (graceful fallback for missing playbooks with warning)
+- [ ] Failed derivatives logged but do not abort the run
+- [ ] Each audience-facing asset passed through /ttm-humanize before final write.
+</success_criteria>
+
+<output>
+- `.taketomarket/CAMPAIGNS/${SLUG}/ASSETS/*.md` (produced content files)
+- `.taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json` (production manifest for /ttm-verify)
+</output>
