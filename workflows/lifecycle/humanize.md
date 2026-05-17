@@ -3,7 +3,7 @@ Humanization workflow for /ttm-humanize. Detects and rewrites the AI-writing pat
 cataloged in references/humanizer-patterns.md against an audience-facing asset, calibrated
 to the brand voice declared in .taketomarket/BRAND.md and constrained by the positioning
 invariant in .taketomarket/POSITIONING.md. Every audience-facing asset in takeToMarket
-passes through this workflow before write — no asset ships with the AI fingerprint intact.
+passes through this workflow before write -- no asset ships with the AI fingerprint intact.
 </purpose>
 
 <required_reading>
@@ -23,7 +23,7 @@ contradict POSITIONING.md, abort the rewrite for that span and flag it instead.
 ## BRAND.md voice is authoritative
 
 The asset's voice MUST match `.taketomarket/BRAND.md`. If the source asset already deviates
-from BRAND.md, humanization is not the place to fix it — flag the deviation and recommend
+from BRAND.md, humanization is not the place to fix it -- flag the deviation and recommend
 `/ttm-positioning-check` or a manual brand review.
 
 ## Meaning is preserved
@@ -62,7 +62,7 @@ Parse `$ARGUMENTS`. Strip the `--text` flag if present. The remaining token is t
   `.taketomarket/CAMPAIGNS/${SLUG}/ASSETS/${NN}-*.md`.
 - A bare campaign slug: read `.taketomarket/CAMPAIGNS/${SLUG}/MANIFEST.json` and humanize
   every asset listed. Process the hero first, then derivatives.
-- No argument and stdin/clipboard text present: treat as inline mode — humanize the pasted
+- No argument and stdin/clipboard text present: treat as inline mode -- humanize the pasted
   text and print the result; do not write to disk.
 
 Store the source text as `DRAFT`. Store the resolution mode as `MODE` (`file` | `campaign` |
@@ -78,13 +78,13 @@ takeToMarket > CALIBRATING VOICE
 
 Read full content (Tier 2 per context-loading.md):
 
-- `.taketomarket/BRAND.md` — voice, tone, vocabulary, must-not-say terms
-- `.taketomarket/POSITIONING.md` — anchors, proof points, must-not-say terms (positioning)
+- `.taketomarket/BRAND.md` -- voice, tone, vocabulary, must-not-say terms
+- `.taketomarket/POSITIONING.md` -- anchors, proof points, must-not-say terms (positioning)
 
 If the asset belongs to a campaign (MODE is `file` under `CAMPAIGNS/${SLUG}/ASSETS/` or
 MODE is `campaign`), also read:
 
-- `.taketomarket/CAMPAIGNS/${SLUG}/BRIEF.md` — campaign-specific hook, proof points,
+- `.taketomarket/CAMPAIGNS/${SLUG}/BRIEF.md` -- campaign-specific hook, proof points,
   channel constraints
 
 From BRAND.md, extract a **voice profile**:
@@ -99,7 +99,7 @@ From BRAND.md, extract a **voice profile**:
 
 If BRAND.md does not declare these explicitly, infer them from any sample passages it
 contains. If no samples exist, set `VOICE_PROFILE=default` (varied rhythm, opinionated,
-first-person allowed, no AI tells — see "Signs of soulless writing" in
+first-person allowed, no AI tells -- see "Signs of soulless writing" in
 `references/humanizer-patterns.md`).
 
 ---
@@ -112,16 +112,16 @@ takeToMarket > SCANNING FOR AI PATTERNS
 
 Walk `DRAFT` against every section in `${CLAUDE_PLUGIN_ROOT}/references/humanizer-patterns.md`:
 
-1. CONTENT PATTERNS (sections 1-6) — significance inflation, notability puffery,
+1. CONTENT PATTERNS (sections 1-6) -- significance inflation, notability puffery,
    superficial -ing analyses, promotional language, vague attributions, formulaic
    challenges sections.
-2. LANGUAGE AND GRAMMAR PATTERNS (sections 7-13) — AI vocabulary, copula avoidance,
+2. LANGUAGE AND GRAMMAR PATTERNS (sections 7-13) -- AI vocabulary, copula avoidance,
    negative parallelism, rule of three, elegant variation, false ranges, passive voice.
-3. STYLE PATTERNS (sections 14-19) — em-dash overuse, boldface overuse, inline-header
+3. STYLE PATTERNS (sections 14-19) -- em-dash overuse, boldface overuse, inline-header
    lists, title-case headings, emojis, curly quotes.
-4. COMMUNICATION PATTERNS (sections 20-22) — chatbot artifacts, knowledge-cutoff
+4. COMMUNICATION PATTERNS (sections 20-22) -- chatbot artifacts, knowledge-cutoff
    disclaimers, sycophantic tone.
-5. FILLER AND HEDGING (sections 23-29) — filler phrases, excessive hedging, generic
+5. FILLER AND HEDGING (sections 23-29) -- filler phrases, excessive hedging, generic
    positive conclusions, hyphenated word-pair overuse, persuasive authority tropes,
    signposting, fragmented headers.
 
@@ -132,7 +132,7 @@ For each hit, record:
 - The rewrite shape suggested by the section's Before/After pair
 
 Store the list as `HITS`. If `HITS` is empty AND the draft does not fail the "soulless
-writing" check from the reference, skip to Step 6 — the asset is already clean.
+writing" check from the reference, skip to Step 6 -- the asset is already clean.
 
 ---
 
@@ -145,7 +145,7 @@ takeToMarket > REWRITING (${N} pattern hits)
 For each hit in `HITS`, rewrite the offending span using:
 
 - The Before/After template from the matching section of `humanizer-patterns.md`
-- The voice profile from Step 2 — match the asset's brand cadence, not a generic
+- The voice profile from Step 2 -- match the asset's brand cadence, not a generic
   "natural" tone
 
 Rules:
@@ -157,7 +157,7 @@ Rules:
 - Do NOT remove a span that is load-bearing for positioning (anchor phrase, proof point,
   differentiator) even if it pattern-matches. Flag it and leave it.
 - If the brand voice is itself terse and bullet-heavy, don't rewrite inline-header lists
-  into prose paragraphs — match the brand.
+  into prose paragraphs -- match the brand.
 - Soulless output is a failure mode. After mechanical fixes, do one personality pass
   using the "How to add voice" guidance in the reference: vary rhythm, allow opinion,
   let some mess in, be specific.
@@ -175,7 +175,7 @@ takeToMarket > FINAL AUDIT
 Run one more pass against `DRAFT_V2`:
 
 1. Re-scan against `humanizer-patterns.md`. Record any remaining tells as a short bulleted
-   list `REMAINING_TELLS` (cap at 5 items — the goal is signal, not exhaustiveness).
+   list `REMAINING_TELLS` (cap at 5 items -- the goal is signal, not exhaustiveness).
 2. Apply one more revision targeting `REMAINING_TELLS` specifically. Most often this means
    tightening rhythm, breaking up tidy parallel structure, or replacing a remaining
    abstract noun with a concrete one.
@@ -190,7 +190,7 @@ Behavior depends on `MODE`:
 
 ### MODE = `file` or `campaign` (write back)
 
-Write `DRAFT_FINAL` to the original asset path. Overwrite without prompting — the previous
+Write `DRAFT_FINAL` to the original asset path. Overwrite without prompting -- the previous
 draft is recoverable via git.
 
 For campaign mode, after writing the asset, append a line to
@@ -231,7 +231,7 @@ or proof-point load. Review manually if voice still feels off.
 - [ ] Source asset resolved (file, campaign asset, or inline text)
 - [ ] BRAND.md voice profile loaded and applied to rewrites
 - [ ] POSITIONING.md anchors and proof points preserved verbatim
-- [ ] Every hit from the pattern scan addressed — rewritten or flagged with reason
+- [ ] Every hit from the pattern scan addressed -- rewritten or flagged with reason
 - [ ] Final anti-AI audit completed with remaining tells listed (or empty)
 - [ ] Soulless-writing check passed (rhythm varied, voice present, not just clean)
 - [ ] Output written to disk (file/campaign mode) or printed (inline mode)

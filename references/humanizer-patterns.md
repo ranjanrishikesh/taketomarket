@@ -252,7 +252,7 @@ When scanning an asset:
 **Problem:** ChatGPT uses curly quotes ("...") instead of straight quotes ("...").
 
 **Before:**
-> He said "the project is on track" but others disagreed.
+> He said “the project is on track” but others disagreed.
 
 **After:**
 > He said "the project is on track" but others disagreed.
