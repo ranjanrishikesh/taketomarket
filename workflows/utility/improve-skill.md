@@ -226,7 +226,8 @@ or a URL is printed for the user to open (browser path).
 
 ## What if this doesn't fit?
 
-Looks like /ttm-improve-skill can't do that yet.
+Looks like /ttm-improve-skill can't do that yet. Try one of:
 
-- Want a new skill? /ttm-request-skill
-- Existing skill needs work? /ttm-improve-skill
+- Want a brand-new skill instead? /ttm-request-skill
+- Need an overview of the system first? /ttm-101
+- Otherwise file a free-form issue: https://github.com/ranjanrishikesh/taketomarket/issues/new

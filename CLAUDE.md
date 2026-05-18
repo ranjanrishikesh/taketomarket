@@ -129,6 +129,29 @@ When assisting the user:
 Conventions not yet established. Will populate as patterns emerge during development.
 <!-- GSD:conventions-end -->
 
+<!-- ttm-maintainer-notes-start: hand-written, not GSD-managed -->
+## Maintainer Notes
+
+Project-specific gotchas future maintainers should know before editing.
+
+### Inline-workflow skills (no separate workflow file)
+
+Two skills carry their entire workflow inline in `SKILL.md` instead of routing to a `workflows/<...>.md` file:
+
+- `skills/ttm-update/SKILL.md`
+- `skills/ttm-seo/SKILL.md` (with sub-workflows at `workflows/discipline/seo/{aeo,audit,keyword-map}.md` covering subcommand bodies)
+
+The P6 first-run-inline-education hook (`## Step 0: First-run inline education`) lives in the SKILL.md for these two — not in a workflow file. If you later split either skill's flow out into a dedicated workflow file, **move Step 0 with it** and remove it from the SKILL.md so the hook fires exactly once per invocation.
+
+### Playbook contract
+
+Every discipline playbook in `playbooks/<discipline>.md` must conform to `playbooks/base.md`: YAML frontmatter (`discipline`, `asset_types`, `version`), 7 required H2 sections in order (Production Guidance / Discipline Gates / Base Gate Overrides / Format Rules / Examples / Anti-Patterns / Metrics), gate IDs `DISC-{DISCIPLINE}-NN` with PASS/WARN/FAIL criteria, ≤500 lines. An optional `## Sources` 8th section is permitted for leader-derived playbooks (P6+).
+
+### Install-method detection
+
+`bin/lib/install-detect.cjs` reads `~/.taketomarket/.install-method` first (sentinel JSON written by `install.js` during `copyPackageBase`). Falls back to a CLAUDE_PLUGIN_ROOT + `.git/` heuristic only when the sentinel is absent. The plugin-root candidate must contain a `package.json` with `"name": "taketomarket"` to qualify — this prevents false positives against generic `~/.claude/skills/` directories. If you change `install.js`'s copy targets, keep `writeInstallSentinel` in the same code path or `/ttm-update` will degrade silently.
+<!-- ttm-maintainer-notes-end -->
+
 <!-- GSD:architecture-start source:ARCHITECTURE.md -->
 ## Architecture
 

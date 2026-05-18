@@ -19,12 +19,6 @@ Per target:
 - **What to ask:** "Try takeToMarket for one positioning + landing-page workflow. Share what blocked you."
 - **Status:** Not contacted.
 
-### Akash Gupta
-- **Why:** TBD-RESEARCH — likely a developer-marketing thought leader per maintainer note. Maintainer to fill in fit rationale before outreach.
-- **Channel:** TBD — pick based on his most active channel.
-- **What to ask:** TBD — specific ask tied to fit rationale.
-- **Status:** Not contacted.
-
 ### Anthony Pierri
 - **Why:** Cited as Positioning playbook leader (Homepage-First). Closing the loop with him validates the positioning playbook's authorship.
 - **Channel:** LinkedIn DM.
@@ -95,7 +89,6 @@ Happy to send a 5-minute Loom walkthrough or jump on a quick call.
 | Person | Channel | Date sent | Response | Notes |
 |---|---|---|---|---|
 | Maja Voje | LinkedIn DM | — | — | — |
-| Akash Gupta | TBD | — | — | — |
 | Anthony Pierri | LinkedIn DM | — | — | — |
 | Justin Welsh | LinkedIn DM | — | — | — |
 | Peep Laja | LinkedIn DM | — | — | — |
