@@ -283,6 +283,36 @@ const PACKAGE_BASE_DIRS = ['workflows', 'templates', 'references', 'playbooks', 
 const PACKAGE_BASE_FILES = ['settings.json', 'package.json'];
 
 /**
+ * Classify how this installer was invoked so /ttm-update can pick the right upgrade path later.
+ * Returns 'clone' if the source tree is a git checkout, 'npm' if it lives inside node_modules
+ * or the npm cache, 'plugin' if it's the Claude Code plugin cache, else 'unknown'.
+ * @param {string} packageRoot
+ * @returns {'clone'|'npm'|'plugin'|'unknown'}
+ */
+function classifyInstallMethod(packageRoot) {
+  if (dirExists(path.join(packageRoot, '.git'))) return 'clone';
+  if (packageRoot.includes(path.sep + 'node_modules' + path.sep)) return 'npm';
+  if (packageRoot.includes(path.sep + '.npm' + path.sep)) return 'npm';
+  if (packageRoot.includes(path.sep + 'claude-plugins-official' + path.sep)) return 'plugin';
+  return 'unknown';
+}
+
+/**
+ * Write the install-method sentinel so /ttm-update can read it without re-deriving from copied files.
+ * @param {string} destDir - ~/.taketomarket/
+ * @param {string} packageRoot
+ */
+function writeInstallSentinel(destDir, packageRoot) {
+  const sentinel = {
+    method: classifyInstallMethod(packageRoot),
+    source: packageRoot,
+    version: VERSION,
+    installed_at: new Date().toISOString(),
+  };
+  fs.writeFileSync(path.join(destDir, '.install-method'), JSON.stringify(sentinel, null, 2) + '\n');
+}
+
+/**
  * Copy non-skill package files to ~/.taketomarket/ (shared across all runtimes).
  * @param {string} packageRoot - Source npm package root
  * @param {string} [homeDir]
@@ -304,6 +334,8 @@ function copyPackageBase(packageRoot, homeDir = os.homedir()) {
       fs.copyFileSync(src, path.join(dest, file));
     }
   }
+
+  writeInstallSentinel(dest, packageRoot);
 }
 
 /**
@@ -755,5 +787,7 @@ module.exports = {
   printInstallSummary,
   copyPackageBase,
   installSkillsForRuntime,
+  classifyInstallMethod,
+  writeInstallSentinel,
   PACKAGE_ROOT,
 };

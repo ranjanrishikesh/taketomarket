@@ -1,6 +1,6 @@
 ---
 discipline: positioning
-asset_types: [positioning-statement, homepage-copy, one-liner, manifesto]
+asset_types: [positioning-statement, homepage-copy, one-liner]
 version: "1.0"
 ---
 
