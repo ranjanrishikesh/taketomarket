@@ -1,8 +1,7 @@
 {
   "name": "taketomarket",
-  "displayName": "takeToMarket",
-  "description": "Marketing OS for developerneurs and solopreneurs. Built for engineers shipping products with zero marketing experience required. Spec-driven campaigns with positioning-as-invariant enforcement and quality gate walls.",
-  "version": "2.3.0-rc.1",
+  "description": "Marketing OS for developerneurs + solopreneurs — engineers shipping products with zero marketing experience. Spec-driven campaigns with positioning-invariant quality gates.",
+  "version": "2.3.0",
   "author": {
     "name": "Rishikesh Ranjan",
     "url": "https://github.com/ranjanrishikesh"
@@ -10,18 +9,15 @@
   "homepage": "https://www.npmjs.com/package/taketomarket",
   "repository": "https://github.com/ranjanrishikesh/taketomarket",
   "license": "MIT",
-  "keywords": ["marketing", "campaigns", "positioning", "quality-gates", "agent-skills"],
-  "category": "productivity",
-  "source": "git",
-  "sourceUrl": "https://github.com/ranjanrishikesh/taketomarket.git",
-  "skills": [
-    "ttm-init", "ttm-new-campaign", "ttm-brief", "ttm-research",
-    "ttm-produce", "ttm-review", "ttm-fix", "ttm-verify", "ttm-ship",
-    "ttm-measure", "ttm-learn", "ttm-health", "ttm-state", "ttm-next",
-    "ttm-resume", "ttm-archive", "ttm-positioning-check",
-    "ttm-positioning-shift", "ttm-brand-refresh", "ttm-icp-refresh",
-    "ttm-competitor-scan", "ttm-aeo-check", "ttm-seo-audit",
-    "ttm-email-preflight", "ttm-keyword-map", "ttm-affiliate-kit",
-    "ttm-repurpose", "ttm-update"
+  "keywords": [
+    "marketing",
+    "campaigns",
+    "positioning",
+    "quality-gates",
+    "agent-skills",
+    "developerneurs",
+    "solopreneurs",
+    "gtm",
+    "indie-hackers"
   ]
 }
