@@ -1,157 +1,187 @@
 ---
 discipline: paid-ads
-asset_types: [search-ad, display-ad, social-ad, video-ad, landing-page-ad]
-version: "1.0"
+asset_types: [facebook-ad, google-search-ad, linkedin-ad]
+version: "2.0"
 ---
 
-# Paid Ads Discipline Playbook
+# Paid Ads Discipline Playbook -- Dennis Yu's Dollar-a-Day
 
 This playbook extends the base playbook contract (`base.md`) with paid advertising-specific production guidance, discipline gates, and format rules. It is loaded by ttm-producer during content generation and parsed by ttm-verify for gate evaluation.
+
+The framework: **Dennis Yu's Dollar-a-Day** -- spend $1/day per ad to discover signal, scale only the winners, and never run a new ad creative that has not already proven itself organically. Combined with the **3×3 Content Grid** (3 audiences × 3 funnel stages = 9 ad sets), this is the testing protocol an engineer can run on a credit card and an evening.
+
+If you came here to spend $5,000 a day on a single cold-audience video your agency just produced: close this file. That is not what we do.
 
 ---
 
 ## Production Guidance
 
-### Ad-to-Landing-Page Message Match
+### Dollar-a-Day: Test Cheap, Scale Winners
 
-The single most important factor in paid ad performance is message match -- the ad copy promise must match the landing page headline and above-the-fold content exactly. When a user clicks an ad that says "Get 50% Off Your First Month," the landing page H1 must say "50% Off Your First Month" (or semantically equivalent). Any disconnect between ad promise and landing page delivery kills conversion rate and wastes ad spend.
+Every paid-ads campaign starts at **$1/day per ad**. One dollar. Not one hundred. Not five hundred. One.
 
-For every ad creative, specify the landing page URL and confirm that:
+The reason is not frugality -- it is signal. At $1/day, you can run 30 ads for $30/day total and let the platform tell you which 3 are working. At $100/day per ad, you can run one ad and learn one thing, expensively, while burning cash on five other ads that were going to lose anyway. Engineers already know this pattern: it is `git bisect` for ad creative. Test a wide surface area at near-zero cost, then concentrate spend on the commits that didn't break the build.
 
-- The ad headline claim appears in the landing page H1
-- The ad CTA matches the landing page primary action button
-- The visual style (colors, imagery, tone) is consistent between ad and landing page
-- The offer terms visible in the ad are present above the fold on the landing page
+Concrete rules:
 
-### Creative Variety
+- **Test phase: $1/day per ad, for 7 days minimum.** Less than a week is statistical noise. More than two weeks without scaling means you have no winners and should kill the set.
+- **Scale ladder: $1 → $30 → $100 → $300 per day.** A winner at $1/day earns $30/day for the next 30 days. Still winning? $100/day. Still winning? $300/day. Each step is a new test -- if the metric breaks at $30, do not go to $100.
+- **Never scale a loser.** "Give it time" is the most expensive sentence in paid ads. If it lost at $1/day, it loses at $100/day -- you just lose 100× faster.
 
-Never run a single creative. Every campaign must include multiple creative variations for A/B testing:
+This is not about being cheap. It is about being honest with your money.
 
-- Minimum 3 distinct variations per ad set
-- Each variation should test a different angle: different hook, different value proposition emphasis, different visual approach
-- Variations should differ meaningfully -- changing one word does not count as a variation
-- Label each variation clearly (e.g., "Pain Point Hook," "Social Proof Hook," "Benefit-First Hook")
+### The 3×3 Content Grid: 3 Audiences × 3 Stages
 
-Creative variety enables performance optimization. Without it, you cannot know which message resonates and you are guessing with budget.
+Every campaign produces **9 ad sets** before launch. The grid:
 
-### Audience-Creative Fit
+|                  | Cold (Awareness)         | Warm (Engagement)        | Hot (Conversion)              |
+|------------------|--------------------------|--------------------------|-------------------------------|
+| **Audience A** (broadest interest) | Awareness ad for A      | Engagement ad for A       | Conversion ad for A            |
+| **Audience B** (look-alike / mid) | Awareness ad for B      | Engagement ad for B       | Conversion ad for B            |
+| **Audience C** (retargeting / hot) | Awareness ad for C      | Engagement ad for C       | Conversion ad for C            |
 
-Match creative angle to the target audience segment:
+A campaign with only conversion ads to cold audiences is what Dennis calls "well-running-dry funnel design" -- you cannot harvest leads from an audience that doesn't know you. A campaign with only awareness ads is a charity. You need all 9 cells -- the awareness ads feed the engagement ads, the engagement ads feed the conversion ads. This is the **Brand → Demand → Lead → Sale (BDLS) flywheel**.
 
-- Pull language directly from ICP.md customer language library -- use the words your audience uses, not internal product jargon
-- Address specific pain points or jobs-to-be-done (JTBD) relevant to the audience segment
-- Adjust tone for platform context: LinkedIn ads are professional, Instagram ads are visual-first, Google Search ads are intent-driven
-- If targeting multiple segments, create segment-specific ad sets with tailored creative -- do not use one-size-fits-all copy
+Every ad in the brief must be tagged with its **(audience, stage)** cell. If you cannot place an ad on the 3×3 grid, the ad does not belong in the campaign.
 
-### Bid Strategy Awareness
+### Boost Organic Winners; Do Not Make Net-New Ad Creative
 
-Creative approach must align with the campaign bid strategy and objective:
+Pure-ad creatives almost never win. The ones that do are *boosted organic content* -- posts that already performed on your feed, that already proved a human voice resonated, that the platform already has engagement data on.
 
-- **Awareness campaigns** (CPM/reach): Broad messaging, brand-focused, emotional appeal. Creative drives impressions and recall.
-- **Consideration campaigns** (CPC/engagement): Educational, value-driven. Creative drives clicks and engagement.
-- **Conversion campaigns** (CPA/ROAS): Direct response, clear CTA, urgency. Creative drives specific actions.
+The workflow:
 
-Mismatching creative style and bid strategy wastes budget -- brand awareness copy with aggressive "Buy Now" CTAs confuses the audience; conversion campaigns with vague brand messaging fail to drive action.
+1. Inventory your organic content from the last 30-90 days (posts, videos, threads, founder LinkedIn updates).
+2. Filter for posts with above-median organic engagement on their channel.
+3. Boost those exact posts at $1/day to a defined audience.
+4. Do **not** rewrite, do not "make it more ad-like," do not add a hard CTA on top. Let the original post run.
 
-### Platform-Specific Copy Constraints
+This is the "**Goose-and-Gander**" principle: the same voice that worked organically is the only voice you should pay to amplify. Pristine ad-agency creative shot in a studio loses to a founder's iPhone-recorded explainer video, every time, because the audience can smell the difference between humans and brands.
 
-Each platform has strict format requirements. Produce creative within these constraints from the start -- do not write long copy and then truncate:
+If a campaign brief proposes new creative that has never been posted organically, the answer is: post it organically first, measure for 3-7 days, then decide if it earns ad budget.
 
-- **Google Search Ads:** Headlines 1-3 (30 chars each), descriptions 1-2 (90 chars each)
-- **Meta/Facebook:** Primary text (125 chars above fold), headline (40 chars), description (30 chars), image 1200x628px
-- **LinkedIn:** Single image headline (70 chars), intro text (150 chars above fold), image 1200x627px
-- **Display ads:** Varies by size (300x250, 728x90, 160x600) -- text must be legible at each size
+### Goldilocks Audience Sizing: 1M–10M
 
-Write to the constraint, not around it. If the headline must be 30 characters, write a 30-character headline -- do not write 50 characters and hope it fits.
+Audience too small (<1M) → no learning signal, the platform can't optimize, your $1/day buys nothing.
+Audience too large (>10M) → your $1/day spreads to noise, no concentration.
+Audience just right (1M–10M) → the platform has room to find the right people without diffusing your signal.
+
+For each ad set in the 3×3 grid, declare the targeting and the estimated audience size before launch. Audiences outside the Goldilocks band are flagged.
+
+### Platform-Agnostic, Mechanics-Specific
+
+The Dollar-a-Day strategy works the same on Meta, TikTok, LinkedIn, YouTube, and Google -- the strategy is platform-agnostic. The *mechanics* are platform-specific:
+
+- **Meta / Facebook:** Boost organic posts directly. Audience builder + lookalikes. Cheapest CPM, best for B2C and SMB B2B.
+- **LinkedIn:** Sponsor founder posts and document posts. Higher CPM (~$30-80) but tighter B2B targeting. Still test at $1-5/day -- LinkedIn's minimum is higher than Meta's.
+- **Google Search:** Intent-driven, not interest-driven. Same scale ladder ($1→$30→$100→$300), but tested by keyword cluster, not by creative. Each keyword cluster is its own ad set.
+
+Whatever the platform, the rules don't change: test cheap, boost organic, scale winners, cover the 3×3 grid.
 
 ---
 
 ## Discipline Gates
 
-### DISC-PAID-ADS-01: Message Match -- Tier 1
+### DISC-PAID-ADS-01: Dollar-a-Day Test Spend Cap -- Tier 1
 
-**Checks:** Ad copy promise matches the landing page headline and above-the-fold content
-**Against:** Ad creative and specified landing page content
-
-#### Evaluation Criteria
-
-1. **Headline-to-landing-page alignment**
-   - PASS: Ad headline claim appears verbatim or semantically equivalent in the landing page H1, and the CTA matches the landing page primary action
-   - WARN: Ad and landing page share the same topic but the specific promise differs (e.g., ad says "50% off" but LP says "save big")
-   - FAIL: Ad copy makes a promise not present on the landing page, or landing page URL is missing from the brief
-
-2. **Offer consistency**
-   - PASS: Any pricing, discount, or offer terms in the ad are identically present on the landing page above the fold
-   - WARN: Offer is present on the landing page but requires scrolling or clicking to find
-   - FAIL: Ad mentions an offer or price not found on the landing page
-
-### DISC-PAID-ADS-02: Creative Variety -- Tier 1
-
-**Checks:** Campaign includes multiple creative variations for testing
-**Against:** Ad brief creative set
+**Checks:** Test-phase ads are budgeted at $1/day per ad (within Dollar-a-Day tolerance) and have not been scaled prematurely.
+**Against:** Ad brief budget table per ad set, campaign phase declaration.
 
 #### Evaluation Criteria
 
-1. **Variation count**
-   - PASS: At least 3 distinct ad variations (different hooks, visuals, or angles) defined in the brief, each clearly labeled
-   - WARN: 2 variations defined
-   - FAIL: Single creative with no variation plan
+1. **Per-ad daily budget in test phase**
+   - PASS: Every ad in the test phase is budgeted at $1-$5/day (LinkedIn allowed up to $10/day given platform minimums), and the brief explicitly labels the phase as "test"
+   - WARN: Budget is $5-$15/day per ad without a stated reason, or the test/scale phase is unlabeled
+   - FAIL: Any test-phase ad is budgeted above $15/day, or the campaign launches at $100+/day per ad with no prior $1/day testing data
 
-2. **Variation distinctiveness**
-   - PASS: Each variation tests a meaningfully different angle (different pain point, different value prop, different emotional appeal)
-   - WARN: Variations exist but differ only in minor wording changes (synonym swaps)
-   - FAIL: "Variations" are identical copy with only formatting changes
+2. **Scale ladder declared**
+   - PASS: Brief states the scale ladder explicitly (e.g., "$1/day for 7 days, then $30/day if CTR > X, then $100/day if CPL < Y")
+   - WARN: Scale ladder mentioned but thresholds for advancing tiers are not numerical
+   - FAIL: No scale ladder; brief jumps from test directly to "$500/day for launch week" with no in-between
 
-### DISC-PAID-ADS-03: Audience-Creative Fit -- Tier 2
+### DISC-PAID-ADS-02: 3×3 Grid Coverage -- Tier 1
 
-**Checks:** Creative angle matches the target audience segment's pain points and language
-**Against:** ICP.md customer language library and audience segment definition
-
-#### Evaluation Criteria
-
-1. **Language alignment**
-   - PASS: Ad copy uses language from ICP.md customer language library, addresses a specific pain point or JTBD relevant to the audience segment
-   - WARN: Ad copy addresses the right topic but uses generic rather than ICP-specific language
-   - FAIL: Ad copy uses internal/product jargon or addresses pain points not in the ICP definition
-
-2. **Segment specificity**
-   - PASS: Creative is tailored to a specific audience segment with named pain points from that segment's profile
-   - WARN: Creative is broadly relevant to the target market but not tailored to a specific segment
-   - FAIL: Creative uses one-size-fits-all messaging with no audience segment consideration
-
-### DISC-PAID-ADS-04: Platform Format Compliance -- Tier 2
-
-**Checks:** Ad copy respects platform character limits and format rules
-**Against:** Platform specifications (Google, Meta, LinkedIn, Display)
+**Checks:** Each ad in the campaign maps to exactly one (audience, stage) cell of the 3×3 grid, and the grid has awareness coverage.
+**Against:** Ad brief campaign matrix.
 
 #### Evaluation Criteria
 
-1. **Character limits**
-   - PASS: All headlines under platform limit (Google: 30 chars, Meta: 40 chars, LinkedIn: 70 chars), descriptions under limit (Google: 90 chars, Meta: 125 chars primary text), all copy verified against the target platform
-   - WARN: Copy is within 10% of limits but could be tighter to avoid truncation on some devices
-   - FAIL: Copy exceeds platform character limits or uses formats unsupported by the target platform
+1. **Per-ad grid cell assignment**
+   - PASS: Every ad is tagged `(audience: cold|warm|hot, stage: awareness|engagement|conversion)` and lands in exactly one cell of the 3×3 grid
+   - WARN: Most ads are tagged but 1-2 are unlabeled or span multiple cells
+   - FAIL: Ads are not tagged by audience or stage, or the brief has no grid declared
 
-2. **Asset specifications**
-   - PASS: Image dimensions, video length, and file format match platform requirements (e.g., Meta: 1200x628px, Google Display: specified banner sizes)
-   - WARN: Specs are close but not exact (e.g., slightly off aspect ratio)
-   - FAIL: No image/video specs provided, or specs are incompatible with the target platform
+2. **Awareness layer presence**
+   - PASS: At least one ad in the campaign targets a cold audience at the awareness stage (top of the BDLS flywheel)
+   - WARN: Cold-awareness exists but is severely underweighted (<10% of campaign budget) -- the well will run dry
+   - FAIL: Campaign is 100% conversion ads to warm/hot audiences with no awareness layer feeding it
 
-### DISC-PAID-ADS-05: Bid Strategy Alignment -- Tier 2
+### DISC-PAID-ADS-03: Boosted Organic Creative -- Tier 1
 
-**Checks:** Creative approach aligns with the stated bid strategy and campaign objective
-**Against:** Campaign brief bid strategy and objective declaration
+**Checks:** Ad creative is repurposed organic content with documented organic performance, not net-new ad-only material.
+**Against:** Per-ad creative provenance and organic engagement reference.
 
 #### Evaluation Criteria
 
-1. **Strategy-creative coherence**
-   - PASS: Awareness campaigns use broad/engagement-focused creative, conversion campaigns use direct-response creative with clear CTA, the brief explicitly states bid strategy
-   - WARN: Bid strategy stated but creative style does not clearly match the objective (e.g., awareness campaign with aggressive CTA)
-   - FAIL: No bid strategy stated in the brief, or creative contradicts the campaign objective
+1. **Organic provenance**
+   - PASS: Each ad creative is an existing organic post (link or post ID supplied) that has run on the channel for at least 3 days with above-median engagement on that account
+   - WARN: Creative is repurposed from organic content but engagement data is not cited, or the post is less than 3 days old
+   - FAIL: Creative is net-new, produced specifically for the ad, never posted organically -- spending dollars to validate something free posting could have validated first
 
-2. **CTA appropriateness**
-   - PASS: CTA strength matches funnel stage -- soft CTAs ("Learn more") for awareness, strong CTAs ("Start free trial") for conversion
-   - WARN: CTA is present but mismatched to the funnel stage
-   - FAIL: No CTA in conversion-focused ads, or aggressive sales CTA in awareness-stage ads
+2. **Original voice preserved**
+   - PASS: The boosted post matches the original organic post (same copy, same media); ad version adds nothing the audience did not already see organically
+   - WARN: The post has been lightly edited from organic (added one CTA line) -- acceptable but flagged
+   - FAIL: The post has been rewritten into "ad voice" with stock imagery, hard CTAs, and corporate polish that the organic post did not have
+
+### DISC-PAID-ADS-04: Hook-and-Voice Authenticity -- Tier 2
+
+**Checks:** Ad hook reads as something a human actually said on this account -- the Goose-and-Gander check. If the founder wouldn't post it organically, they shouldn't pay to amplify it.
+**Against:** Ad copy hook (first 125 chars on Meta, first 150 on LinkedIn, headline on Google).
+
+#### Evaluation Criteria
+
+1. **Hook in ≤125 characters**
+   - PASS: Hook lands within the first 125 chars (Meta above-fold cutoff) and makes a single concrete promise or asks a single concrete question
+   - WARN: Hook lands but slightly exceeds 125 chars on Meta or 150 chars on LinkedIn -- truncation likely
+   - FAIL: No hook in the first 125 chars (lede buried), or the "hook" is generic brand throat-clearing ("We are excited to announce…")
+
+2. **Voice consistency with the account**
+   - PASS: A reader of the founder's organic feed would recognize the ad as written by the same person -- same vocabulary, same cadence, same level of polish
+   - WARN: Voice is similar to the organic feed but noticeably more polished or more corporate
+   - FAIL: Voice is unrecognizable from organic content; reads as agency-produced or ChatGPT-default-tone
+
+### DISC-PAID-ADS-05: Goldilocks Audience Sizing -- Tier 2
+
+**Checks:** Each ad set's targeted audience falls in the 1M–10M sweet spot for testing on Meta-style platforms (with platform-appropriate adjustments).
+**Against:** Per-ad-set targeting definition and platform-reported audience size estimate.
+
+#### Evaluation Criteria
+
+1. **Audience size band**
+   - PASS: Each ad set targets an audience between 1M and 10M (Meta/TikTok), or 50K-2M for LinkedIn given its smaller pool, with the estimated size declared in the brief
+   - WARN: Audience is outside the band by ≤30% (e.g., 700K on Meta, 12M on Meta) with a stated reason
+   - FAIL: Audience is <100K or >50M, or no estimated audience size is declared in the brief
+
+2. **Targeting basis is declared**
+   - PASS: Each ad set declares targeting basis (interest, lookalike %, custom audience source, keyword cluster for Google) and what cell of the 3×3 grid it serves
+   - WARN: Targeting basis is declared but rationale for size is missing
+   - FAIL: Targeting is "broad" or undeclared -- no learning signal possible
+
+### DISC-PAID-ADS-06: Scale-on-Winners Discipline -- Tier 2
+
+**Checks:** Scale decisions are tied to numerical thresholds, not vibes; losers are killed not "given time."
+**Against:** Brief's scaling rules and kill criteria.
+
+#### Evaluation Criteria
+
+1. **Win/kill thresholds defined**
+   - PASS: Brief states numerical PASS thresholds (e.g., "CTR ≥ 1.5% AND CPL ≤ $X to advance from $1/day to $30/day") and numerical kill thresholds (e.g., "kill if CTR < 0.5% after 7 days at $1/day")
+   - WARN: Thresholds exist but only for scaling, not for killing -- losers will linger
+   - FAIL: No numerical thresholds; scaling decisions are described qualitatively ("if it's doing well…")
+
+2. **Review cadence**
+   - PASS: Brief specifies a review cadence (e.g., "review every 7 days, hard cutoff at day 14 for any ad with no winner signal")
+   - WARN: Review cadence stated but no hard cutoff date for non-performers
+   - FAIL: No review cadence -- ads will run forever on autopilot
 
 ---
 
@@ -159,160 +189,181 @@ Write to the constraint, not around it. If the headline must be 30 characters, w
 
 | Base Gate ID | Default Tier | Override Tier | Reason |
 |-------------|-------------|---------------|--------|
-| GATE-05 (Funnel Integrity) | Tier 2 | Tier 1 | Paid traffic with broken funnels wastes ad spend directly -- every click costs money, so the funnel must be verified before launch |
-| GATE-06 (UTM Hygiene) | Tier 2 | Tier 1 | Paid channels require precise attribution to justify spend and optimize campaigns. Missing or incorrect UTMs make ROAS unmeasurable. |
+| GATE-05 (Funnel Integrity) | Tier 2 | Tier 1 | Every paid click costs money. A broken funnel at $1/day is annoying; a broken funnel at $300/day is a fire. The funnel must be verified before launch. |
+| GATE-06 (UTM Hygiene) | Tier 2 | Tier 1 | Dollar-a-Day requires per-ad-set ROAS attribution to identify winners. Missing or duplicate UTMs make the scale ladder unmeasurable -- you can't promote a winner you can't see. |
 
 ---
 
 ## Format Rules
 
-### Google Search Ads
+### Meta / Facebook (Boosted Post Format)
 
 ```
-Headline 1: {30 characters max -- primary keyword + value prop}
-Headline 2: {30 characters max -- differentiator or benefit}
-Headline 3: {30 characters max -- CTA or brand}
-Description 1: {90 characters max -- expand on the promise, include keyword}
-Description 2: {90 characters max -- social proof, urgency, or secondary benefit}
-Display URL path: {15 chars}/{15 chars}
+Post type: Boosted existing organic post (post ID required in brief)
+Primary text: {original organic post copy -- DO NOT REWRITE for ad voice}
+  Hook in first 125 chars (above "See more" fold)
+Media: Original post's image/video -- do not swap for stock
+CTA button: Optional. Default "Learn More" or "Sign Up"; omit on awareness ads
+Budget: $1/day in test phase
+Audience: 1M-10M people
+Placement: Auto (let the platform decide)
 ```
 
-### Meta / Facebook Ads
+### LinkedIn (Sponsored Founder Post)
 
 ```
-Primary text: {125 characters visible above fold -- hook + value prop}
-  Extended text: {up to 500 chars total, but only 125 visible before "See more"}
-Headline: {40 characters max}
-Description: {30 characters max -- appears below headline}
-CTA button: {Select from platform options: Learn More, Sign Up, Shop Now, etc.}
-Image: 1200x628px (1.91:1 ratio), max 20% text overlay
-Video: 1:1 or 4:5 for feed, 9:16 for Stories/Reels, 15-60 seconds
+Post type: Boost existing organic post from founder's personal profile or company page
+Intro text: {original post copy -- 150 chars above fold}
+Headline: ≤70 chars
+Media: Native LinkedIn document, carousel, or video from the original post
+CTA button: Optional; omit on awareness ads
+Budget: $5-$10/day in test phase (LinkedIn platform minimum)
+Audience: 50K-2M (LinkedIn's pool is smaller than Meta's)
 ```
 
-### LinkedIn Ads
+### Google Search Ads (Intent-Tested, Not Creative-Tested)
 
 ```
-Single Image:
-  Intro text: {150 characters visible above fold, up to 600 total}
-  Headline: {70 characters max}
-  Image: 1200x627px (1.91:1 ratio)
-  CTA button: {Platform options: Learn More, Sign Up, Download, etc.}
-
-Carousel:
-  Cards: 2-10 cards
-  Card headline: {45 characters max}
-  Card image: 1080x1080px (1:1 ratio)
+Ad group structure: 1 ad group per intent cluster (e.g., "comparison queries", "high-intent buyer queries", "problem-aware queries")
+Headlines: 3-15 variations per ad (30 chars each), let RSA test combinations
+Descriptions: 2-4 variations (90 chars each)
+Budget: $1/day per ad group in test phase
+Bidding: Manual CPC for test, switch to Target CPA only after $1/day phase identifies winners
+Negative keywords: Required before launch -- exclude branded competitors, irrelevant intent terms
 ```
 
-### Display Ad Sizes
+### Creative Constraint (All Platforms)
 
-| Size | Use Case | Text Guidelines |
-|------|----------|-----------------|
-| 300x250 | Medium rectangle -- sidebars and in-content | Max 2 lines of headline text, 1 line CTA |
-| 728x90 | Leaderboard -- page headers | Single headline + CTA, horizontal layout |
-| 160x600 | Wide skyscraper -- sidebars | Stacked layout, headline on top, CTA at bottom |
-| 320x50 | Mobile banner | Ultra-short: 5-7 word headline + CTA |
-| 300x600 | Half page -- high impact | More room for messaging, image-heavy |
-
-### Video Ad Specs
-
-| Format | Duration | Platform | Notes |
-|--------|----------|----------|-------|
-| Bumper | 6 seconds | YouTube, Meta | Single message, no CTA click-through |
-| Short | 15 seconds | All platforms | Hook in first 2 seconds, CTA at end |
-| Standard | 30 seconds | YouTube, Meta, LinkedIn | Full structure: hook, value, CTA |
-| Long-form | 60+ seconds | YouTube (skippable) | Hook in first 5 seconds before skip option |
+| Constraint | Rule |
+|------------|------|
+| Mobile-first | All creative reviewed on a phone screen first. Desktop preview is secondary. |
+| Hook length | ≤125 characters above the fold on Meta; ≤150 on LinkedIn; in Headline 1 on Google. |
+| Text overlay (Meta) | ≤20% of image area (legacy rule, still affects reach). |
+| Vertical video | 9:16 for all video placements in 2026 -- Reels, Shorts, Stories, TikTok. |
 
 ---
 
 ## Examples
 
-### Good: Strong Message Match Pair
+### Good: Dollar-a-Day Campaign Brief (Meta, B2B SaaS)
 
 ```
-Google Search Ad:
-  Headline 1: "50% Off First 3 Months"        (25 chars)
-  Headline 2: "Marketing OS for Startups"      (27 chars)
-  Headline 3: "Start Free Trial Today"         (23 chars)
-  Description 1: "Ship marketing campaigns with built-in quality gates. No more guessing." (73 chars)
-  Description 2: "Trusted by 500+ startups. Cancel anytime. No credit card required."       (68 chars)
+Campaign: takeToMarket launch -- 3x3 test
+Phase: Test ($1/day per ad, 7 days)
+Total daily spend: $9/day (9 ad sets × $1)
 
-Landing Page H1: "Get 50% Off Your First 3 Months"
-Landing Page CTA: "Start Free Trial"
-Above fold: Pricing table showing the 50% discount, feature highlights, "No credit card required"
+3x3 Grid:
+  Cold-Awareness:    Boost founder's "what I built in 4 weekends" post (organic CTR: 4.2%)
+  Cold-Engagement:   Boost demo video that hit 12K organic views
+  Cold-Conversion:   Boost "ship in 9 phases" carousel (organic comments: 47)
+  Warm-Awareness:    Same posts, retargeted to past site visitors
+  Warm-Engagement:   Same posts, retargeted to past site visitors
+  Warm-Conversion:   Same posts, retargeted to past site visitors
+  Hot-Awareness:     Light-touch update post, retargeted to email subscribers
+  Hot-Engagement:    "What's new" thread, retargeted to email subscribers
+  Hot-Conversion:    "Get 50% off" offer post, retargeted to email subscribers
+
+Scale ladder:
+  $1/day → $30/day if (CTR ≥ 1.5% AND CPL ≤ $40) after 7 days
+  $30/day → $100/day if metrics hold for 14 days
+  $100/day → $300/day if metrics hold for 30 days
+
+Kill criteria:
+  Any ad with CTR < 0.5% after 7 days at $1/day → kill, do not scale.
+  Any ad with no conversion at $30/day after 14 days → kill.
+
+Audience sizing:
+  Cold: 4.2M people (developer-adjacent interests)
+  Warm: 38K site visitors over 90 days
+  Hot: 1,200 email subscribers
 ```
 
-Why it works: Ad headline promise ("50% Off First 3 Months") matches LP H1 exactly. CTA matches. Offer terms are consistent. No surprises after the click.
+Why it works: 9 ad sets across the full 3×3 grid. Every ad is a boosted organic post with cited engagement. Budget starts at $9/day total. Scale ladder is numerical. Kill criteria are explicit. Audiences are sized.
 
-### Bad: Broken Message Match
-
-```
-Meta Ad:
-  Primary text: "The #1 marketing tool for growing teams"
-  Headline: "Try It Free"
-  CTA: Sign Up
-
-Landing Page H1: "Enterprise Marketing Platform"
-Landing Page CTA: "Request a Demo"
-Above fold: Enterprise features, case studies from Fortune 500 companies
-```
-
-Why it fails: Ad targets "growing teams" but LP targets "enterprise." Ad says "Try It Free" but LP says "Request a Demo." The user who clicked expecting a free trial for a small team lands on an enterprise sales page. Conversion rate: near zero.
-
-### Good: Creative Variety Set
+### Bad: The Agency $10K-Day Cold Campaign
 
 ```
-Variation A - Pain Point Hook:
-  "Tired of marketing campaigns that ship without quality checks?"
-
-Variation B - Social Proof Hook:
-  "500+ startups use this to ship marketing 3x faster"
-
-Variation C - Benefit-First Hook:
-  "Ship campaigns with built-in quality gates -- no more guessing"
+Campaign: Big Launch Week
+Total daily spend: $10,000/day
+Creative: One agency-produced 30-second hero video, never posted organically.
+Audience: 50M people, "all marketers"
+Bidding: Conversion-optimized, target CPA $50
+Phase: Skipping test, going straight to scale.
+Kill criteria: None stated.
 ```
 
-Why it works: Each tests a fundamentally different angle (pain, proof, benefit). Clear labels. Measurable differences in CTR will reveal which angle resonates.
+Why it fails: Single new creative with no organic validation -- $10K to learn what $1/day would have learned. Audience is 50M (off the Goldilocks chart -- signal will spread to noise). No 3×3 grid -- one ad, one cell. No scale ladder (already at the top). No kill criteria. By Friday, the campaign has spent $50K and produced a "we need more time" Slack message.
 
-### Bad: Monotone Creative Set
+### Good: The Boosted Founder Tweet
 
 ```
-Variation A: "Great marketing tool for your team"
-Variation B: "Amazing marketing tool for your team"
-Variation C: "Excellent marketing tool for your team"
+Original post: Founder's LinkedIn post -- "I shipped 9 paid-ads frameworks this month, here's what stuck."
+  Organic stats: 23K impressions, 4.8% CTR, 312 comments over 5 days.
+Boost: $1/day for 7 days to a 2M-person developer-tooling audience.
+Hook (first 125 chars): "I shipped 9 paid-ads frameworks this month, here's what stuck. (3 worked, 6 didn't. Here's the rule that separated them.)"
+Media: Original carousel from the post.
+CTA: None -- awareness stage, no hard CTA needed.
 ```
 
-Why it fails: Only the adjective changes. No meaningful test. CTR differences will be noise, not signal.
+Why it works: Organic provenance documented. Hook in first 125 chars. Voice = founder's actual voice. $1/day budget. Goose-and-Gander principle honored.
+
+### Bad: The "Ad-Voice" Rewrite of an Organic Winner
+
+```
+Original post: Founder tweet -- "Stop guessing at marketing. Use a quality gate."
+  Organic stats: 18K impressions, 5.1% CTR.
+Boost version (rewritten by agency):
+  "Introducing takeToMarket -- the revolutionary AI-powered marketing platform
+   that empowers go-to-market teams to ship campaigns with confidence.
+   Schedule your demo today!"
+Media: Stock photo of a team high-fiving.
+```
+
+Why it fails: Original was a 9-word punchy line in the founder's voice. Rewrite is corporate filler with no hook. Stock imagery replaces what the organic audience already responded to. The boost spends money to make the post *less* effective than it was for free.
 
 ---
 
 ## Anti-Patterns
 
-1. **Sending all ad traffic to the homepage** -- Homepage is not a landing page. It serves multiple audiences and purposes. Paid traffic needs a dedicated landing page with a single message and CTA that matches the ad.
+1. **Skipping the $1/day test, launching at $100+/day per ad** -- The most expensive shortcut in paid advertising. If the creative doesn't work, you lose 100× more. If it does work, you would have found out at $1/day anyway. Test cheap is non-negotiable.
 
-2. **Single creative with no A/B variants** -- Running one ad creative means you cannot optimize. You are paying for traffic with no ability to learn what works. Always launch with 3+ variations.
+2. **All conversion ads, no awareness layer** -- The funnel runs dry. Conversion ads only convert people who already know you. Without an awareness layer feeding the pipeline, you exhaust your warm audience in weeks and CPL skyrockets.
 
-3. **Awareness creative with conversion bid strategy** -- Running brand awareness copy ("Introducing our new platform") with a CPA bid tells the algorithm to optimize for conversions, but the creative is not designed to convert. Match creative intent to bid strategy.
+3. **Net-new ad creative that has not been posted organically** -- You are spending money to test what you could have tested for free. Post it organically first. If it bombs organically with zero spend, paid spend will not save it.
 
-4. **Ignoring platform character limits** -- Writing 50-character headlines for Google Ads (30-char limit) means the platform truncates your message. Write to the constraint from the start.
+4. **Agency-produced ad voice on a founder account** -- The audience can tell. Corporate-polished creative on a personal-brand account triggers a "this isn't really her" reflex and CTR collapses. Goose-and-Gander: if the founder wouldn't post it organically, don't pay to amplify it.
 
-5. **Same copy across all platforms** -- LinkedIn professional audience, Instagram visual-first audience, and Google search-intent audience require different creative approaches. Cross-posting identical copy shows audience blindness.
+5. **Audience too broad ("all marketers", "small businesses")** -- 50M-person audiences spread $1/day across noise. The platform can't optimize. Target tightly: 1M-10M for Meta, 50K-2M for LinkedIn.
 
-6. **Missing landing page URL in brief** -- An ad brief without a specified landing page cannot be verified for message match. The landing page is half the ad -- always include it.
+6. **"Give it time" on a losing ad** -- 7 days at $1/day is enough signal. Two weeks is excessive. If CTR is below 0.5% at $1/day, it will be below 0.5% at $100/day -- you'll just lose 100× faster. Kill losers on schedule.
 
-7. **No bid strategy declaration** -- If the brief does not state whether this is an awareness, consideration, or conversion campaign, the creative cannot be evaluated for strategy alignment. Always declare the objective.
+7. **No 3×3 grid -- ad sets pointing at the same cell** -- Running three "cold-conversion" ads with no awareness or engagement layer is not a campaign, it's a scattergun. Place every ad on the grid before launch.
+
+8. **Scaling a winner straight from $1 → $300/day** -- The ladder exists because each step is its own test. Performance at $1/day does not guarantee performance at $300/day. Step through $30, $100, then $300, validating at each rung.
+
+9. **No UTM hygiene per ad set** -- You cannot identify which ad won if every ad shares the same UTM. ROAS attribution per (audience, stage) cell is the whole point of the 3×3 grid.
 
 ---
 
 ## Metrics
 
-Track these indicators for paid ad campaigns after launch:
+Track these indicators for paid ad campaigns after launch. The Dollar-a-Day framework measures by 3×3 cell, not by overall campaign aggregate -- aggregates hide which cells are winning and which are losers being subsidized.
 
-- **Cost per click (CPC)** -- Average cost per click. Compare against industry benchmarks and historical campaign data.
-- **Click-through rate (CTR)** -- Impressions to clicks. Measures ad creative effectiveness. Google Search benchmark: 3-5%. Display benchmark: 0.5-1%.
-- **Conversion rate** -- Clicks to desired action (signup, purchase, download). Measures landing page effectiveness post-click.
-- **Return on ad spend (ROAS)** -- Revenue generated per dollar spent. Primary efficiency metric for conversion campaigns.
-- **Cost per acquisition (CPA)** -- Total spend divided by conversions. Measures efficiency of the full funnel.
-- **Quality Score (Google)** -- 1-10 rating based on expected CTR, ad relevance, and landing page experience. Higher scores reduce CPC.
-- **Relevance Score (Meta)** -- Ad relevance diagnostics: quality ranking, engagement rate ranking, conversion rate ranking. Low scores indicate audience-creative mismatch.
-- **Impression share** -- Percentage of eligible impressions captured. Low impression share may indicate budget or bid constraints.
+- **CPM by 3×3 cell** -- Cost per thousand impressions per (audience, stage) cell. Cold-awareness CPM should be lowest; hot-conversion CPM is allowed to be highest. Diverging from this hierarchy indicates targeting or creative mismatch.
+- **CTR by 3×3 cell** -- Click-through rate per cell. PASS threshold per cell varies: cold-awareness >1.5%, warm-engagement >2.5%, hot-conversion >4%. Lower-than-expected CTR at a cell signals a creative-audience mismatch for that cell specifically.
+- **Cost per lead (CPL) by 3×3 cell** -- Per-cell lead acquisition cost. The conversion-stage cells should produce the lowest CPL; awareness cells produce few or no leads (that's expected -- their job is feeding the funnel).
+- **ROAS by 3×3 cell** -- Revenue per ad dollar, per cell. Only conversion-stage cells will have meaningful ROAS. Aggregate-only ROAS lies because the awareness cells (with $0 revenue) drag the number down even when they're doing their job.
+- **Scale-ladder progression rate** -- What % of $1/day ads earn promotion to $30/day? What % survive to $100/day? Healthy campaigns promote ~10-30% of $1/day ads; >50% means thresholds are too loose, <5% means thresholds are too tight (or creative inventory is weak).
+- **Frequency** -- Average impressions per user per ad set. Above 3-5/week per cold audience = creative fatigue is incoming, refresh from the organic inventory.
+- **Quality score (Google) / Relevance ranking (Meta)** -- Platform-assigned creative-audience-fit scores. Low scores at a cell mean the boosted post does not match the audience -- usually a Goose-and-Gander violation.
+- **Organic-to-paid lift ratio** -- For each boosted post, paid CTR / organic CTR. Healthy boosts should be within ±30% of organic CTR. A boost performing far below organic is a signal the audience is wrong; far above suggests the organic post was under-distributed and the paid layer is just unlocking reach.
+
+---
+
+## Sources
+
+- [Dennis Yu -- Dollar-a-Day category archive](https://dennis-yu.com/category/dollar-a-day/) -- The canonical home of the Dollar-a-Day strategy, with case studies and current updates from Dennis Yu directly.
+- [Flowster -- Dennis Yu's $1/Day Strategy](https://flowster.app/dollar-a-day/) -- Step-by-step operationalization of the Dollar-a-Day framework with the scale ladder and 3×3 grid mechanics.
+- [Bolder Future -- 30 Days with Dennis Yu's Dollar-a-Day](https://www.bolderfuture.com/blog/case-study-30-days-with-dennis-yus-dollar-a-day-ad-strategy) -- Practitioner case study running the strategy for 30 days, with metrics by cell.
+- [Fitness Business Podcast -- Dollar-a-Day with Dennis Yu](https://fitnessbusinesspodcast.com/280-the-dollar-a-day-facebook-ad-strategy-with-dennis-yu/) -- Dennis explaining the strategy and the BDLS flywheel in his own words.
+- [Hustle and Flowchart -- Dennis Yu on $1 ads](https://hustleandflowchart.com/how-to-build-a-recognizable-brand-using-1-ads-dennis-yu/) -- Goldilocks audience sizing and Goose-and-Gander principles, plus the scale-ladder discipline.
