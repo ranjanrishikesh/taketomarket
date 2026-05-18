@@ -1,192 +1,220 @@
 ---
 discipline: seo
 asset_types: [blog-post, landing-page, pillar-page, programmatic-seo]
-version: "1.0"
+version: "2.0"
 ---
 
 # SEO Discipline Playbook
 
 This playbook extends the base playbook contract (`base.md`) with SEO-specific production guidance, discipline gates, and format rules. It is loaded by ttm-producer during content generation and parsed by ttm-verify for gate evaluation.
 
+The playbook is opinionated around **Strategic SEO Frameworks** as taught by Aleyda Solis (Orainti, LearningSEO.io, SEOFOMO, Crawling Mondays). Operational page-anatomy details for programmatic pages live in `references/pseo-page-anatomy.md` and on-page conversion mechanics in `references/landing-page-anatomy.md` — this playbook governs the **strategy + measurement layer** that sits above them.
+
 ---
 
 ## Production Guidance
 
-### Search Intent First
+### Strategy before tactics — always
 
-Identify whether the target query is informational, commercial, navigational, or transactional. Match the content format to the intent:
+"Tactics without strategy is noise." Before drafting any SEO asset, the brief must answer three questions in this order:
 
-- **Informational** ("how to X", "what is X"): long-form guide or explainer
-- **Commercial** ("best X", "X vs Y"): comparison, listicle, or review
-- **Navigational** ("brand X login", "X pricing"): direct landing page
-- **Transactional** ("buy X", "X free trial"): conversion-focused landing page with CTA
+1. **What business outcome are we serving?** Not "rank #1 for X" — what signups, revenue, or activation does this asset enable? If the answer is "more traffic", the brief is not done.
+2. **What is the search intent and the user journey it sits in?** Awareness, consideration, decision, retention — and which step does this page take the visitor toward?
+3. **Is the technical floor in place?** Crawlability, indexability, rendering parity. If the site cannot be crawled, fix the floor before drafting another word.
 
-If the content format does not match the dominant intent in top-ranking results, the asset will underperform regardless of quality.
+Tactical knobs (title tags, internal links, schema) only compound when wrapped in a strategy. Skip the strategy and you are polishing pages that no business cares about.
 
-### Keyword Placement
+### The 3-Layer Measurement Model (Aleyda's framework)
 
-Place the target keyword in:
+Every SEO asset is measured on three layers, never collapsed into one score:
 
-- Title tag (near the front)
-- H1 heading
-- First 100 words of body content
-- At least one H2 subheading
+- **Layer 1 — Presence:** Are we showing up? Rankings, AI Overview citations, knowledge panel mentions, brand SERP coverage.
+- **Layer 2 — Readiness:** Is our content/site *eligible* to be cited and ranked? Crawlable, renderable, schema-marked, entity-linked, hreflang-correct, fast.
+- **Layer 3 — Business Impact:** Does the presence drive revenue? Organic-attributed signups, qualified leads, expansion revenue.
 
-Do NOT stuff keywords. Maintain 1-2% keyword density maximum. Keyword variants and synonyms count toward topical coverage but not density.
+A page can be high on Presence and zero on Business Impact (vanity traffic). It can be high on Readiness and low on Presence (technically perfect, strategically invisible). Producers must declare which layer the asset is moving and why the other two layers are already in place — or queued.
 
-### Content Structure
+### SEO maturity model — start at the floor
 
-Use H2/H3 hierarchy logically. Every H2 should answer a sub-question of the main query. Avoid skipping heading levels (H1 to H3). Each H2 section should be 150-400 words -- long enough for substance, short enough for scannability.
+Engineer-founders routinely try to do off-page link building before fixing on-page structure, or attempt entity SEO before their robots.txt allows crawling. Walk the maturity ladder in order:
 
-### Internal Linking
+1. **Crawlability & indexability** — robots.txt, sitemap, internal linking, noindex hygiene.
+2. **Rendering parity** — SSR/SSG for content-bearing pages. Client-rendered SPAs are second-class for SEO.
+3. **On-page structure** — title, H1, meta description, heading hierarchy, schema, canonical.
+4. **Topical coverage** — clusters of intent-aligned pages around a pillar topic.
+5. **Authority signals** — internal linking depth, entity references, mentions, links.
+6. **AI search readiness** — passage-level optimization, citability, llms.txt, structured data depth.
 
-Weave 3-6 contextual internal links per 1000 words to related content. Use descriptive anchor text that tells the reader what they will find. Avoid generic anchors like "click here" or "read more."
+Do not skip levels. A pillar page on an unrenderable subdomain is worth nothing.
 
-### Schema Markup
+### Audit-driven prioritization
 
-Include Article schema at minimum for blog posts and pillar pages. Add FAQ schema if the content contains question-answer pairs. Add HowTo schema if the content has step-by-step instructions. Specify required fields (headline, author, datePublished for Article; name, acceptedAnswer for FAQ).
+Every campaign starts with a 30-minute audit, not a "what should I write?" brainstorm. The audit answers:
 
-### Entity-Based SEO
+- **Crawl errors:** any 5xx, 4xx surges, blocked critical paths?
+- **Index coverage:** what pages should be indexed and are they?
+- **Cannibalization:** are multiple pages targeting the same intent?
+- **Render parity:** does the rendered HTML contain the same content as the source?
+- **Hreflang correctness:** if international, are we leaking traffic to the wrong locale?
+- **Core Web Vitals at the template level:** which template family is failing?
 
-Reference known entities (people, organizations, concepts, products) that search engines associate with the topic. Build topical authority by connecting to established knowledge graph entities rather than relying on keyword repetition alone.
+Output: a ranked list of fixes. **Fix beats write.** A repaired template lifts every page on it; a new blog post lifts only itself.
 
-### Performance Awareness
+### Intent-modeled content
 
-Content decisions impact Core Web Vitals. Follow these rules:
+Identify whether the target query is informational, commercial, navigational, or transactional — but more importantly, identify the **shape of the SERP**: what formats currently rank, what AI Overviews quote, what entities are co-cited. Reverse-engineer the format the search engine has already decided is correct, then exceed it with substance. Mismatching format kills the asset before the first word is read.
 
-- Use optimized image formats (WebP/AVIF) with explicit width/height attributes
-- Lazy-load images below the fold
-- Avoid render-blocking embeds (video players, social widgets) above the fold
-- Reserve space for ad slots and dynamic content to prevent layout shift
-- Prefer native HTML elements (details/summary for accordions) over heavy JavaScript widgets
+### International-first reflex
+
+Even for solo founders, build with locale-portability from day one: language-agnostic URLs, hreflang stubs ready, content authored in a structure that translates. Most growing startups underinvest here and bleed traffic in non-English markets where competition is thinner.
+
+### Discoverable AND citable
+
+In the AI-search era, the page has two jobs:
+
+1. **Discoverable** — rank in the SERP for the query.
+2. **Citable** — be quoted, summarized, or linked by AI Overviews, Perplexity, ChatGPT, and downstream LLM answer engines.
+
+These require distinct optimization. Discoverability is keyword + intent + on-page. Citability is passage-level self-containedness + named entities + verifiable claims + structured data. See the AEO playbook (`playbooks/aeo.md`) for the citability layer; this playbook ensures the discoverability layer.
+
+### Cross-reference the operational layers
+
+This playbook is the strategy. For execution mechanics, defer to:
+
+- **`references/pseo-page-anatomy.md`** — programmatic-SEO page structure, template anatomy, quality-gate-before-indexing.
+- **`references/landing-page-anatomy.md`** — on-page conversion structure for landing pages.
+- **`playbooks/aeo.md`** — relevance engineering and passage-level citability.
+- **`playbooks/pseo.md`** — data × template × intent for programmatic pages.
+
+When this playbook and a reference disagree on a tactical detail, the reference wins on mechanics; this playbook wins on prioritization and measurement.
 
 ---
 
 ## Discipline Gates
 
-### DISC-SEO-01: Title/H1 Alignment -- Tier 1
+### DISC-SEO-01: Business-Outcome Linkage — Tier 1
 
-**Checks:** Title tag and H1 heading convey the same primary topic
-**Against:** Asset content structure
+**Checks:** Asset brief declares a business outcome on the 3-Layer model, not a vanity metric
+**Against:** Asset brief and campaign measurement plan
 
 #### Evaluation Criteria
 
-1. **Title-H1 topic match**
-   - PASS: Title tag and H1 contain the same primary keyword and address the same topic
-   - WARN: Title and H1 address the same topic but use different keyword phrasing
-   - FAIL: Title and H1 address different topics or target different keywords
+1. **Outcome declared**
+   - PASS: Brief names a specific Layer 3 (Business Impact) outcome — signup, trial, qualified lead, revenue path — with the journey step explicit
+   - WARN: Brief names a Layer 1 (Presence) goal (rank, impressions) with a documented hand-off to a Layer 3 page
+   - FAIL: Brief targets traffic, rankings, or impressions with no journey step or downstream conversion path defined
 
-2. **Title length**
-   - PASS: Title tag is 50-60 characters
-   - WARN: Title tag is 45-49 or 61-70 characters
-   - FAIL: Title tag is under 30 or over 70 characters
+2. **Layer assignment**
+   - PASS: Brief states which of the 3 Layers the asset is moving (Presence / Readiness / Business Impact) and confirms the other two are already in acceptable state
+   - WARN: Layer named but no evidence the other layers are in place
+   - FAIL: No layer assignment — asset treats SEO as a single undifferentiated score
 
-### DISC-SEO-02: Search Intent Match -- Tier 1
+### DISC-SEO-02: Technical Floor Precondition — Tier 1
 
-**Checks:** Content matches the search intent of the target query
-**Against:** Brief's target keyword and declared intent type
+**Checks:** Crawlability, rendering parity, and indexability are verified before content production
+**Against:** Asset URL or template, site configuration
+
+#### Evaluation Criteria
+
+1. **Crawlable and indexable**
+   - PASS: Target URL/template is allowed in robots.txt, has no `noindex` directive, is reachable from at least one indexed internal link, and is included in the sitemap
+   - WARN: Crawlable but missing from sitemap, or reachable only via JavaScript navigation
+   - FAIL: Blocked by robots.txt, marked noindex, orphan page, or behind authentication
+
+2. **Render parity (SSR/SSG)**
+   - PASS: Rendered HTML (server response) contains the same primary content, H1, and internal links as the in-browser DOM
+   - WARN: Most content present in rendered HTML but secondary sections inject client-side
+   - FAIL: Primary content (H1, body copy, internal links) only appears after client-side hydration
+
+### DISC-SEO-03: Search Intent & SERP-Format Match — Tier 1
+
+**Checks:** Content shape matches the SERP shape already preferred by the engine for the target query
+**Against:** Brief's target query, declared intent, and observed top-ranking format
 
 #### Evaluation Criteria
 
 1. **Intent alignment**
-   - PASS: First 100-150 words directly address the target query and match the declared intent
-   - WARN: Content addresses the query but the direct answer is buried below introductory context
-   - FAIL: Content does not match the declared intent type (e.g., informational content for a transactional query)
+   - PASS: First 100-150 words directly address the target query and the declared intent is consistent with the dominant intent in current top-ranking results
+   - WARN: Content matches intent but buries the direct answer below introductory throat-clearing
+   - FAIL: Declared intent contradicts SERP evidence (e.g., informational long-form for a query where every top result is a transactional page)
 
-2. **Content format match**
-   - PASS: Content format matches intent -- listicle for "best X", how-to guide for "how to X", comparison for "X vs Y"
-   - WARN: Content partially matches the expected format but includes mixed intent signals
-   - FAIL: Content format contradicts the search intent (e.g., a product page for an informational query)
+2. **Format match**
+   - PASS: Content format matches the SERP-dominant format (listicle for "best X", how-to for "how to X", comparison for "X vs Y", direct landing for transactional)
+   - WARN: Format partially matches but mixes intent signals (e.g., a how-to that pivots to a product pitch)
+   - FAIL: Format directly contradicts the SERP-dominant format
 
-### DISC-SEO-03: Schema Markup -- Tier 2
+### DISC-SEO-04: Cannibalization Check — Tier 1
 
-**Checks:** Structured data presence and correctness
-**Against:** schema.org specification for the applicable type (Article, FAQPage, HowTo)
-
-#### Evaluation Criteria
-
-1. **Schema presence**
-   - PASS: Appropriate schema type (Article, FAQ, or HowTo) is specified in the asset with required fields populated
-   - WARN: Schema type is mentioned but one or more required fields are missing or incomplete
-   - FAIL: No schema markup specified for content that qualifies for structured data
-
-2. **Schema accuracy**
-   - PASS: All required fields present and correctly typed (e.g., datePublished is ISO 8601, author has name)
-   - WARN: Required fields present but optional fields (image, dateModified) are missing
-   - FAIL: Required fields missing, incorrect field types, or wrong schema type for the content
-
-### DISC-SEO-04: Internal Link Density -- Tier 2
-
-**Checks:** Contextual internal link quantity and anchor text quality
-**Against:** Asset content (self-contained check)
+**Checks:** Asset is not competing with an existing page on the same site for the same query intent
+**Against:** Site's existing indexed URL inventory
 
 #### Evaluation Criteria
 
-1. **Link count**
-   - PASS: 3-6 contextual internal links per 1000 words of content
-   - WARN: 1-2 internal links per 1000 words
-   - FAIL: 0 internal links in the asset
+1. **Unique intent slot**
+   - PASS: No existing indexed page on the same site targets the same primary intent and query cluster; or if one exists, the brief documents an explicit consolidation/redirect plan
+   - WARN: A weak existing page exists on overlapping intent but is sufficiently differentiated by sub-intent
+   - FAIL: An existing page already targets the same intent and is ranking — producing this asset will split equity
 
-2. **Anchor text quality**
-   - PASS: All internal links use descriptive anchor text that indicates the destination content
-   - WARN: Some links use generic anchors ("click here", "read more", "learn more")
-   - FAIL: N/A -- linked to link count result
+### DISC-SEO-05: Citability & Entity Coverage — Tier 2
 
-### DISC-SEO-05: Thin Content Detection -- Tier 1
-
-**Checks:** Content depth and uniqueness
-**Against:** Asset content (self-contained check)
+**Checks:** Asset is structured to be both ranked AND cited by AI answer engines
+**Against:** Asset content and structured data
 
 #### Evaluation Criteria
 
-1. **Word count**
-   - PASS: 800+ words for standard pages (blog-post, landing-page, pillar-page); 300+ words for programmatic-seo variants
-   - WARN: 500-799 words for standard pages
-   - FAIL: Under 500 words for standard pages or under 300 words for programmatic-seo
+1. **Passage-level self-containedness**
+   - PASS: Each H2/H3 section answers a distinct sub-question in a self-contained way; a single passage lifted out of context still answers the implied query
+   - WARN: Most sections self-contained but 1-2 sections rely on earlier context to make sense
+   - FAIL: Content flows as continuous prose where passages cannot be quoted standalone
 
-2. **Unique substance**
-   - PASS: Content provides original analysis, proprietary data, unique perspective, or first-party research
-   - WARN: Content summarizes existing publicly available information with minor original commentary
-   - FAIL: Content is mostly boilerplate, template-generated text with only location/variable swaps, or restates common knowledge without adding value
+2. **Entity & citation density**
+   - PASS: At least 3 named entities (people, products, organizations, standards) referenced precisely; verifiable claims cite a source by name or URL
+   - WARN: Entities present but unnamed or vague ("a leading tool", "industry experts")
+   - FAIL: No named entities, no source citations on quantitative claims
 
-### DISC-SEO-06: Meta Description -- Tier 2
+3. **Structured data depth**
+   - PASS: Required schema present AND entity properties (`author`, `publisher`, `mainEntity`, `sameAs` where applicable) filled with real values
+   - WARN: Required schema present but entity properties missing
+   - FAIL: No schema or wrong schema type for the content
 
-**Checks:** Meta description presence, length, and keyword inclusion
-**Against:** Asset metadata fields
+### DISC-SEO-06: Confidence-Labelled Metrics — Tier 2
 
-#### Evaluation Criteria
-
-1. **Presence and length**
-   - PASS: Meta description is present and 120-160 characters in length
-   - WARN: Meta description is present but under 120 or over 160 characters
-   - FAIL: No meta description provided
-
-2. **Keyword inclusion**
-   - PASS: Target keyword appears naturally within the meta description
-   - WARN: A keyword variant or close synonym is used instead of the exact target keyword
-   - FAIL: Neither the target keyword nor any recognizable variant appears in the meta description
-
-### DISC-SEO-07: Core Web Vitals Budget -- Tier 1
-
-**Checks:** Content structure for Core Web Vitals impact -- whether the asset's content design stays within performance budgets
-**Against:** Google Core Web Vitals thresholds (LCP < 2.5s, CLS < 0.1, INP < 200ms)
+**Checks:** Measurement plan declares the confidence level and source of every metric tracked
+**Against:** Campaign measurement plan
 
 #### Evaluation Criteria
 
-1. **LCP risk**
-   - PASS: Hero/above-fold content uses optimized image formats (WebP/AVIF) with explicit width/height, lazy-loads below-fold images, no render-blocking embeds above fold
-   - WARN: Images present above fold but missing explicit dimensions or using unoptimized formats (PNG/uncompressed JPEG)
-   - FAIL: Above-fold content depends on heavy unoptimized media (>200KB hero image without dimensions), multiple render-blocking third-party embeds, or auto-playing video without poster frame
+1. **Source named per metric**
+   - PASS: Every tracked metric names its source (GSC, GA4, server logs, CrUX, AI-citation tracker) and the granularity (per-URL, per-template, per-cluster)
+   - WARN: Sources named for most metrics but 1-2 metrics are unsourced
+   - FAIL: Metrics listed without source attribution — "we'll track rankings and traffic" with no tool named
 
-2. **CLS risk**
-   - PASS: All images and embeds have explicit width/height or aspect-ratio CSS, no dynamically injected content above fold, ad slots have reserved space
-   - WARN: Most media has dimensions but 1-2 elements are missing explicit sizing
-   - FAIL: Images/embeds without dimensions that will cause layout shift, dynamically inserted banners or CTAs above existing content
+2. **Confidence label per metric**
+   - PASS: Each metric carries a confidence label — high (server-side, deterministic), medium (sampled, scraped), low (estimated, proxy) — so single-metric dashboards never present false precision
+   - WARN: Some metrics labelled, others presented without confidence framing
+   - FAIL: All metrics presented as equally reliable with no uncertainty acknowledged
 
-3. **INP risk**
-   - PASS: No heavy inline JavaScript or click handlers that would block interaction -- content relies on standard links and native form elements
-   - WARN: Interactive elements present (accordions, tabs) but use standard HTML patterns or lightweight JS
-   - FAIL: Content specifies complex interactive widgets, heavy carousels, or inline calculators without performance notes
+### DISC-SEO-07: On-Page Format Integrity — Tier 1
+
+**Checks:** Title, H1, meta description, headings, canonical, and image metadata follow SEO format rules
+**Against:** Asset metadata and content structure (see Format Rules below)
+
+#### Evaluation Criteria
+
+1. **Title & H1 alignment**
+   - PASS: Title tag is 50-60 characters, contains the primary keyword near the front, and addresses the same topic as the single H1
+   - WARN: Title 45-49 or 61-70 chars, or H1 phrasing diverges from title while keeping topic
+   - FAIL: Title under 30 or over 70 chars, multiple H1s, or title and H1 target different topics
+
+2. **Meta description**
+   - PASS: 120-160 characters, action-oriented, contains the target keyword or close variant naturally
+   - WARN: Present but outside 120-160 range, or uses only a distant synonym
+   - FAIL: No meta description, or meta does not relate to the page topic
+
+3. **Heading hierarchy & canonical**
+   - PASS: Heading levels descend logically (H1 → H2 → H3, no skips), canonical URL specified, image alt text descriptive
+   - WARN: Minor heading-level skips, canonical present but self-referencing where it should consolidate
+   - FAIL: Skipped levels, missing or wrong canonical, images missing alt text
 
 ---
 
@@ -194,91 +222,156 @@ Content decisions impact Core Web Vitals. Follow these rules:
 
 | Base Gate ID | Default Tier | Override Tier | Reason |
 |-------------|-------------|---------------|--------|
-| GATE-10 | Tier 2 (advisory) | Tier 1 (blocking) | SEO format correctness directly impacts search rankings; structural errors (missing H1, broken title tag) prevent proper indexing and SERP display |
+| GATE-10 | Tier 2 (advisory) | Tier 1 (blocking) | SEO format correctness directly impacts crawling, indexing, and SERP display. A missing H1, broken title tag, or wrong canonical prevents the page from being ranked at all — making format a strategic, not advisory, concern. |
 
 ---
 
 ## Format Rules
 
-- **Title tag:** 50-60 characters, target keyword placed near the front
-- **Meta description:** 120-160 characters, action-oriented with target keyword included
-- **H1:** Exactly one per page, must address the same topic as the title tag
-- **URL structure:** Short, hyphenated, includes primary keyword (e.g., `/seo-content-guide` not `/page?id=123`)
-- **Image alt text:** Descriptive of the image content, includes target keyword where naturally appropriate
-- **Images:** Explicit width/height attributes required, WebP/AVIF format preferred, lazy-load attribute on below-fold images
-- **Heading hierarchy:** H1 > H2 > H3 in order, no skipped levels
-- **Canonical URL:** Specified for every page to prevent duplicate content issues
+- **Title tag:** 50-60 characters, primary keyword near the front, written for the searcher not the engine.
+- **Meta description:** 120-160 characters, action-oriented, includes target keyword or close variant.
+- **H1:** Exactly one per page, must address the same topic as the title tag.
+- **URL structure:** Short, lowercase, hyphen-separated, includes primary keyword; no query strings for indexable content.
+- **Canonical:** Specified on every indexable page; self-referencing is the default, cross-referencing only when consolidating duplicates.
+- **Hreflang:** Required for any site serving more than one locale; bidirectional and self-referencing.
+- **Heading hierarchy:** H1 → H2 → H3 in order, no skipped levels. Each H2 answers a sub-question of the query.
+- **Image metadata:** Explicit width/height attributes required; descriptive alt text; WebP/AVIF preferred over PNG/JPEG; lazy-load below the fold.
+- **Schema markup:** Article minimum for blog/pillar; FAQPage when Q&A is present; HowTo when ordered steps are present; LocalBusiness for location pages. Entity properties (`author`, `publisher`, `sameAs`) must be populated, not just declared.
+- **Internal links:** 3-6 contextual links per 1000 words, descriptive anchors that name the destination topic.
 
 ---
 
 ## Examples
 
-### Good: Intent-Matching Blog Post Structure
+### Good — Strategic blog post with 3-Layer linkage
 
 ```
-Title: "How to Optimize Core Web Vitals in 2024" (48 chars)
-H1: "How to Optimize Core Web Vitals: A Step-by-Step Guide"
-First 100 words: Directly explains what CWV optimization involves and why it matters.
-Schema: HowTo with 6 numbered steps.
-Internal links: 4 links to related performance articles with descriptive anchors.
+Brief declares:
+- Business outcome: free-trial signup from "how to optimize Core Web Vitals" reader
+- Journey step: awareness → consideration; CTA routes to the CWV-audit tool page
+- Layer assignment: moving Layer 1 (Presence). Layer 2 (Readiness) confirmed:
+  page is SSR, schema present, hreflang correct. Layer 3 (Business Impact)
+  tracked via UTM-tagged CTA + GA4 conversion event.
+
+Title (52 chars): "Optimize Core Web Vitals: A 2026 Engineer's Guide"
+H1: "Optimize Core Web Vitals: A 2026 Engineer's Guide"
+First 120 words: Names the three CWV metrics, who this guide is for,
+  and what the reader will be able to do at the end.
+Schema: HowTo with 6 steps + Article with named author and publisher.
+Entities cited: Google, Chrome UX Report, web.dev, three named tools.
+Internal links: 5 contextual links to related performance posts and the
+  CWV-audit tool, descriptive anchors throughout.
+Measurement: GSC for impressions/clicks (high confidence), GA4 for
+  CTA-click-through (high), AI Overview citation tracker (medium).
 ```
 
-### Good: Programmatic SEO with Sufficient Depth
+### Good — Programmatic page with audit-driven prioritization
+
+See `references/pseo-page-anatomy.md` for the page structure. The strategic layer:
 
 ```
-Title: "Best Coffee Shops in Austin, TX" (33 chars -- variant page)
-H1: "Best Coffee Shops in Austin, Texas"
-Content: 450 words with 3 unique reviews, local entity references, original ratings.
-Schema: Article with LocalBusiness references.
-Unique content ratio: 70%+ original text beyond the template.
+Audit found: 8,400 templated pages indexed; only 1,200 have unique data;
+  6,200 are thin variants ranking nowhere and cannibalizing the strong 1,200.
+Decision (audit-first): noindex the 6,200 thin pages, redirect 1,000 to
+  the strongest variant, keep 1,200 indexed.
+Result expectation: traffic stays flat or grows on the kept pages because
+  internal equity consolidates. Layer 2 (Readiness) improves; Layer 1
+  (Presence) on the survivors improves as cannibalization ends.
 ```
 
-### Bad: Keyword-Stuffed Landing Page
+### Bad — Tactic without strategy
 
 ```
-Title: "Best SEO Tools | SEO Tools Reviews | Top SEO Tools 2024"
-Problem: Title is 56 chars but keyword "SEO Tools" appears 3 times (stuffing).
-H1: "SEO Tools" -- does not match the multi-topic title.
-Body: "SEO tools" appears every other sentence (4%+ density).
+Brief: "Write a blog post on 'best CRM for startups' to rank for that
+  keyword."
+Problems:
+- No business outcome declared. Ranking is not a goal; it is a means.
+- No SERP audit done. The current top results are all listicles by
+  comparison sites with deep domain authority — outranking them in
+  one post is implausible.
+- No layer assignment. Cannot tell which of Presence/Readiness/Business
+  Impact this asset moves.
+- No technical-floor check. The /blog/ subdomain is client-rendered;
+  Googlebot sees an empty shell.
+Verdict: produce the technical-floor fix first; this post would be wasted
+  on an unrenderable template.
 ```
 
-### Bad: Thin Programmatic SEO Template
+### Bad — Single-score dashboard
 
 ```
-Title: "Best Coffee Shops in [City], [State]"
-Content: 120 words. Only the city name changes between variants.
-Unique content: Template boilerplate with location swap only.
-No schema, no internal links, no original substance.
+Dashboard shows: "SEO Health Score: 72/100"
+Problem: collapses Presence, Readiness, and Business Impact into one
+  number. A site can have 90 Readiness, 60 Presence, and 0 Business
+  Impact (vanity traffic) and score 72 — masking the fact that no
+  revenue is being generated. Layered metrics with confidence labels
+  beat composite scores.
 ```
 
 ---
 
 ## Anti-Patterns
 
-1. **Keyword stuffing** -- Keyword density exceeding 2%. Search engines penalize unnatural repetition. Use synonyms and topical variants instead.
+1. **Tactics without strategy** — Writing posts, adding schema, building links without a business outcome and 3-Layer assignment. Tactical work compounds only inside a strategy; outside one, it produces motion without progress.
 
-2. **Title/H1 mismatch** -- Title tag targeting one keyword while H1 targets a different topic. This confuses search engines about the page's primary topic.
+2. **Rank-tracking as the goal** — Treating rankings or impressions as the success metric. Rankings are a Layer 1 (Presence) signal; the goal is always Layer 3 (Business Impact). Optimizing for rank divorced from revenue produces vanity sites.
 
-3. **Missing schema markup** -- Publishing content that qualifies for Article, FAQ, or HowTo structured data without specifying the schema. Missed opportunity for rich results.
+3. **Single-score dashboards** — Collapsing Presence, Readiness, and Business Impact into one composite score. Hides which layer is broken and creates false confidence. Always report layered metrics with confidence labels.
 
-4. **Generic internal link anchors** -- Using "click here", "read more", or "learn more" as anchor text. Descriptive anchors help search engines understand link relationships.
+4. **AI search treated as a separate channel** — Building "AEO content" as if it lives in a different department from SEO. AI Overviews are a continuum of SERP, not a separate surface. Discoverability and citability optimization happen together.
 
-5. **Duplicate/thin programmatic pages** -- Generating hundreds of pages where only a location or variable name changes. Each page must contain substantive unique content (300+ words unique).
+5. **Skipping the technical floor** — Producing content on sites that are not crawlable, not renderable, or not indexable. No content strategy survives a broken technical foundation; fix the floor first.
 
-6. **Ignoring search intent** -- Serving informational content for a transactional query, or a product page for an informational query. Match the dominant intent visible in current SERP results.
+6. **Keyword-density mythology** — Repeating the target keyword to hit a "density target". Keyword stuffing was deprecated by Google over 15 years ago. Entity coverage and topical depth replaced it.
 
-7. **Hero images without explicit dimensions** -- Placing large images above the fold without width/height attributes causes Cumulative Layout Shift (CLS), degrading Core Web Vitals scores and user experience.
+7. **Link buying / black-hat shortcuts** — Purchasing links, PBN tactics, sneaky redirects. Explicit anti-recommendation: shortcuts compound risk, not equity. Earn links through cited research, named-entity authority, and genuinely linkable assets.
+
+8. **International afterthought** — Building English-only without hreflang scaffolding. Adding international SEO later costs 10x more than building locale-aware from day one.
+
+9. **Cannibalization through volume** — Publishing multiple pages on overlapping intent because "more pages = more SEO". Internal competition splits equity. Audit and consolidate before producing.
+
+10. **Render-blind production** — Drafting beautifully for a JavaScript-rendered SPA that Googlebot sees as an empty `<div>`. Verify SSR/SSG parity before drafting a single page.
 
 ---
 
 ## Metrics
 
-Track these indicators for SEO content after shipping:
+Track per the 3-Layer Measurement Model. Every metric carries a source and a confidence label.
 
-- **Organic impressions and clicks** -- Google Search Console, measured weekly for first 90 days
-- **Average position for target keyword** -- GSC, track trend over 30/60/90 day windows
-- **Click-through rate (CTR) from SERP** -- GSC, compare against position-adjusted benchmarks
-- **Time on page / scroll depth** -- Analytics platform, indicates content engagement
-- **Internal link click-through** -- Track clicks on internal links within the asset
-- **Core Web Vitals pass rate** -- PageSpeed Insights or CrUX data, must maintain "Good" threshold
-- **Indexed status** -- Confirm page is indexed within 7 days of publication via GSC
+### Layer 1 — Presence
+
+- **Organic impressions and clicks** — Source: Google Search Console. Confidence: high. Weekly for first 90 days.
+- **Average position for target keyword cluster** — Source: GSC. Confidence: medium (averaged, sampled). 30/60/90 day windows.
+- **AI Overview / AI answer engine citations** — Source: AI-citation tracker (Profound, Otterly, manual sampling). Confidence: low-medium. Sample weekly.
+- **Brand SERP coverage** — Source: manual brand SERP audit. Confidence: medium. Monthly.
+
+### Layer 2 — Readiness
+
+- **Indexed status** — Source: GSC Coverage report. Confidence: high. Confirm within 7 days of publication.
+- **Render parity check** — Source: View-source vs. rendered DOM diff, or URL Inspection in GSC. Confidence: high. Per template, per release.
+- **Core Web Vitals pass rate** — Source: PageSpeed Insights, CrUX. Confidence: high (CrUX) or medium (PSI single-run). Must maintain "Good" threshold per template family.
+- **Schema validity** — Source: Schema.org validator, GSC Rich Results report. Confidence: high. Per template.
+- **Crawl error volume** — Source: GSC, server logs. Confidence: high. Weekly trend.
+
+### Layer 3 — Business Impact
+
+- **Organic-attributed signups / trials / leads** — Source: GA4 with UTM tagging, or product analytics with referrer capture. Confidence: medium (last-click attribution carries known bias). Track per asset and per cluster.
+- **Organic-attributed revenue or pipeline** — Source: CRM joined to web analytics. Confidence: medium. Monthly.
+- **Activation rate from organic-acquired users** — Source: product analytics. Confidence: high (deterministic event). Compare against paid-acquired cohort.
+
+### Reporting discipline
+
+- Never present a Layer 1 metric without the corresponding Layer 3 read.
+- Never present a composite "SEO score". Report each layer separately with its confidence label.
+- When a metric source is unknown or sampled, say so. False precision beats no metric only when both layers know it is false.
+
+---
+
+## Sources
+
+1. **Aleyda Solis — 3-Layer Framework for AI Search Measurement** — https://www.aleydasolis.com/en/ai-search/a-3-layer-framework-to-measure-ai-presence-readiness-and-business-impact-redefining-metrics-for-the-ai-search-era/
+2. **LearningSEO.io — open-source SEO roadmap** — https://learningseo.io/
+3. **Aleyda Solis — main site and newsletter (SEOFOMO, Crawling Mondays)** — https://www.aleydaseotips.com/
+4. **Aleyda Solis — Orainti consultancy** — https://www.aleydasolis.com/en/
+5. **Yoast podcast — Aleyda Solis on strategic SEO** — https://yoast.com/podcast/aleyda-solis/
+6. **Search Engine Journal — International SEO with Aleyda Solis** — https://www.searchenginejournal.com/international-seo-considerations-with-aleyda-solis-podcast/282461/
