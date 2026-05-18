@@ -27,20 +27,9 @@ Source of truth: <https://github.com/microsoft/playwright-mcp> and <https://play
 The server is the npm package `@playwright/mcp`. You normally do **not** install it globally — runtimes invoke it via `npx`, which fetches and caches it on first run. To pre-warm the cache and confirm Node finds it:
 
 ```bash
-npx -y @playwright/mcp@0.0.75 --help
-```
-
-Pin to the current verified version if you want reproducible behavior:
-
-```bash
-npx -y @playwright/mcp@0.0.75 --help
-```
-
-Verify Node and the package resolve:
-
-```bash
 node -v                                  # must print v18.x or higher
 npm view @playwright/mcp version         # should print 0.0.75 (or later)
+npx -y @playwright/mcp@0.0.75 --help     # pre-warm cache + confirm version pin resolves
 ```
 
 ### 2. Install the Chrome extension bridge

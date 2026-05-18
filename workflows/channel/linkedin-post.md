@@ -32,6 +32,14 @@ node ${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs playwright-check --raw
 
 If detected = false: print "Author scraping needs Playwright MCP. Run /ttm-playwright-setup first." Then exit the workflow.
 
+Also check the extension capability:
+
+```bash
+node ${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs config read --raw
+```
+
+If `playwright_mcp_extension` is not `true`: print "Author scraping needs the Chrome extension bridge (`--extension`) so Playwright can use your logged-in LinkedIn session. Re-run /ttm-playwright-setup and re-add Playwright with the `--extension` flag, then retry." Exit.
+
 ## Step 4: Scrape authors
 
 For each profile URL:

@@ -8,7 +8,11 @@
 node ${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs playwright-check --raw
 ```
 
-If `detected = true`: print "Playwright MCP already configured" and offer to run the smoke test (skip ahead to Step 5).
+If `detected = true`: print "Playwright MCP already configured for Claude Code." Then AskUserQuestion (priority: critical):
+- "Run smoke test, install for another runtime (Codex/Cursor), or exit?"
+- options: "Run smoke test" / "Install for another runtime" / "Exit"
+
+If "Run smoke test": skip to Step 5. If "Install for another runtime": continue to Step 2 (filter Claude Code out of the candidate list). If "Exit": exit.
 
 ## Step 2: Pick target runtime
 
@@ -61,7 +65,18 @@ If the user said "Yes, ready to test":
 
 ## Step 6: Mark CONFIG.md
 
-Append `playwright_mcp_setup_at: <timestamp>` to `.taketomarket/CONFIG.md` (use the `timestamp` subcommand from `ttm-tools.cjs` for an ISO 8601 value).
+```bash
+TS=$(node ${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs timestamp --raw | tr -d '"')
+node ${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs config set playwright_mcp_setup_at "$TS"
+```
+
+If the user installed with the Chrome extension bridge (`--extension`), also record that capability so downstream skills can precondition:
+
+```bash
+node ${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs config set playwright_mcp_extension true
+```
+
+Otherwise set it to `false`.
 
 ## Step 7: Print next steps
 
