@@ -10,15 +10,19 @@ node ${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs playwright-check --raw
 
 If `detected = true`: print "Playwright MCP already configured" and offer to run the smoke test (skip ahead to Step 5).
 
-## Step 2: Detect runtime
+## Step 2: Pick target runtime
 
-Check env vars and on-disk fingerprints to pick the runtime whose config the user needs to edit:
+Even if the current session is Claude Code, the user might be installing for Codex or Cursor. Always ask.
 
-- **Claude Code:** `CLAUDE_CODE` env var set, or `~/.claude/` directory present.
-- **Codex CLI:** `~/.codex/` directory present.
-- **Cursor:** `~/.cursor/` directory present.
+Suggest candidates by checking which dirs exist:
+- `~/.claude/` → Claude Code
+- `~/.codex/` → Codex
+- `~/.cursor/` → Cursor
 
-If multiple match, ask which runtime to configure first.
+Then AskUserQuestion (priority: critical):
+- "Which runtime do you want to configure Playwright MCP for?"
+- options: list detected candidates first (marked "(detected)"), then the other runtimes, then "All of them"
+- if user picks "All of them": loop through each in Step 3.
 
 ## Step 3: Print install steps for detected runtime
 
@@ -47,7 +51,9 @@ If "I'll do it later": exit with a reminder that `/ttm-playwright-setup` can be 
 If the user said "Yes, ready to test":
 
 - Re-run `node ${CLAUDE_PLUGIN_ROOT}/bin/ttm-tools.cjs playwright-check --raw`.
+- Track retry count across re-checks. Cap at 2 failed re-checks.
 - If still not detected: print "MCP server not detected. Common fixes:" followed by the relevant items from the reference's **Troubleshooting** section (Node version too old, runtime needs a full restart to pick up new MCP entries, absolute path required for `npx` on Cursor macOS). Loop back to Step 4.
+- After the 2nd failed re-check, exit the smoke-test loop with: "Couldn't detect Playwright MCP after 2 attempts. See references/playwright-mcp-setup.md Troubleshooting section, fix the issue, then re-run /ttm-playwright-setup."
 - If detected: try a real Playwright call:
   - Use the MCP `browser_navigate` tool to navigate to `https://example.com` and take a screenshot.
   - On success: print "✓ Playwright MCP working. takeToMarket capabilities now unlocked."
