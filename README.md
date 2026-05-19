@@ -1,4 +1,4 @@
-# takeToMarket
+# taketomarket
 
 [![npm](https://img.shields.io/npm/v/taketomarket)](https://www.npmjs.com/package/taketomarket)
 [![GitHub stars](https://img.shields.io/github/stars/ranjanrishikesh/taketomarket?style=social)](https://github.com/ranjanrishikesh/taketomarket)
