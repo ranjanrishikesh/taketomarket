@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.3.1 - 2026-05-20
+
+Patch release. Docs + manifest hygiene only — no skill, agent, workflow, or bin/ changes. Plugin install + npm install paths both compatible.
+
+### Added
+- `references/landing-page-headline-examples.md` — 20 category-tagged clear-vs-clever H1 pairs (SaaS buzzword / FinTech sophistication / DevTools jargon / UX engineering-speak), each annotated with the DISC gates demonstrated (LANDING-PAGES-01..04 + POSITIONING-04). Loaded by `ttm-producer` at production time and by `ttm-verify` at gate-evaluation time via @-link from `playbooks/landing-pages.md` and `references/landing-page-anatomy.md`.
+
+### Fixed
+- `.claude-plugin/marketplace.json` — bumped to current version and dropped deprecated fields per obra convention.
+
 ## 2.3.0 - 2026-05-18 (GA)
 
 The "developerneur-ready" release. Reframes takeToMarket as the marketing OS for engineers + solopreneurs with zero marketing experience.
