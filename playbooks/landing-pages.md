@@ -254,6 +254,10 @@ Subhead:  Built different. Powered by AI. Trusted by leaders.
 
 Why it fails: differentiation claims with no named alternative ("only", "different"), invented category language, no ICP, no outcome. Differentiation arrives before clarity exists, which inverts the hierarchy. **Fails DISC-LANDING-PAGES-04 and DISC-LANDING-PAGES-05.**
 
+### Category-tagged H1 examples (clear vs clever)
+
+For 20 trap-categorized headline pairs (SaaS buzzword / FinTech sophistication / DevTools jargon / UX engineering-speak) with gate-ID annotations and "why bad / why good" commentary, see the companion reference: `references/landing-page-headline-examples.md`. Used by `ttm-producer` for hero calibration and by `ttm-verify` for FAIL annotations on DISC-LANDING-PAGES-01 and DISC-POSITIONING-04.
+
 ---
 
 ## Anti-Patterns

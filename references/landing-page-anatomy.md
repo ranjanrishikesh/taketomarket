@@ -25,6 +25,7 @@
 - Lead with outcome, not feature. "Ship 3x more landing pages" beats "AI-powered landing page builder".
 - Specific number > vague claim.
 - Match the differentiator from POSITIONING.md.
+- Examples (clear vs clever, category-tagged): see `references/landing-page-headline-examples.md`.
 
 ### CTAs
 - Primary: action verb. "Start free trial", "Get demo", "Try it free".
