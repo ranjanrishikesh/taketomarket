@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.3.3 - 2026-05-24
+
+Docs-only patch release. Republishing to keep the npm-cached README in sync with GitHub. No skill, agent, workflow, or bin/ changes.
+
+### Changed
+- `README.md` — audited against the official [Claude Code plugins docs](https://code.claude.com/docs/en/plugins) and corrected 7 issues:
+  - Option 2 (community marketplace) install command was pointing at `@claude-plugins-official` (curated, no submission path); corrected to `@claude-community` with the required `/plugin marketplace add anthropics/claude-plugins-community` step.
+  - Option 3 (direct from GitHub) was missing the `@taketomarket` marketplace suffix on `/plugin install`.
+  - Option 4 (manual) `cd` path corrected (`takeToMarket` → `taketomarket`).
+  - Stale "pending marketplace approval" note removed; plugin is Published in the community catalog as of 2026-05-14.
+  - Quick Start + Runtime Notes now call out plugin-install namespace explicitly (`/taketomarket:ttm-init` vs bare `/ttm-init`).
+  - Campaign Lifecycle split into Setup (Init + New Campaign) and the actual 9-Phase Lifecycle (Discover through Learn); previously listed 11 numbered items while the intro claimed 9-phase.
+  - Brand casing swept from `takeToMarket` → `taketomarket` in all body copy for consistency with the H1, npm package name, GitHub repo slug, and `plugin.json` `displayName`.
+- `CONTRIBUTING.md` — added a "Submitting plugin manifest changes" section requiring `claude plugin validate .` and a 3-manifest version-lockstep grep before opening manifest-touching PRs. Would have caught the 2.3.1 marketplace.json schema break.
+
 ## 2.3.2 - 2026-05-24
 
 Patch release. Marketplace schema fix + plugin manifest polish. No skill, workflow, or bin/ changes.
