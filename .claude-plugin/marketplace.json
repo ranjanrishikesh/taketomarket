@@ -1,23 +1,28 @@
 {
   "name": "taketomarket",
-  "description": "Marketing OS for developerneurs + solopreneurs — engineers shipping products with zero marketing experience. Spec-driven campaigns with positioning-invariant quality gates.",
-  "version": "2.3.1",
-  "author": {
+  "owner": {
     "name": "Rishikesh Ranjan",
     "url": "https://github.com/ranjanrishikesh"
   },
-  "homepage": "https://www.npmjs.com/package/taketomarket",
-  "repository": "https://github.com/ranjanrishikesh/taketomarket",
-  "license": "MIT",
-  "keywords": [
-    "marketing",
-    "campaigns",
-    "positioning",
-    "quality-gates",
-    "agent-skills",
-    "developerneurs",
-    "solopreneurs",
-    "gtm",
-    "indie-hackers"
+  "plugins": [
+    {
+      "name": "taketomarket",
+      "source": "./",
+      "description": "Marketing OS for developerneurs + solopreneurs — engineers shipping products with zero marketing experience. Spec-driven campaigns with positioning-invariant quality gates.",
+      "version": "2.3.2",
+      "homepage": "https://www.npmjs.com/package/taketomarket",
+      "license": "MIT",
+      "keywords": [
+        "marketing",
+        "campaigns",
+        "positioning",
+        "quality-gates",
+        "agent-skills",
+        "developerneurs",
+        "solopreneurs",
+        "gtm",
+        "indie-hackers"
+      ]
+    }
   ]
 }
