@@ -1,4 +1,4 @@
-# Contributing to takeToMarket
+# Contributing to taketomarket
 
 ## Reporting bugs
 
@@ -14,7 +14,7 @@ Feature PRs without a linked discussion may be closed without review.
 
 ```bash
 git clone https://github.com/ranjanrishikesh/taketomarket
-cd takeToMarket
+cd taketomarket
 node --test   # run full test suite — no install step needed
 ```
 
@@ -31,3 +31,21 @@ node --test   # run full test suite — no install step needed
 - No new npm dependencies
 - One clear purpose per PR — link to the issue it closes
 - Commits follow conventional commit style (`feat:`, `fix:`, `docs:`, `chore:`, `test:`)
+
+## Submitting plugin manifest changes
+
+Before opening a PR that touches `.claude-plugin/plugin.json` or `.claude-plugin/marketplace.json`, run:
+
+```bash
+claude plugin validate .
+```
+
+The Anthropic community-marketplace review pipeline runs the same check on every submission. Failing locally = failing in review.
+
+Also verify all three version manifests stay in lockstep:
+
+```bash
+grep '"version"' package.json .claude-plugin/plugin.json .claude-plugin/marketplace.json
+```
+
+All three must report the same version per the release playbook.
