@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.3.2 - 2026-05-24
+
+Patch release. Marketplace schema fix + plugin manifest polish. No skill, workflow, or bin/ changes.
+
+### Fixed
+- `.claude-plugin/marketplace.json` — restructured to match Claude Code marketplace schema (`owner` object + `plugins[]` array). Previous form was missing required fields and failed `/plugin marketplace add` with `InvalidSchema`. Plugin metadata (description, version, license, keywords) is now nested inside `plugins[0]` where the schema expects it.
+
+### Changed
+- `.claude-plugin/plugin.json` — added `displayName`, `homepage`, `repository`. Author field now resolves to "Rishikesh Ranjan" + GitHub URL (was previously the brand string, which conflicts with the marketplace `owner` convention).
+
+### Added
+- `AGENTS.md` — Codex-compatible instruction file alongside `CLAUDE.md` for dual-runtime support.
+
 ## 2.3.1 - 2026-05-20
 
 Patch release. Docs + manifest hygiene only — no skill, agent, workflow, or bin/ changes. Plugin install + npm install paths both compatible.

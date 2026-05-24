@@ -9,7 +9,7 @@
       "name": "taketomarket",
       "source": "./",
       "description": "Marketing OS for developerneurs + solopreneurs — engineers shipping products with zero marketing experience. Spec-driven campaigns with positioning-invariant quality gates.",
-      "version": "2.3.1",
+      "version": "2.3.2",
       "homepage": "https://www.npmjs.com/package/taketomarket",
       "license": "MIT",
       "keywords": [
