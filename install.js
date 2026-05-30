@@ -21,6 +21,7 @@ const DIRS_TO_COPY = [
   'gates',
   'bin',
   'agents',
+  'hooks',
 ];
 
 const FILES_TO_COPY = [
@@ -180,12 +181,27 @@ async function promptRuntimeSelection(args, homeDir = os.homedir()) {
   const result = [];
   for (const name of choices) {
     if (name === 'custom') {
-      result.push({ label: 'Custom', skillsDir: customPath, parentDir: null });
+      result.push(buildCustomTarget(customPath, homeDir));
     } else {
       result.push(allTargets[name]);
     }
   }
   return result;
+}
+
+/**
+ * Build an install target for a user-typed custom path. Expands a leading `~`
+ * to the home dir (so a literal `~/.claude/skills` does not create a stray `~`
+ * directory) and derives parentDir from the path so the Claude-target gate in
+ * main() can recognise a custom path that lands under ~/.claude and still wire
+ * the SessionStart update-check hook.
+ * @param {string} customPath
+ * @param {string} [homeDir]
+ * @returns {{label: string, skillsDir: string, parentDir: string}}
+ */
+function buildCustomTarget(customPath, homeDir = os.homedir()) {
+  const expanded = customPath.replace(/^~(?=$|[/\\])/, homeDir);
+  return { label: 'Custom', skillsDir: expanded, parentDir: path.dirname(expanded) };
 }
 
 // ── Runtime detection ────────────────────────────────────────────────────────
@@ -279,7 +295,7 @@ function copyDirSync(src, dest) {
 
 // ── Package Base & Per-Runtime Skill Install ──────────────────────────────────
 
-const PACKAGE_BASE_DIRS = ['workflows', 'templates', 'references', 'playbooks', 'gates', 'bin', 'agents'];
+const PACKAGE_BASE_DIRS = ['workflows', 'templates', 'references', 'playbooks', 'gates', 'bin', 'agents', 'hooks'];
 const PACKAGE_BASE_FILES = ['settings.json', 'package.json'];
 
 /**
@@ -416,6 +432,77 @@ function registerPlugin(installPath, version, homeDir = os.homedir()) {
   fs.renameSync(tmpPath, registryPath);
 
   console.log('  Registered in installed_plugins.json');
+}
+
+// ── Update-check Hook Injection (Claude Code only) ─────────────────────────────
+
+const CHECK_UPDATE_SCRIPT_REL = path.join('.taketomarket', 'bin', 'check-update.cjs');
+const CHECK_UPDATE_MARKER = 'check-update.cjs';
+
+/**
+ * Build the shell command Claude Code runs at SessionStart. Uses the absolute
+ * resolved path (no shell-expansion assumptions) into the shared package base.
+ * @param {string} homeDir
+ * @returns {string}
+ */
+function buildCheckUpdateCommand(homeDir) {
+  return `node "${path.join(homeDir, CHECK_UPDATE_SCRIPT_REL)}"`;
+}
+
+/**
+ * Inject the takeToMarket update-check hook into ~/.claude/settings.json as a
+ * SessionStart command hook. This is the npm/clone-path equivalent of the
+ * plugin-path hooks/hooks.json (plugin installs auto-discover that file; npm and
+ * git-clone installs do not, so we register the hook in the user's settings).
+ *
+ * Idempotent (skips if any SessionStart command already references
+ * check-update.cjs), atomic (tmp -> rename), and preserves all existing hooks
+ * and settings. Claude Code only.
+ *
+ * @param {string} [homeDir]
+ * @returns {boolean} true if the hook was newly added, false if already present
+ */
+function injectSessionStartHook(homeDir = os.homedir()) {
+  const settingsPath = path.join(homeDir, '.claude', 'settings.json');
+  const settingsDir = path.dirname(settingsPath);
+  const command = buildCheckUpdateCommand(homeDir);
+
+  let settings = {};
+  if (fileExists(settingsPath)) {
+    try {
+      settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+      if (!settings || typeof settings !== 'object') settings = {};
+    } catch {
+      fs.renameSync(settingsPath, settingsPath + '.bak');
+      console.warn('  Warning: ~/.claude/settings.json was corrupted. Backed up to .bak and recreated.');
+      settings = {};
+    }
+  }
+
+  if (!settings.hooks || typeof settings.hooks !== 'object') settings.hooks = {};
+  if (!Array.isArray(settings.hooks.SessionStart)) settings.hooks.SessionStart = [];
+
+  const already = settings.hooks.SessionStart.some(group =>
+    group && Array.isArray(group.hooks) && group.hooks.some(h =>
+      h && typeof h.command === 'string' && h.command.includes(CHECK_UPDATE_MARKER)
+    )
+  );
+  if (already) {
+    console.log('  Update-check hook already present in ~/.claude/settings.json');
+    return false;
+  }
+
+  settings.hooks.SessionStart.push({
+    hooks: [{ type: 'command', command }],
+  });
+
+  const tmpPath = settingsPath + '.tmp';
+  fs.mkdirSync(settingsDir, { recursive: true });
+  fs.writeFileSync(tmpPath, JSON.stringify(settings, null, 2) + '\n', 'utf8');
+  fs.renameSync(tmpPath, settingsPath);
+
+  console.log('  Installed update-check hook -> ~/.claude/settings.json (SessionStart)');
+  return true;
 }
 
 // ── Skill Introspection ───────────────────────────────────────────────────────
@@ -723,6 +810,18 @@ Options:
     }
   }
 
+  // Register the SessionStart update-check hook (Claude Code only).
+  const claudeParent = path.join(os.homedir(), '.claude');
+  const claudeTargeted = targets.some(t => t.parentDir === claudeParent);
+  if (claudeTargeted) {
+    console.log('');
+    try {
+      injectSessionStartHook();
+    } catch (err) {
+      console.warn(`  Warning: could not install update-check hook: ${err.message}`);
+    }
+  }
+
   // Summary
   const successes = results.filter(r => r.success);
   const failures = results.filter(r => !r.success);
@@ -789,5 +888,8 @@ module.exports = {
   installSkillsForRuntime,
   classifyInstallMethod,
   writeInstallSentinel,
+  injectSessionStartHook,
+  buildCheckUpdateCommand,
+  buildCustomTarget,
   PACKAGE_ROOT,
 };
