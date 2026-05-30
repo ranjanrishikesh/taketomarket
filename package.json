@@ -1,6 +1,6 @@
 {
   "name": "taketomarket",
-  "version": "2.3.3",
+  "version": "2.4.0",
   "description": "Marketing OS for developerneurs and solopreneurs. Built for engineers shipping products with zero marketing experience required. Spec-driven campaigns with positioning-as-invariant enforcement and quality gate walls.",
   "license": "MIT",
   "repository": {
@@ -28,6 +28,7 @@
     "gates/",
     "bin/",
     "agents/",
+    "hooks/",
     "settings.json",
     "install.js",
     "LICENSE",

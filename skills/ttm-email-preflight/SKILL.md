@@ -1,7 +1,7 @@
 ---
 name: ttm-email-preflight
 description: >
-  [DEPRECATED v2.3.0 -> removed v2.4.0] Renamed to /ttm-email-check.
+  [DEPRECATED v2.3.0 -> removed v3.0.0] Renamed to /ttm-email-check.
 disable-model-invocation: true
 allowed-tools: Read
 ---

@@ -1,5 +1,23 @@
 # Changelog
 
+## 2.4.0 - 2026-05-31
+
+Adds an automatic update-check hook. takeToMarket now nudges you to run `/ttm-update` when your installed version falls behind the npm registry — wired automatically by both install paths, no manual setup.
+
+### Added
+- `bin/check-update.cjs` — `SessionStart` hook script. Reads the installed version, checks the npm registry (throttled to once per 24h via `~/.taketomarket/.update-check.json`), and injects a `SessionStart` `additionalContext` block instructing Claude to surface the update and offer `/ttm-update` when a newer version exists. Fail-silent (never blocks session start; always exits 0). Opt-out via `TTM_NO_UPDATE_CHECK=1`.
+- `hooks/hooks.json` — plugin-install path. Auto-discovered by Claude Code on `/plugin install`; runs the check via `${CLAUDE_PLUGIN_ROOT}/bin/check-update.cjs`.
+- `install.js` `injectSessionStartHook()` — npm/git-clone install path. Registers the same `SessionStart` hook into `~/.claude/settings.json` (idempotent, atomic tmp→rename, preserves existing hooks/settings, recovers a corrupt file to `.bak`). Claude Code targets only.
+
+### Changed
+- `package.json` `files[]` and `install.js` copy lists (`DIRS_TO_COPY`, `PACKAGE_BASE_DIRS`) — publish and install the new `hooks/` directory.
+- `install.js` custom-path targets now expand a leading `~` and derive `parentDir`, so a custom install under `~/.claude` also gets the update-check hook (and a literal `~/...` path no longer creates a stray `~` directory).
+
+### Notes
+- Version comparison follows full semver precedence including prerelease ordering, so an installed release candidate is correctly nudged toward its stable release of the same core.
+- A dual install (plugin + npm) would otherwise fire the hook twice per session; the script suppresses the duplicate nudge via a 30s per-session cooldown.
+- The renamed-skill deprecation stubs (`/ttm-research`, `/ttm-email-preflight`, `/ttm-aeo-check`, `/ttm-keyword-map`, `/ttm-seo-audit`) are **retained**. v2.3.0 scheduled their removal for v2.4.0, but that window (~2 weeks) is too short to drop live commands; removal is moved to **v3.0.0** (next major), where breaking changes belong. Stub text updated accordingly.
+
 ## 2.3.3 - 2026-05-24
 
 Docs-only patch release. Republishing to keep the npm-cached README in sync with GitHub. No skill, agent, workflow, or bin/ changes.
