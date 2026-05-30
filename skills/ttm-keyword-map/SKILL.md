@@ -1,7 +1,7 @@
 ---
 name: ttm-keyword-map
 description: >
-  [DEPRECATED v2.3.0 -> removed v2.4.0] Merged into /ttm-seo keyword-map.
+  [DEPRECATED v2.3.0 -> removed v3.0.0] Merged into /ttm-seo keyword-map.
 disable-model-invocation: true
 allowed-tools: Read
 ---

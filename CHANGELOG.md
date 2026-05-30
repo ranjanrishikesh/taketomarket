@@ -16,6 +16,7 @@ Adds an automatic update-check hook. takeToMarket now nudges you to run `/ttm-up
 ### Notes
 - Version comparison follows full semver precedence including prerelease ordering, so an installed release candidate is correctly nudged toward its stable release of the same core.
 - A dual install (plugin + npm) would otherwise fire the hook twice per session; the script suppresses the duplicate nudge via a 30s per-session cooldown.
+- The renamed-skill deprecation stubs (`/ttm-research`, `/ttm-email-preflight`, `/ttm-aeo-check`, `/ttm-keyword-map`, `/ttm-seo-audit`) are **retained**. v2.3.0 scheduled their removal for v2.4.0, but that window (~2 weeks) is too short to drop live commands; removal is moved to **v3.0.0** (next major), where breaking changes belong. Stub text updated accordingly.
 
 ## 2.3.3 - 2026-05-24
 

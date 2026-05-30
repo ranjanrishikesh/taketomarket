@@ -1,14 +1,14 @@
 ---
 name: ttm-research
 description: >
-  [DEPRECATED v2.3.0 -> removed v2.4.0] Renamed to /ttm-discover.
+  [DEPRECATED v2.3.0 -> removed v3.0.0] Renamed to /ttm-discover.
 disable-model-invocation: true
 allowed-tools: Read
 ---
 
 # /ttm-research (DEPRECATED)
 
-This skill was renamed to `/ttm-discover` in v2.3.0 and will be removed in v2.4.0.
+This skill was renamed to `/ttm-discover` in v2.3.0 and will be removed in v3.0.0.
 
 Print to user:
 
